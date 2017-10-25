@@ -12,9 +12,6 @@ public class HiloVerificacion implements Runnable {
 		principal=im;
 	}
 	public void run() {
-		while(sistemaLineal.darNumHilos()>0){
-			//juejue
-		}
-		principal.refrescarSolucionSistema(sistemaLineal.darSolucion());
+		
 	}
 }
