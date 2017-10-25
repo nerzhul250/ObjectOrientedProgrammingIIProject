@@ -69,6 +69,12 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 		}
 		g2d.setColor(Color.BLACK);
 		g2d.drawString("x="+df.format(mousePosx)+" "+"y="+df.format(mousePosy),30,30);
+		
+		for(int i=1;i<MathyGen.ANCHOPLANO;i++){
+			double wx=MathyGen.ANCHOPLANO*(Math.cos(i)-traslX+alcance)/(2*alcance);
+			double wy=(Math.sin(i)-traslY-alcance)*MathyGen.LARGOPLANO/(-2*alcance);
+			g2d.drawLine((int)(wx),(int)(wy),(int) wx,(int) wy);
+		}
 	}
 	public void mouseWheelMoved(MouseWheelEvent e) {
 //		mousePosx=(((e.getX()-centroW)*(alcanceX))/(MathyGen.ANCHOPLANO-centroW));
