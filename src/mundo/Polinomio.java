@@ -16,10 +16,6 @@ public class Polinomio extends Funcion {
 	public Polinomio(String form){
 		 InputStream inputStream = System.in;
 	     ScanReader in = new ScanReader(inputStream);
-	     while (en.hasMoreElements()) {
-			type type = (type) en.nextElement();
-			
-		}
 	}
 	@Override
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY,

@@ -45,12 +45,10 @@ public class ScanReader {
         return neg * integer;
     }
     public char scanChar(){
-    	int c=0;
     	int n=scan();
+    	
     	while (isWhiteSpace(n)) n = scan();
-    	if(){
-    		
-    	}
+    	return 0;
     }
     private boolean isWhiteSpace(int n) {
         if (n == ' ' || n == '\n' || n == '\r' || n == '\t' || n == -1) return true;
