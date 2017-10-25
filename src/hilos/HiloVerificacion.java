@@ -12,6 +12,8 @@ public class HiloVerificacion implements Runnable {
 		principal=im;
 	}
 	public void run() {
-		
+		while(sistemaLineal.darHilosEnEjecucion()!=0){			
+		}
+		principal.mostrarMatrizProducto(sistemaLineal.darMatrizProducto());
 	}
 }

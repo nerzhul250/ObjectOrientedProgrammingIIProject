@@ -20,6 +20,7 @@ public class SistemaLineal {
 		this.matrizCoeficientes1=matrizCoeficientes1;
 		this.matrizCoeficientes2=matrizCoeficientes2;
 		solucionSistema=new double[matrizCoeficientes1[0].length];
+		hilosEnEjecucion=matrizCoeficientes1.length*matrizCoeficientes2[0].length;
 	}
 	public int darFilaEjecutada() {
 		filaEjecutada=columnaEjecutada/matrizB.length;
@@ -127,7 +128,7 @@ public class SistemaLineal {
 	public void iniciarMatrizProducto(int filas,int columnas) {
 		matrizProducto=new double[filas][columnas];
 	}
-	public double[][] darMatrizX(){
+	public double[][] darMatrizProducto(){
 		return matrizProducto;
 	}
 

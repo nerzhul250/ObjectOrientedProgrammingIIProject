@@ -19,15 +19,14 @@ public class HiloMultiplicacion implements Runnable {
 
 	public void run() {
 
-		double[][] matrizInversa=sistema.darMatrizCoeficientes2();
-		double[][] matrizB=sistema.darMatrizB();
-		sistema.modificarHilosEnEjecucion(1);
+		double[][] matrizInversa=sistema.darMatrizCoeficientes1();
+		double[][] matrizB=sistema.darMatrizCoeficientes2();
 		double multiplicacion=0;
 		for(int i =0;i<matrizInversa[0].length;i++){
 			multiplicacion+=matrizInversa[fila][i]*matrizB[i][columna];
 		}
-		sistema.modificarHilosEnEjecucion(-1);
 		sistema.modificarValorMatrizProducto(fila,columna, multiplicacion);
+		sistema.modificarHilosEnEjecucion(-1);
 		
 	}
 	

@@ -9,5 +9,12 @@ public class MathyGen {
 	private Punto primerPunto;
 	private Funcion raizFuncion;
 	private ArrayList<Region> listaRegiones;
-
+	private SistemaLineal sistemaLineal;
+	
+	public SistemaLineal darSistemaLineal(){
+		return sistemaLineal;
+	}
+	public void iniciarSistemaLineal(double[][] m1,double[][] m2){
+		sistemaLineal= new SistemaLineal(m1, m2);
+	}
 }
