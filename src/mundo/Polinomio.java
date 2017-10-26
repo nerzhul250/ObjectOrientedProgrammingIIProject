@@ -6,17 +6,35 @@ import java.awt.Graphics2D;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 
 public class Polinomio extends Funcion {
 
 	private ArrayList<Double> coeficientes;
+	private HashMap<Integer,Double>gradosACoeficientes;
+	private int grado;
 	
 	public Polinomio(String form){
-		 InputStream inputStream = System.in;
-	     ScanReader in = new ScanReader(inputStream);
+	     grado=0;
+	     coeficientes=new ArrayList<Double>();
+	     gradosACoeficientes=new HashMap<Integer,Double>();
+	     parsearPolinomio(0,(form+"T").toCharArray());  
+	     for (int i = 0; i < grado+1; i++) {
+	    	double val=((gradosACoeficientes.get(i)==null)?0:gradosACoeficientes.get(i));
+			coeficientes.add(val);
+		}
 	}
+	
+	public ArrayList<Double> getCoeficientes() {
+		return coeficientes;
+	}
+
+	public void setCoeficientes(ArrayList<Double> coeficientes) {
+		this.coeficientes = coeficientes;
+	}
+
 	@Override
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY,
 			double traslX, int ancho, int largo) {
@@ -40,5 +58,63 @@ public class Polinomio extends Funcion {
 			valy=x*valy+coeficientes.get(i);
 		}
 		return valy;
+	}
+	private void parsearPolinomio(int i,char[] a) {
+		int nam=0;
+		int paw=0;
+		boolean num=false;
+		boolean pow=false;
+		while((!num || !pow) && i<a.length){
+			int c=a[i];
+			if(c=='-' || c=='+' ||(c >= '0' && c <= '9')){
+				int integer=0;
+				int neg=1;
+				if (c == '-') {
+		            neg = -1;
+		            c = a[++i];
+		        }
+				if(c =='+'){
+					c = a[++i];
+			    }
+		        while ((c >= '0' && c <= '9')) {
+		            integer *= 10;
+		            integer += c - '0';
+		            c=a[++i];
+		        }
+		        i--;
+			    nam=neg * integer;
+				num=true;
+			}else if(c=='x'){
+				if(a[++i]=='^'){
+					c=a[++i];
+					int integer=0;
+					if(c =='+'){
+						c = a[++i];
+				    }
+			        while ((c >= '0' && c <= '9')) {
+			            integer *= 10;
+			            integer += c - '0';
+			            c=a[++i];
+			        }
+				    paw=integer;
+				}else{
+					paw=1;
+				}
+				if(paw>grado){
+					grado=paw;
+				}
+				i--;
+				pow=true;
+			}else if(num && (c=='-' || c=='+' || c=='T')){
+				paw=0;
+				pow=true;
+			}
+			i++;
+		}
+		double val=((gradosACoeficientes.get(paw)==null)?0:gradosACoeficientes.get(paw));
+		gradosACoeficientes.put(paw,val+nam);
+		if(i<a.length){
+			parsearPolinomio(i,a);
+		}
 	}
 }

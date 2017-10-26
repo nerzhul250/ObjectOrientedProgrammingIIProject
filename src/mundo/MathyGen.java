@@ -10,10 +10,15 @@ import java.util.ArrayList;
 
 public class MathyGen {
 
+<<<<<<< HEAD
 	public final static int ANCHOPLANO =600;
 	public final static int LARGOPLANO =600;
 	public final static String RUTA_MATRIZ_GIGANTE_1="./data/matricesGigantes/matrizGigante1.txt";
 	public final static String RUTA_MATRIZ_GIGANTE_2="./data/matricesGigantes/matrizGigante2.txt";
+=======
+	public final static int ANCHOPLANO =625;
+	public final static int LARGOPLANO =625;
+>>>>>>> 2b0ee61df766f6a494808ecb8ef624b15ec9ee2e
 	private Punto primerPunto;
 	private Funcion raizFuncion;
 	private ArrayList<Region> listaRegiones;

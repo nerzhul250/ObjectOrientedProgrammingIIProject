@@ -31,7 +31,7 @@ public class PanelObjetoDibujable extends JPanel{
 			listModel.addElement(kaka.get(i));
 		}
 	}
-	public Dibujable darProgramadorSeleccionado() {
+	public Dibujable darDibujableSeleccionado() {
 		Dibujable p=listaObj.getSelectedValue();
 		return p;
 	}
