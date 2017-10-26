@@ -12,7 +12,6 @@ public class Parser {
     public Parser(InputStream inputStream) {
         in = new BufferedInputStream(inputStream);
     }
-    
     private int scan() {
         if (index >= total) {
             index = 0;
