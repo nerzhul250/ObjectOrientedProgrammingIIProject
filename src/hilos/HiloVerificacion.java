@@ -12,10 +12,13 @@ public class HiloVerificacion implements Runnable {
 		principal=im;
 	}
 	public void run() {
+		long tiempo=System.currentTimeMillis();
 		while(sistemaLineal.darHilosEnEjecucion()!=0){
 			System.out.println(sistemaLineal.darHilosEnEjecucion());
 		}
-		System.out.println("hecho");
+		tiempo= System.currentTimeMillis()-tiempo;
+		System.out.println(tiempo);
 		principal.mostrarMatrizProducto(sistemaLineal.darMatrizProducto());
+		
 	}
 }

@@ -33,6 +33,7 @@ public class HiloMultiplicacion implements Runnable {
 		}
 		sistema.modificarHilosEnEjecucion(-1);
 		System.out.println(sistema.darHilosEnEjecucion());
+		
 
 	}
 	
