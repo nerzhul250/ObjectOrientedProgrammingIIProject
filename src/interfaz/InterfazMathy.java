@@ -26,7 +26,6 @@ public class InterfazMathy extends JFrame{
 	
 	private HiloMultiplicacion hiloMul;
 	private HiloVerificacion hiloVerifi;
-	private VentanaMatrizProducto venMatrizPro;
 	private VentanaMatriz venMatrizPro;
 	private VentanaMatrizB ventanaMaB;
 	public InterfazMathy(){
