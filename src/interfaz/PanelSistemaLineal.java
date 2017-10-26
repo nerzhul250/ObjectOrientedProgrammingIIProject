@@ -151,6 +151,10 @@ public class PanelSistemaLineal extends JPanel implements ActionListener{
 			principal.pack();
 		}else if(comando.equals(CALCULAR_PRODUCTO)){
 			principal.iniciarProductoEntreMatrices();
+		}else if(comando.equals(CALCULAR_DETERMINANTE)){
+			principal.calcularDeterminanteMatriz1();
+		}else if(comando.equals(CALCULAR_SOLUCION)){
+			principal.ventanaMatrizBVisible();
 		}
 		
 	}

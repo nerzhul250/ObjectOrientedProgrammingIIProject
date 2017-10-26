@@ -1,6 +1,7 @@
 package interfaz;
 
 import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -12,6 +13,7 @@ import javax.swing.JTabbedPane;
 import hilos.HiloMultiplicacion;
 import hilos.HiloVerificacion;
 import mundo.MathyGen;
+import mundo.MatrizNoInvertibleException;
 import mundo.NoEsNumeroException;
 
 public class InterfazMathy extends JFrame{
@@ -21,6 +23,7 @@ public class InterfazMathy extends JFrame{
 	private HiloMultiplicacion hiloMul;
 	private HiloVerificacion hiloVerifi;
 	private VentanaMatrizProducto venMatrizPro;
+	private VentanaMatrizB ventanaMaB;
 	public InterfazMathy(){
 		setTitle("MathyGen");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -38,7 +41,9 @@ public class InterfazMathy extends JFrame{
 		add(jtp);
 		pack();
 	}
-	
+	public int darTamanoMatrizB(){
+		return mundo.darSistemaLineal().darMatrizCoeficientes1()[0].length;
+	}
 	public void iniciarProductoEntreMatrices(){
 		try {
 			double[][] m1=psl.darMatriz1();
@@ -54,7 +59,41 @@ public class InterfazMathy extends JFrame{
 			hiloVerifi= new HiloVerificacion(this,mundo.darSistemaLineal());
 			Thread h = new Thread(hiloVerifi);
 			h.start();
-
+		} catch (NoEsNumeroException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage()+e.darIndice());
+		}
+	}
+	public void calcularDeterminanteMatriz1(){
+		double[][] m1;
+		try {
+			m1 = psl.darMatriz1();
+			mundo.iniciarSistemaLineal(m1, null);
+			JOptionPane.showMessageDialog(this,"El determinante de la matriz es: "+ mundo.calcularDeterminanteMatriz1());
+		} catch (NoEsNumeroException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage()+e.darIndice());
+		}
+	}
+	public void ventanaMatrizBVisible(){
+		double[][] m1;
+		try {
+			m1 = psl.darMatriz1();
+			mundo.iniciarSistemaLineal(m1, null);
+			ventanaMaB= new VentanaMatrizB(this);
+			ventanaMaB.setVisible(true);
+		} catch (NoEsNumeroException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage()+e.darIndice());
+		}
+	}
+	public void calcularSolucionesMatriz1(){
+		try {
+			mundo.darSistemaLineal().modificarMatrizB(ventanaMaB.darMatrizB());
+			ventanaMaB.setVisible(false);
+			JOptionPane.showMessageDialog(this, mundo.calcularSolucionesMatriz1());
+		} catch (HeadlessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MatrizNoInvertibleException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
 		} catch (NoEsNumeroException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage()+e.darIndice());
 		}

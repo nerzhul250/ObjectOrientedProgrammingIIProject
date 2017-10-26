@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class SistemaLineal {
 
 	private double[][] matrizCoeficientes1;
-	private double[][] matrizB;
+	private double[] matrizB;
 	private double[][] matrizProducto;
 	private double[][] matrizCoeficientes2;
 	
@@ -20,6 +20,7 @@ public class SistemaLineal {
 		this.matrizCoeficientes1=matrizCoeficientes1;
 		this.matrizCoeficientes2=matrizCoeficientes2;
 		solucionSistema=new double[matrizCoeficientes1[0].length];
+		if(matrizCoeficientes2!= null)
 		hilosEnEjecucion=matrizCoeficientes1.length*matrizCoeficientes2[0].length;
 	}
 	public int darFilaEjecutada() {
@@ -42,20 +43,26 @@ public class SistemaLineal {
 	public double[] darSolucionSistema(){
 		return solucionSistema;
 	}
-	public void determinarSolucionesSistema(){
-		double determinanteOriginal = calcularDeterminante(matrizCoeficientes1);
-		double[][] matrizCrammer=new double[matrizCoeficientes1.length][matrizCoeficientes1.length];
-		iniciarSolucionSistema(matrizCoeficientes1.length);
-		for(int i =0; i<matrizCoeficientes1.length;i++){
-			for (int j = 0; j < matrizCrammer.length; j++) {
-				matrizCrammer[j]=matrizCoeficientes1[j].clone();
+	public void determinarSolucionesSistema() throws MatrizNoInvertibleException{
+		if(calcularDeterminante(matrizCoeficientes1)!=0){
+			
+			double determinanteOriginal = calcularDeterminante(matrizCoeficientes1);
+			double[][] matrizCrammer=new double[matrizCoeficientes1.length][matrizCoeficientes1.length];
+			iniciarSolucionSistema(matrizCoeficientes1.length);
+			for(int i =0; i<matrizCoeficientes1.length;i++){
+				for (int j = 0; j < matrizCrammer.length; j++) {
+					matrizCrammer[j]=matrizCoeficientes1[j].clone();
+				}
+				for(int j=0;j<matrizCoeficientes1.length;j++){
+					matrizCrammer[j][i]=matrizB[j];
+				}
+				double solucion= calcularDeterminante(matrizCrammer)/determinanteOriginal;
+				solucionSistema[i]=solucion;
 			}
-			for(int j=0;j<matrizCoeficientes1.length;j++){
-				matrizCrammer[j][i]=matrizB[j][0];
-			}
-			double solucion= calcularDeterminante(matrizCrammer)/determinanteOriginal;
-			solucionSistema[i]=solucion;
+		}else{
+			throw new MatrizNoInvertibleException("La matriz no es invertible, la aplicación solo es capaz de resolver sistemas cuadrados e invertibles");
 		}
+		
 	}
 	
 	public void modificarFilaEjecutada(int hilos) {
@@ -113,11 +120,11 @@ public class SistemaLineal {
 		
 	}
 
-	public double[][] darMatrizB() {
+	public double[] darMatrizB() {
 		return matrizB;
 	}
 
-	public void modificarMatrizB(double[][] matrizB) {
+	public void modificarMatrizB(double[] matrizB) {
 		this.matrizB = matrizB;
 	}
 

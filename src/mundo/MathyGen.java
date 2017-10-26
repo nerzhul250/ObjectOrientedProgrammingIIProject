@@ -17,4 +17,17 @@ public class MathyGen {
 	public void iniciarSistemaLineal(double[][] m1,double[][] m2){
 		sistemaLineal= new SistemaLineal(m1, m2);
 	}
+	public double calcularDeterminanteMatriz1(){
+		return sistemaLineal.calcularDeterminante(sistemaLineal.darMatrizCoeficientes1());
+	}
+	public String calcularSolucionesMatriz1() throws MatrizNoInvertibleException{
+		String mensaje="";
+		double[] soluciones=new double[sistemaLineal.darMatrizCoeficientes1()[0].length];
+		sistemaLineal.determinarSolucionesSistema();
+		soluciones=sistemaLineal.darSolucionSistema();
+		for(int i =0;i<soluciones.length;i++){
+			mensaje+= "X"+(i+1)+"= "+soluciones[i]+"\n";
+		}
+		return mensaje;
+	}
 }
