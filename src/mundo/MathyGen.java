@@ -10,15 +10,12 @@ import java.util.ArrayList;
 
 public class MathyGen {
 
-<<<<<<< HEAD
-	public final static int ANCHOPLANO =600;
-	public final static int LARGOPLANO =600;
 	public final static String RUTA_MATRIZ_GIGANTE_1="./data/matricesGigantes/matrizGigante1.txt";
 	public final static String RUTA_MATRIZ_GIGANTE_2="./data/matricesGigantes/matrizGigante2.txt";
-=======
+
 	public final static int ANCHOPLANO =625;
 	public final static int LARGOPLANO =625;
->>>>>>> 2b0ee61df766f6a494808ecb8ef624b15ec9ee2e
+
 	private Punto primerPunto;
 	private Funcion raizFuncion;
 	private ArrayList<Region> listaRegiones;
@@ -59,7 +56,7 @@ public class MathyGen {
 		}
 		return mensaje;
 	}
-<<<<<<< HEAD
+
 	public Funcion agregarFuncion(String form, int t){
 		Funcion fun=null;
 		switch (t) {
@@ -70,6 +67,7 @@ public class MathyGen {
 		agregarFuncionAlArbol(fun,raizFuncion);
 		return fun;
 	}
+	
 	public void agregarFuncionAlArbol(Funcion f,Funcion actual){
 		if(actual==null){
 			actual=f;
@@ -80,7 +78,7 @@ public class MathyGen {
 				agregarFuncionAlArbol(f,actual.getFunDe());
 			}
 		}
-=======
+	}
 	
 	public void cargarMatricesGigantes() throws IOException{
 		sistemaLineal=new SistemaLineal(cargarMatrizGigante1(), cargarMatrizGigante2());
@@ -167,6 +165,5 @@ public class MathyGen {
 		}
 		log.close();
 		System.out.println("terminado 2");
->>>>>>> 111ef478deb99ca910fdb784092528444a911905
 	}
 }
