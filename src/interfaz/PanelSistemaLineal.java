@@ -26,6 +26,8 @@ public class PanelSistemaLineal extends JPanel implements ActionListener{
 	private JButton btnCalcProducto;
 	private JButton btnCalcDeterminante;
 	private JButton btnCalcSolucion;
+	private JButton btnCargarMatrizGigante1;
+	private JButton btnCargarMatrizGigante2;
 	String[] tamanosMatrices={"2x2","3x3","4x4","5x5","6x6","7x7"};
 	private JComboBox listaTamano;
 	
@@ -34,6 +36,9 @@ public class PanelSistemaLineal extends JPanel implements ActionListener{
 	public final static String CALCULAR_DETERMINANTE="calcDeterminante";
 	public final static String CALCULAR_SOLUCION="calcSolucion";
 	public final static String INICIALIZAR_MATRICES="iniMatrices";
+	public final static String CARGAR_MATRICES_GIGANTES="cgrma1";
+	public final static String MULTIPLICAR_MATRICES_GIGANTES="cgrma2";
+	
 	
 	
 	public PanelSistemaLineal(InterfazMathy p){
@@ -58,15 +63,25 @@ public class PanelSistemaLineal extends JPanel implements ActionListener{
 		btnCalcSolucion.addActionListener(this);
 		btnCalcSolucion.setActionCommand(CALCULAR_SOLUCION);
 		
+		btnCargarMatrizGigante1= new JButton("Cargar matrices gigantes");
+		btnCargarMatrizGigante1.addActionListener(this);
+		btnCargarMatrizGigante1.setActionCommand(CARGAR_MATRICES_GIGANTES);
+		
+		btnCargarMatrizGigante2= new JButton("Multiplicar Matrices gigantes");
+		btnCargarMatrizGigante2.addActionListener(this);
+		btnCargarMatrizGigante2.setActionCommand(MULTIPLICAR_MATRICES_GIGANTES);
+		
 		listaTamano=new JComboBox(tamanosMatrices);
 		listaTamano.addActionListener(this);
 		JPanel panelAuxiliarOpciones= new JPanel();
-		panelAuxiliarOpciones.setLayout(new GridLayout(1,5));
+		panelAuxiliarOpciones.setLayout(new GridLayout(1,7));
 		panelAuxiliarOpciones.add(listaTamano);
 		panelAuxiliarOpciones.add(btnInicializarMatrices);
 		panelAuxiliarOpciones.add(btnCalcProducto);
 		panelAuxiliarOpciones.add(btnCalcDeterminante);
 		panelAuxiliarOpciones.add(btnCalcSolucion);
+		panelAuxiliarOpciones.add(btnCargarMatrizGigante1);
+		panelAuxiliarOpciones.add(btnCargarMatrizGigante2);
 		add(panelAuxiliarOpciones,BorderLayout.SOUTH);
 		
 	}
@@ -155,6 +170,10 @@ public class PanelSistemaLineal extends JPanel implements ActionListener{
 			principal.calcularDeterminanteMatriz1();
 		}else if(comando.equals(CALCULAR_SOLUCION)){
 			principal.ventanaMatrizBVisible();
+		}else if(comando.equals(CARGAR_MATRICES_GIGANTES)){
+			principal.cargarMatricesGigantes();
+		}else if(comando.equals(MULTIPLICAR_MATRICES_GIGANTES)){
+			principal.iniciarMultiplicacionMatricesGigantes();
 		}
 		
 	}

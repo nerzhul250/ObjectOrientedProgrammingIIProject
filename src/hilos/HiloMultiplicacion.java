@@ -8,26 +8,32 @@ public class HiloMultiplicacion implements Runnable {
 
 	private SistemaLineal sistema;
 	int fila;
-	int columna;
+	int inicioFila;
 	
-	public HiloMultiplicacion(SistemaLineal s,int fila, int columna){
+	public HiloMultiplicacion(SistemaLineal s,int filaMax,int inicioF){
 		sistema = s;
-		this.fila=fila;
-		this.columna=columna;
+		inicioFila=inicioF;
+		this.fila=filaMax;
 	}
 
 
 	public void run() {
-
-		double[][] matrizInversa=sistema.darMatrizCoeficientes1();
-		double[][] matrizB=sistema.darMatrizCoeficientes2();
+		double[][] matrizCoeficientes1=sistema.darMatrizCoeficientes1();
+		double[][] matrizCoeficientes2=sistema.darMatrizCoeficientes2();
 		double multiplicacion=0;
-		for(int i =0;i<matrizInversa[0].length;i++){
-			multiplicacion+=matrizInversa[fila][i]*matrizB[i][columna];
+		for(int i =inicioFila; i<fila;i++){
+			for(int k =0;k<matrizCoeficientes1.length;k++){
+				multiplicacion=0;
+				for(int j=0;j<matrizCoeficientes1.length;j++){
+					multiplicacion+=matrizCoeficientes1[i][j]*matrizCoeficientes2[j][k];
+				}
+				
+				sistema.modificarValorMatrizProducto(i,k, multiplicacion);
+			}
 		}
-		sistema.modificarValorMatrizProducto(fila,columna, multiplicacion);
 		sistema.modificarHilosEnEjecucion(-1);
-		
+		System.out.println(sistema.darHilosEnEjecucion());
+
 	}
 	
 	
