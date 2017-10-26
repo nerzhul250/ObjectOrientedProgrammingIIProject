@@ -59,6 +59,11 @@ public class Polinomio extends Funcion {
 		}
 		return valy;
 	}
+	/**
+	 * Metodo para extraer los coeficientes del polinomio y su grado
+	 * @param i
+	 * @param a
+	 */
 	private void parsearPolinomio(int i,char[] a) {
 		int nam=0;
 		int paw=0;
@@ -116,5 +121,24 @@ public class Polinomio extends Funcion {
 		if(i<a.length){
 			parsearPolinomio(i,a);
 		}
+	}
+	@Override
+	public String toString() {
+		String nim=""+coeficientes.get(0);
+		for (int i = 1; i <coeficientes.size() ; i++) {
+			if(coeficientes.get(i)!=0){
+				if(coeficientes.get(i)<0){
+					nim=nim+coeficientes.get(i)+"x^"+i;
+				}else{
+					nim=nim+"+"+coeficientes.get(i)+"x^"+i;
+				}
+			}
+		}
+		return nim;
+	}
+	//En la forma actual de comparar, los polinomios ni ninguna funcion se añadiran bien al arbol de funciones
+	public int comparar(Polinomio g2) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

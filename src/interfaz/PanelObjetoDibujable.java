@@ -1,5 +1,6 @@
 package interfaz;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -10,29 +11,23 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import mundo.Dibujable;
+import mundo.Funcion;
 
 public class PanelObjetoDibujable extends JPanel{
-	private JList<Dibujable> listaObj;
-	private DefaultListModel listModel;
-	public PanelObjetoDibujable(){
-		listModel = new DefaultListModel();
-		listaObj = new JList<Dibujable>(listModel);
+	private PanelObjDibFuncion podf;
+	private PanelObjDibRegion podr;
+	private PanelObjDibPunto podp;
+	
+	private InterfazMathy principal;
+	public PanelObjetoDibujable(InterfazMathy in){
+		principal=in;
+		setLayout(new BorderLayout());
 		
-		JScrollPane scrollMostrar = new JScrollPane(this.listaObj);
-		scrollMostrar.setBackground(Color.WHITE);
-		add(scrollMostrar);
+		podf=new PanelObjDibFuncion(principal);
+		
+		add(podf,BorderLayout.NORTH);
 	}
-	public void agregarObjetoDibujable(Dibujable b){
-		listModel.addElement(b);
-	}
-	public void refrescarLista(ArrayList<Dibujable>kaka){
-		listModel.removeAllElements();
-		for (int i = 0; i < kaka.size(); i++) {
-			listModel.addElement(kaka.get(i));
-		}
-	}
-	public Dibujable darDibujableSeleccionado() {
-		Dibujable p=listaObj.getSelectedValue();
-		return p;
+	public void agregarFuncion(Funcion fun) {
+		podf.agregarFuncion(fun);
 	}
 }

@@ -56,6 +56,28 @@ public class MathyGen {
 		}
 		return mensaje;
 	}
+<<<<<<< HEAD
+	public Funcion agregarFuncion(String form, int t){
+		Funcion fun=null;
+		switch (t) {
+		case 3:
+			fun=new Polinomio(form);
+			break;
+		}
+		agregarFuncionAlArbol(fun,raizFuncion);
+		return fun;
+	}
+	public void agregarFuncionAlArbol(Funcion f,Funcion actual){
+		if(actual==null){
+			actual=f;
+		}else{
+			if(f.compareTo(actual)==-1){
+				agregarFuncionAlArbol(f,actual.getFunIz());
+			}else if(f.compareTo(actual)==1){
+				agregarFuncionAlArbol(f,actual.getFunDe());
+			}
+		}
+=======
 	
 	public void cargarMatricesGigantes() throws IOException{
 		sistemaLineal=new SistemaLineal(cargarMatrizGigante1(), cargarMatrizGigante2());
@@ -142,5 +164,6 @@ public class MathyGen {
 		}
 		log.close();
 		System.out.println("terminado 2");
+>>>>>>> 111ef478deb99ca910fdb784092528444a911905
 	}
 }

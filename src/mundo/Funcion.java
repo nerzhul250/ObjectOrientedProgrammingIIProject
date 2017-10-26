@@ -3,8 +3,9 @@ package mundo;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
-public abstract class Funcion implements Dibujable, Computable, Comparable  {
+public abstract class Funcion implements Dibujable, Computable, Comparable, Serializable  {
 
 	private String nombre;
 	private Color color;
@@ -12,7 +13,8 @@ public abstract class Funcion implements Dibujable, Computable, Comparable  {
 	private int nivelDeBelleza;
 	private Funcion funIz;
 	private Funcion funDe;
-
+	private Funcion funDad;
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -23,6 +25,14 @@ public abstract class Funcion implements Dibujable, Computable, Comparable  {
 
 	public Color getColor() {
 		return color;
+	}
+
+	public Funcion getFunDad() {
+		return funDad;
+	}
+
+	public void setFunDad(Funcion funDad) {
+		this.funDad = funDad;
 	}
 
 	public void setColor(Color color) {
@@ -85,10 +95,27 @@ public abstract class Funcion implements Dibujable, Computable, Comparable  {
 		int dif=thisNum-oNum;
 		if(dif!=0){
 			dif=(dif>0)?1:-1;
+		}else{
+			if(o instanceof General){
+				General g1=(General)this;
+				General g2=(General)o;
+				dif=g1.comparar(g2);
+			}else if(o instanceof Polinomio){
+				Polinomio g1=(Polinomio)this;
+				Polinomio g2=(Polinomio)o;
+				dif=g1.comparar(g2);
+			}else if(o instanceof Exponencial){
+				Exponencial g1=(Exponencial)this;
+				Exponencial g2=(Exponencial)o;
+				dif=g1.comparar(g2);
+			}else if(o instanceof Trigonometrico){
+				Trigonometrico g1=(Trigonometrico)this;
+				Trigonometrico g2=(Trigonometrico)o;
+				dif=g1.comparar(g2);
+			}
 		}
 		return dif;
 	}
-
 	public abstract void dibujarse(Graphics2D g2d, double alcance, double traslY,
 			double traslX, int ancho, int largo);
 	

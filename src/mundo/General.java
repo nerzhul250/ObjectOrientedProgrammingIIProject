@@ -19,4 +19,9 @@ public class General extends Funcion implements Computable {
 		return 0;
 	}
 
+	public int comparar(General g2) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
