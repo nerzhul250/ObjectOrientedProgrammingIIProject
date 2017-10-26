@@ -21,7 +21,8 @@ public class SistemaLineal {
 		this.matrizCoeficientes2=matrizCoeficientes2;
 		solucionSistema=new double[matrizCoeficientes1[0].length];
 		if(matrizCoeficientes2!= null)
-		hilosEnEjecucion=matrizCoeficientes1.length*matrizCoeficientes2[0].length;
+		hilosEnEjecucion=2;
+		//TODO
 	}
 	public int darFilaEjecutada() {
 		filaEjecutada=columnaEjecutada/matrizB.length;
@@ -83,24 +84,52 @@ public class SistemaLineal {
 				i=matriz.length;
 			}else{
 				double[][] nuevaMatriz=new double[matriz.length-1][matriz.length-1];
-				int fila=0;
-				int columna=0;
-				for(int j=0;j<matriz.length;j++){
-					for(int k=0;k<matriz.length;k++){
-						if(j>0&&(k<i||k>i)){
-							if(columna==nuevaMatriz.length){
-								columna=0;
-								fila++;
-							}
-							nuevaMatriz[fila][columna]=matriz[j][k];
-							columna++;
-						}
-					}
-				}
+//				int fila=0;
+//				int columna=0;
+//				for(int j=0;j<matriz.length;j++){
+//					for(int k=0;k<matriz.length;k++){
+//						if(j>0&&(k<i||k>i)){
+//							if(columna==nuevaMatriz.length){
+//								columna=0;
+//								fila++;
+//							}
+//							nuevaMatriz[fila][columna]=matriz[j][k];
+//							columna++;
+//						}
+//					}
+//				}
+				calcularMatrizFaltante(matriz, nuevaMatriz, 0, i, 0, 0, 0, 0, 0);
+				
 				determinante+=Math.pow(-1, i)*matriz[0][i]*calcularDeterminante(nuevaMatriz);
 			}
 		}
 		return determinante;
+	}
+	
+	public void calcularMatrizFaltante(double[][] matriz,double[][] nuevaMatriz, int indiceFila,int indiceColumna,int filaActual,int columActual,int
+			filaMatriz,int columMatriz, int cont){
+		if(columActual>=matriz[0].length){
+			columActual=0;
+			filaActual++;
+		}
+		if(columMatriz>=nuevaMatriz[0].length){
+			columMatriz=0;
+			filaMatriz++;
+			System.out.println("hecho");
+		}
+		if(cont>=nuevaMatriz.length*nuevaMatriz[0].length){
+		}else if(indiceFila<filaActual&&(columActual<indiceColumna||columActual>indiceColumna)){
+			nuevaMatriz[filaMatriz][columMatriz]=matriz[filaActual][columActual];
+			columActual++;
+			columMatriz++;
+			cont++;
+			System.out.println(columMatriz);
+			calcularMatrizFaltante(matriz, nuevaMatriz, indiceFila, indiceColumna, filaActual, columActual, filaMatriz, columMatriz, cont);
+		}else{
+			columActual++;
+			calcularMatrizFaltante(matriz, nuevaMatriz, indiceFila, indiceColumna, filaActual, columActual, filaMatriz, columMatriz, cont);
+		}
+		
 	}
 
 	public double[][] darMatrizCoeficientes1() {

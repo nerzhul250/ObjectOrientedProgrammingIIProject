@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -25,8 +26,12 @@ public class InterfazMathy extends JFrame{
 	
 	private HiloMultiplicacion hiloMul;
 	private HiloVerificacion hiloVerifi;
+<<<<<<< HEAD
 	
 	private VentanaMatrizProducto venMatrizPro;
+=======
+	private VentanaMatriz venMatrizPro;
+>>>>>>> 111ef478deb99ca910fdb784092528444a911905
 	private VentanaMatrizB ventanaMaB;
 	public InterfazMathy(){
 		setTitle("MathyGen");
@@ -55,16 +60,19 @@ public class InterfazMathy extends JFrame{
 			double[][] m1=psl.darMatriz1();
 			double[][] m2=psl.darMatriz2();
 			mundo.iniciarSistemaLineal(m1, m2);
-			for(int i =0;i<m1.length;i++){
-				for(int j=0;j<m2[0].length;j++){
-					hiloMul= new HiloMultiplicacion(mundo.darSistemaLineal(), i, j);
-					Thread h= new Thread(hiloMul);
-					h.start();
-				}
+			if(mundo.darSistemaLineal().darHilosEnEjecucion()==(2)){
+				hiloMul = new HiloMultiplicacion(mundo.darSistemaLineal(), (m1.length-1)/2, 0);
+				Thread m= new Thread(hiloMul);
+				m.start();
+				hiloMul=new HiloMultiplicacion(mundo.darSistemaLineal(), m1.length,(m1.length-1)/2);
+				m= new Thread(hiloMul);
+				m.start();
+				
+				
+				hiloVerifi= new HiloVerificacion(this,mundo.darSistemaLineal());
+				Thread h = new Thread(hiloVerifi);
+				h.start();
 			}
-			hiloVerifi= new HiloVerificacion(this,mundo.darSistemaLineal());
-			Thread h = new Thread(hiloVerifi);
-			h.start();
 		} catch (NoEsNumeroException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage()+e.darIndice());
 		}
@@ -106,7 +114,7 @@ public class InterfazMathy extends JFrame{
 	}
 	
 	public void mostrarMatrizProducto(double[][] matriz){
-		venMatrizPro= new VentanaMatrizProducto(matriz);
+		venMatrizPro= new VentanaMatriz(matriz);
 		venMatrizPro.setVisible(true);
 		venMatrizPro.pack();
 	}
@@ -115,6 +123,30 @@ public class InterfazMathy extends JFrame{
 		im.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		im.setVisible(true);
 		im.setResizable(false);
+	}
+	public void cargarMatricesGigantes(){
+		
+		try {
+			mundo.cargarMatricesGigantes();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(this, "Error al cargar los archivos");
+		}
+	}
+	public void iniciarMultiplicacionMatricesGigantes(){
+			int m1=mundo.darSistemaLineal().darMatrizCoeficientes1().length;
+			if(mundo.darSistemaLineal().darHilosEnEjecucion()==(2)){
+				
+				hiloMul = new HiloMultiplicacion(mundo.darSistemaLineal(), (m1-1)/2, 0);
+				Thread m= new Thread(hiloMul);
+				m.start();
+				hiloMul=new HiloMultiplicacion(mundo.darSistemaLineal(), m1,(m1-1)/2);
+				m= new Thread(hiloMul);
+				m.start();
+				hiloVerifi= new HiloVerificacion(this,mundo.darSistemaLineal());
+				Thread h = new Thread(hiloVerifi);
+				h.start();
+			}
+		
 	}
 	public void mostrarAcercaDelPrograma() {
 		JOptionPane.showMessageDialog(this,"Hecho por STEVENANDSEBAS");
