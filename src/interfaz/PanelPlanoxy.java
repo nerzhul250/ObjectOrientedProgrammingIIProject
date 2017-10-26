@@ -33,7 +33,10 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 	private double traslX;
 	private double traslY;
 	private DecimalFormat df;
-	public PanelPlanoxy(){
+	
+	private MathyGen mundo;
+	public PanelPlanoxy(MathyGen mun){
+		mundo=mun;
 		setBorder(new TitledBorder("Plano XY"));
 		setPreferredSize(new Dimension(MathyGen.ANCHOPLANO,MathyGen.LARGOPLANO));
 		

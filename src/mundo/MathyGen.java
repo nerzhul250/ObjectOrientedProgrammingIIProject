@@ -30,4 +30,25 @@ public class MathyGen {
 		}
 		return mensaje;
 	}
+	public Funcion agregarFuncion(String form, int t){
+		Funcion fun=null;
+		switch (t) {
+		case 3:
+			fun=new Polinomio(form);
+			break;
+		}
+		agregarFuncionAlArbol(fun,raizFuncion);
+		return fun;
+	}
+	public void agregarFuncionAlArbol(Funcion f,Funcion actual){
+		if(actual==null){
+			actual=f;
+		}else{
+			if(f.compareTo(actual)==-1){
+				agregarFuncionAlArbol(f,actual.getFunIz());
+			}else if(f.compareTo(actual)==1){
+				agregarFuncionAlArbol(f,actual.getFunDe());
+			}
+		}
+	}
 }

@@ -17,5 +17,9 @@ public class Trigonometrico extends Funcion {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	public int comparar(Trigonometrico g2) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

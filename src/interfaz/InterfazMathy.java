@@ -1,5 +1,6 @@
 package interfaz;
 
+import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.event.WindowEvent;
@@ -19,17 +20,22 @@ import mundo.NoEsNumeroException;
 public class InterfazMathy extends JFrame{
 	private PanelPrincipalPlano ppp;
 	private PanelSistemaLineal psl;
+	
 	private MathyGen mundo;
+	
 	private HiloMultiplicacion hiloMul;
 	private HiloVerificacion hiloVerifi;
+	
 	private VentanaMatrizProducto venMatrizPro;
 	private VentanaMatrizB ventanaMaB;
 	public InterfazMathy(){
 		setTitle("MathyGen");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		ppp=new PanelPrincipalPlano();
+		
+		ppp=new PanelPrincipalPlano(this,mundo);
 		psl=new PanelSistemaLineal(this);
 		mundo=new MathyGen();
+		
 		JTabbedPane jtp=new JTabbedPane();
 		jtp.add(ppp,"Plano");
 		jtp.add(psl,"Sistema lineal");
@@ -113,7 +119,12 @@ public class InterfazMathy extends JFrame{
 	public void mostrarAcercaDelPrograma() {
 		JOptionPane.showMessageDialog(this,"Hecho por STEVENANDSEBAS");
 	}
-	public void refrescarSolucionSistema(double[] darSolucion) {
-		
+	public void abrirDialogoAgregarFuncion() {
+		DialogoAgregarFuncion daf=new DialogoAgregarFuncion(this,"Agregar nueva funcion");
+		daf.setModalityType(ModalityType.DOCUMENT_MODAL);
+		daf.setVisible(true);
+	}
+	public void agregarFuncion(String form,int t) {
+		ppp.agregarFuncion(mundo.agregarFuncion(form,t));
 	}
 }

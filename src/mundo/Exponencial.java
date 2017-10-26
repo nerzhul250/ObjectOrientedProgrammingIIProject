@@ -17,4 +17,9 @@ public class Exponencial extends Funcion {
 		return 0;
 	}
 
+	public int comparar(Exponencial g2) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
