@@ -56,6 +56,22 @@ public class MathyGen {
 		}
 		return mensaje;
 	}
+	
+	public void metodoPrueba(){
+		double multiplicacion=0;
+		double[][] matrizCoeficientes1= sistemaLineal.darMatrizCoeficientes1();
+		double[][] matrizCoeficientes2= sistemaLineal.darMatrizCoeficientes2();
+		for(int i =0; i<sistemaLineal.darMatrizCoeficientes1().length;i++){
+			for(int k =0;k<sistemaLineal.darMatrizCoeficientes1().length;k++){
+				multiplicacion=0;
+				for(int j=0;j<sistemaLineal.darMatrizCoeficientes1().length;j++){
+					multiplicacion+=matrizCoeficientes1[i][j]*matrizCoeficientes2[j][k];
+				}
+				
+				sistemaLineal.modificarValorMatrizProducto(i,k, multiplicacion);
+			}
+		}
+	}
 
 	public Funcion agregarFuncion(String form, int t){
 		Funcion fun=null;

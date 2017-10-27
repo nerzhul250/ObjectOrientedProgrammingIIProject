@@ -124,6 +124,10 @@ public class InterfazMathy extends JFrame{
 	public void cargarMatricesGigantes(){	
 		try {
 			mundo.cargarMatricesGigantes();
+			long tiempo=System.currentTimeMillis();
+			mundo.metodoPrueba();
+			tiempo=System.currentTimeMillis()-tiempo;
+			JOptionPane.showMessageDialog(this, "se demoró: "+(tiempo/1000)+" segundos sin hilos");
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(this, "Error al cargar los archivos");
 		}
