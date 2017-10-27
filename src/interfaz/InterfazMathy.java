@@ -50,6 +50,9 @@ public class InterfazMathy extends JFrame{
 	public int darTamanoMatrizB(){
 		return mundo.darSistemaLineal().darMatrizCoeficientes1()[0].length;
 	}
+	public void desplegarMensaje(String mensaje){
+		JOptionPane.showMessageDialog(this, mensaje);
+	}
 	public void iniciarProductoEntreMatrices(){
 		try {
 			double[][] m1=psl.darMatriz1();
