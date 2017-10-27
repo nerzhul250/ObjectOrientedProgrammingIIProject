@@ -19,6 +19,5 @@ public class HiloVerificacion implements Runnable {
 		tiempo= System.currentTimeMillis()-tiempo;
 		principal.desplegarMensaje("El tiempo de multiplicación de matrices es de:\n"+(tiempo/1000)+" segundos"+"\n"+"Espera a que se despliegue el resultado");
 		principal.mostrarMatrizProducto(sistemaLineal.darMatrizProducto());
-		
 	}
 }

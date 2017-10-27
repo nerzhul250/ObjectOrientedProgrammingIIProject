@@ -35,10 +35,13 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 	private DecimalFormat df;
 	
 	private MathyGen mundo;
+	
+	private int anchoAd;
 	public PanelPlanoxy(MathyGen mun){
+		anchoAd=475;
 		mundo=mun;
 		setBorder(new TitledBorder("Plano XY"));
-		setPreferredSize(new Dimension(MathyGen.ANCHOPLANO,MathyGen.LARGOPLANO));
+		setPreferredSize(new Dimension(MathyGen.ANCHOPLANO+anchoAd,MathyGen.LARGOPLANO));
 		
 		traslX=0;
 		traslY=0;
@@ -57,11 +60,11 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 		super.paintComponent(g);
 		Graphics2D g2d=(Graphics2D)g;
 		g2d.setColor(Color.WHITE);
-		g2d.fillRect(0,0,MathyGen.ANCHOPLANO,MathyGen.LARGOPLANO);
+		g2d.fillRect(0,0,MathyGen.ANCHOPLANO+anchoAd,MathyGen.LARGOPLANO);
 		g2d.setColor(Color.BLACK);
 		g2d.drawLine(centroW,MathyGen.LARGOPLANO,centroW,0);
-		g2d.drawLine(MathyGen.ANCHOPLANO,centroH,0,centroH);
-		for (int i = 0; i < MathyGen.ANCHOPLANO; i+=50) {
+		g2d.drawLine(MathyGen.ANCHOPLANO+anchoAd,centroH,0,centroH);
+		for (int i = 0; i < MathyGen.ANCHOPLANO+anchoAd; i+=50) {
 			double val=(2*alcance/MathyGen.ANCHOPLANO)*i-alcance+traslX;
 			g2d.drawString(df.format(val),i-15,centroH);
 			g2d.drawLine(i,centroH,i,centroH+4);
@@ -73,7 +76,7 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 		g2d.setColor(Color.BLACK);
 		g2d.drawString("x="+df.format(mousePosx)+" "+"y="+df.format(mousePosy),30,30);
 		
-		for(int i=1;i<MathyGen.ANCHOPLANO;i++){
+		for(int i=1;i<MathyGen.ANCHOPLANO+anchoAd;i++){
 			double wx=MathyGen.ANCHOPLANO*(Math.cos(i)-traslX+alcance)/(2*alcance);
 			double wy=(Math.sin(i)-traslY-alcance)*MathyGen.LARGOPLANO/(-2*alcance);
 			g2d.drawLine((int)(wx),(int)(wy),(int) wx,(int) wy);

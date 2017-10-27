@@ -114,7 +114,6 @@ public class InterfazMathy extends JFrame{
 	public void mostrarMatrizProducto(double[][] matriz){
 		venMatrizPro= new VentanaMatriz(matriz);
 		venMatrizPro.setVisible(true);
-		venMatrizPro.pack();
 	}
 	public static void main(String[] args) {
 		InterfazMathy im=new InterfazMathy(); 
@@ -122,8 +121,7 @@ public class InterfazMathy extends JFrame{
 		im.setVisible(true);
 		im.setResizable(false);
 	}
-	public void cargarMatricesGigantes(){
-		
+	public void cargarMatricesGigantes(){	
 		try {
 			mundo.cargarMatricesGigantes();
 		} catch (IOException e) {
@@ -144,7 +142,6 @@ public class InterfazMathy extends JFrame{
 				Thread h = new Thread(hiloVerifi);
 				h.start();
 			}
-		
 	}
 	public void mostrarAcercaDelPrograma() {
 		JOptionPane.showMessageDialog(this,"Hecho por STEVENANDSEBAS");
