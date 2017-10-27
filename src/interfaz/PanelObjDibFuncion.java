@@ -1,6 +1,7 @@
 package interfaz;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -12,19 +13,21 @@ import javax.swing.JScrollPane;
 import mundo.Funcion;
 
 public class PanelObjDibFuncion extends JPanel implements MouseListener {
+	
 	private JList<Funcion> listaFuncion;
 	private DefaultListModel<Funcion> listModel;
 	private InterfazMathy principal;
+	
 	public PanelObjDibFuncion(InterfazMathy in){
 		principal=in;
 		
 		listModel = new DefaultListModel<Funcion>();
 		listaFuncion = new JList<Funcion>(listModel);
+		listaFuncion.addMouseListener(this);
 		
 		JScrollPane scrollMostrar = new JScrollPane(listaFuncion);
 		scrollMostrar.setBackground(Color.WHITE);
-		
-		listaFuncion.addMouseListener(this);
+		scrollMostrar.setPreferredSize(new Dimension(260,100));
 		
 		add(scrollMostrar);
 	}

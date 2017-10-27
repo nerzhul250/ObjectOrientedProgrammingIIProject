@@ -19,6 +19,5 @@ public class HiloVerificacion implements Runnable {
 		tiempo= System.currentTimeMillis()-tiempo;
 		System.out.println(tiempo);
 		principal.mostrarMatrizProducto(sistemaLineal.darMatrizProducto());
-		
 	}
 }
