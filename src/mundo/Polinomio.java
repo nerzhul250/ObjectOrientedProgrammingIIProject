@@ -136,7 +136,6 @@ public class Polinomio extends Funcion {
 		}
 		return nim;
 	}
-	//En la forma actual de comparar, los polinomios ni ninguna funcion se añadiran bien al arbol de funciones
 	public int comparar(Polinomio g2) {
 		// TODO Auto-generated method stub
 		return 0;

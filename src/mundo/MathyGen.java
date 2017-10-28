@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class MathyGen {
 
-	public final static String RUTA_MATRIZ_GIGANTE_1="./data/matricesGigantes/matrizGigante1.txt";
-	public final static String RUTA_MATRIZ_GIGANTE_2="./data/matricesGigantes/matrizGigante2.txt";
+	public final static String RUTA_MATRIZ_GIGANTE_1="./data/matricesGigantes/MATRIZ11.txt";
+	public final static String RUTA_MATRIZ_GIGANTE_2="./data/matricesGigantes/MATRIZ2.txt";
 
 	public final static int ANCHOPLANO =625;
 	public final static int LARGOPLANO =625;
