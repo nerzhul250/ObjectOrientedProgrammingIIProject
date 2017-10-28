@@ -23,12 +23,7 @@ public class PanelPrincipalPlano extends JPanel{
 		pod.agregarFuncion(fun);
 	}
 
-	public void agregarObjetoDibujable(Funcion f) {
-		ppxy.agregarObjetoDibujable(f);
+	public void refrescarPlano() {
+		ppxy.repaint();;
 	}
-
-	public void borrarObjetoDibujable(Funcion f) {
-		ppxy.eliminarObjetoDibujable(f);
-	}
-	
 }

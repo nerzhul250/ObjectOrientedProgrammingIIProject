@@ -40,14 +40,11 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 	
 	private int anchoAd;
 	
-	private ArrayList<Dibujable>objetosDibujables;
 	public PanelPlanoxy(MathyGen mun){
 		anchoAd=475;
 		mundo=mun;
 		setBorder(new TitledBorder("Plano XY"));
 		setPreferredSize(new Dimension(MathyGen.ANCHOPLANO+anchoAd,MathyGen.LARGOPLANO));
-		
-		objetosDibujables=new ArrayList<Dibujable>();
 		
 		traslX=0;
 		traslY=0;
@@ -86,19 +83,8 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 			double wy=(Math.sin(i)-traslY-alcance)*MathyGen.LARGOPLANO/(-2*alcance);
 			g2d.drawLine((int)(wx),(int)(wy),(int) wx,(int) wy);
 		}
-		for (int i = 0; i < objetosDibujables.size(); i++) {
-			objetosDibujables.get(i).dibujarse(g2d,alcance,traslY,traslX,MathyGen.ANCHOPLANO+anchoAd);
-		}
-	}
-	public void agregarObjetoDibujable(Dibujable d){
-		if(!objetosDibujables.contains(d)){
-			objetosDibujables.add(d);
-			repaint();
-		}
-	}
-	public void eliminarObjetoDibujable(Dibujable d){
-		if(objetosDibujables.contains(d)){
-			objetosDibujables.remove(d);
+		for (int i = 0; i < mundo.darObjetosDibujables().size(); i++) {
+			mundo.darObjetosDibujables().get(i).dibujarse(g2d,alcance,traslY,traslX,MathyGen.ANCHOPLANO+anchoAd);
 		}
 	}
 	public void mouseWheelMoved(MouseWheelEvent e) {

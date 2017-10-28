@@ -37,9 +37,9 @@ public class InterfazMathy extends JFrame{
 		setTitle("MathyGen");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
+		mundo=new MathyGen();
 		ppp=new PanelPrincipalPlano(this,mundo);
 		psl=new PanelSistemaLineal(this);
-		mundo=new MathyGen();
 		
 		JTabbedPane jtp=new JTabbedPane();
 		jtp.add(ppp,"Plano");
@@ -189,10 +189,12 @@ public class InterfazMathy extends JFrame{
 		JOptionPane.showMessageDialog(this, mensaje);
 	}
 	public void agregarObjetoDibujable(Funcion f) {
-		ppp.agregarObjetoDibujable(f);
+		mundo.agregarObjetoDibujable(f);
+		ppp.refrescarPlano();
 	}
 	public void borrarObjetoDibujable(Funcion f) {
-		ppp.borrarObjetoDibujable(f);
+		mundo.eliminarObjetoDibujable(f);
+		ppp.refrescarPlano();
 	}
 	
 }

@@ -1,6 +1,7 @@
 package mundo;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,6 +24,8 @@ public class MathyGen {
 	private Funcion raizFuncion;
 	private ArrayList<Region> listaRegiones;
 	private SistemaLineal sistemaLineal;
+	private ArrayList<Dibujable>objetosDibujables;
+
 	public MathyGen(){
 //		try {
 //			crearMatrizGigante1();
@@ -36,6 +39,7 @@ public class MathyGen {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		objetosDibujables=new ArrayList<Dibujable>();
 		double[][]m1=new double[1][1];
 		sistemaLineal= new SistemaLineal(m1, null);
 	}
@@ -187,7 +191,19 @@ public class MathyGen {
 		log.close();
 		System.out.println("terminado 2");
 	}
-
+	public void agregarObjetoDibujable(Dibujable d){
+		if(!objetosDibujables.contains(d)){
+			objetosDibujables.add(d);
+		}
+	}
+	public void eliminarObjetoDibujable(Dibujable d){
+		if(objetosDibujables.contains(d)){
+			objetosDibujables.remove(d);
+		}
+	}
+	public ArrayList<Dibujable> darObjetosDibujables() {
+		return objetosDibujables;
+	}
 	public double[][] darMatrizProducto() {
 		return sistemaLineal.darMatrizProducto();
 	}
