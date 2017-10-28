@@ -3,6 +3,7 @@ package interfaz;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -21,11 +22,15 @@ public class PanelObjetoDibujable extends JPanel{
 	private InterfazMathy principal;
 	public PanelObjetoDibujable(InterfazMathy in){
 		principal=in;
-		setLayout(new BorderLayout());
+		setLayout(new GridLayout(3,1));
 		
 		podf=new PanelObjDibFuncion(principal);
+		podr=new PanelObjDibRegion(principal);
+		podp=new PanelObjDibPunto(principal);
 		
-		add(podf,BorderLayout.NORTH);
+		add(podf);
+		add(podr);
+		add(podp);
 	}
 	public void agregarFuncion(Funcion fun) {
 		podf.agregarFuncion(fun);

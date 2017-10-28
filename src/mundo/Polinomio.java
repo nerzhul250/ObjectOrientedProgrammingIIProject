@@ -37,13 +37,13 @@ public class Polinomio extends Funcion {
 
 	@Override
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY,
-			double traslX, int ancho, int largo) {
+			double traslX, int ancho) {
 		g2d.setColor(getColor());
 		g2d.setStroke(new BasicStroke((float) getGrosor()));
 		double valx1=alcance+traslX;
 		double valy1=computarValor(valx1);
 		int h1=(int)((valy1-alcance-traslY)*MathyGen.LARGOPLANO/(-2*alcance));
-		for (int i = 1; i < MathyGen.ANCHOPLANO; i++) {
+		for (int i = 1; i < ancho; i++) {
 			double valx=(2*alcance/MathyGen.ANCHOPLANO)*i-alcance+traslX;
 			double valy=computarValor(valx);
 			int h=(int)((valy-alcance-traslY)*MathyGen.LARGOPLANO/(-2*alcance));
@@ -138,7 +138,21 @@ public class Polinomio extends Funcion {
 	}
 	//En la forma actual de comparar, los polinomios ni ninguna funcion se añadiran bien al arbol de funciones
 	public int comparar(Polinomio g2) {
-		// TODO Auto-generated method stub
-		return 0;
+		if(coeficientes.size()!=g2.getCoeficientes().size()){
+			int dif=coeficientes.size()-g2.getCoeficientes().size();
+			dif=(dif<0)?-1:1;
+			return dif;
+		}else{
+			int i=0;
+			while(i<coeficientes.size()){
+				if(coeficientes.get(i)!=g2.getCoeficientes().get(i)){
+					break;
+				}
+				i++;
+			}
+			int dif=(int) (coeficientes.get(i)-g2.getCoeficientes().get(i));
+			dif=(dif<0)?-1:1;
+			return dif;
+		}
 	}
 }

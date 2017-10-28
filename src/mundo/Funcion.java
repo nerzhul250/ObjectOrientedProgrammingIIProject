@@ -117,7 +117,7 @@ public abstract class Funcion implements Dibujable, Computable, Comparable, Seri
 		return dif;
 	}
 	public abstract void dibujarse(Graphics2D g2d, double alcance, double traslY,
-			double traslX, int ancho, int largo);
+			double traslX, int ancho);
 	
 	public abstract double computarValor(double x);
 }

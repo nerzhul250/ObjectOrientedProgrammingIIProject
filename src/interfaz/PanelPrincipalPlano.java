@@ -22,5 +22,8 @@ public class PanelPrincipalPlano extends JPanel{
 	public void agregarFuncion(Funcion fun) {
 		pod.agregarFuncion(fun);
 	}
-	
+
+	public void refrescarPlano() {
+		ppxy.repaint();;
+	}
 }

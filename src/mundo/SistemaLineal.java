@@ -11,7 +11,6 @@ public class SistemaLineal {
 	
 	private int filaEjecutada;
 	private int columnaEjecutada;
-	private int hilosEnEjecucion;
 	private double[] solucionSistema;
 	
 	public SistemaLineal(double[][] matrizCoeficientes1,double[][] matrizCoeficientes2){
@@ -20,8 +19,6 @@ public class SistemaLineal {
 		this.matrizCoeficientes1=matrizCoeficientes1;
 		this.matrizCoeficientes2=matrizCoeficientes2;
 		solucionSistema=new double[matrizCoeficientes1[0].length];
-		if(matrizCoeficientes2!= null)
-		hilosEnEjecucion=2;
 		//TODO
 	}
 	public int darFilaEjecutada() {
@@ -68,12 +65,6 @@ public class SistemaLineal {
 	
 	public void modificarFilaEjecutada(int hilos) {
 		this.filaEjecutada = hilos;
-	}
-	public void modificarHilosEnEjecucion(int hilos) {
-		this.hilosEnEjecucion += hilos;
-	}
-	public int darHilosEnEjecucion() {
-		return hilosEnEjecucion;
 	}
 	//TODO
 	public double calcularDeterminante(double[][] matriz){

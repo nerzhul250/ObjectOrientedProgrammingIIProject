@@ -13,7 +13,7 @@ import mundo.Region;
 public class PanelObjDibRegion extends JPanel{
 	private JList<Region> listaFuncion;
 	private DefaultListModel<Region> listModel;
-	public PanelObjDibRegion(){
+	public PanelObjDibRegion(InterfazMathy principal){
 		listModel = new DefaultListModel<Region>();
 		listaFuncion = new JList<Region>(listModel);
 		

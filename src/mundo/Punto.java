@@ -8,7 +8,7 @@ public class Punto implements Dibujable {
 	private int y;
 	private Punto sgtPunto;
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY,
-			double traslX, int ancho, int largo) {
+			double traslX, int ancho) {
 		// TODO Auto-generated method stub
 		
 	}

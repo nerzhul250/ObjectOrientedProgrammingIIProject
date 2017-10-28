@@ -9,7 +9,7 @@ public class Region implements Dibujable {
 	private ArrayList<Punto>frontera;
 
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY,
-			double traslX, int ancho, int largo) {
+			double traslX, int ancho) {
 		// TODO Auto-generated method stub
 	}
 

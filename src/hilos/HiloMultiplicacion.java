@@ -16,7 +16,6 @@ public class HiloMultiplicacion implements Runnable {
 		this.fila=filaMax;
 	}
 
-
 	public void run() {
 		double[][] matrizCoeficientes1=sistema.darMatrizCoeficientes1();
 		double[][] matrizCoeficientes2=sistema.darMatrizCoeficientes2();
@@ -27,14 +26,9 @@ public class HiloMultiplicacion implements Runnable {
 				for(int j=0;j<matrizCoeficientes1.length;j++){
 					multiplicacion+=matrizCoeficientes1[i][j]*matrizCoeficientes2[j][k];
 				}
-				
 				sistema.modificarValorMatrizProducto(i,k, multiplicacion);
 			}
 		}
-		sistema.modificarHilosEnEjecucion(-1);
-		System.out.println(sistema.darHilosEnEjecucion());
-		
-
 	}
 	
 	
