@@ -60,7 +60,7 @@ public class InterfazMathy extends JFrame{
 			double[][] m1=psl.darMatriz1();
 			double[][] m2=psl.darMatriz2();
 			mundo.iniciarSistemaLineal(m1, m2);
-			int poolSize = 4;
+			int poolSize = 2;
 		      ExecutorService service = Executors.newFixedThreadPool(poolSize);
 		      List<Future<Runnable>> futures = new ArrayList<Future<Runnable>>();
 		
@@ -143,18 +143,14 @@ public class InterfazMathy extends JFrame{
 			long tiempo=System.currentTimeMillis();
 			int m1=mundo.darSistemaLineal().darMatrizCoeficientes1().length;
 			  //limit the number of actual threads
-		      int poolSize = 4;
+		      int poolSize = 2;
 		      ExecutorService service = Executors.newFixedThreadPool(poolSize);
 		      List<Future<Runnable>> futures = new ArrayList<Future<Runnable>>();
 		
-		      Future f1 = service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(), 250, 0));
+		      Future f1 = service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(), m1/2, 0));
 		      futures.add(f1);
-		      Future f2=service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(), 500,250));
+		      Future f2=service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(),m1,m1/2));
 		      futures.add(f2);
-		      Future f3=service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(),750,500));
-		      futures.add(f3);
-		      Future f4=service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(),1000,750));
-		      futures.add(f4);
 		    
 		      // wait for all tasks to complete before continuing
 		      for (Future<Runnable> fe : futures)

@@ -136,7 +136,6 @@ public class Polinomio extends Funcion {
 		}
 		return nim;
 	}
-	//En la forma actual de comparar, los polinomios ni ninguna funcion se añadiran bien al arbol de funciones
 	public int comparar(Polinomio g2) {
 		if(coeficientes.size()!=g2.getCoeficientes().size()){
 			int dif=coeficientes.size()-g2.getCoeficientes().size();
