@@ -20,6 +20,7 @@ public class MathyGen {
 	
 	public final static int TIPOPOLINOMIO=3;
 
+	public long tiempo;
 	private Punto primerPunto;
 	private Funcion raizFuncion;
 	private ArrayList<Region> listaRegiones;
