@@ -1,11 +1,18 @@
 package interfaz;
 
+import java.awt.Color;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -13,7 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import hilos.HiloMultiplicacion;
-import hilos.HiloVerificacion;
+import mundo.Funcion;
 import mundo.MathyGen;
 import mundo.MatrizNoInvertibleException;
 import mundo.NoEsNumeroException;
@@ -24,8 +31,6 @@ public class InterfazMathy extends JFrame{
 	
 	private MathyGen mundo;
 	
-	private HiloMultiplicacion hiloMul;
-	private HiloVerificacion hiloVerifi;
 	private VentanaMatriz venMatrizPro;
 	private VentanaMatrizB ventanaMaB;
 	public InterfazMathy(){
@@ -50,29 +55,35 @@ public class InterfazMathy extends JFrame{
 	public int darTamanoMatrizB(){
 		return mundo.darSistemaLineal().darMatrizCoeficientes1()[0].length;
 	}
-	public void desplegarMensaje(String mensaje){
-		JOptionPane.showMessageDialog(this, mensaje);
-	}
 	public void iniciarProductoEntreMatrices(){
 		try {
 			double[][] m1=psl.darMatriz1();
 			double[][] m2=psl.darMatriz2();
 			mundo.iniciarSistemaLineal(m1, m2);
-			if(mundo.darSistemaLineal().darHilosEnEjecucion()==(2)){
-				hiloMul = new HiloMultiplicacion(mundo.darSistemaLineal(), (m1.length-1)/2, 0);
-				Thread m= new Thread(hiloMul);
-				m.start();
-				hiloMul=new HiloMultiplicacion(mundo.darSistemaLineal(), m1.length,(m1.length-1)/2);
-				m= new Thread(hiloMul);
-				m.start();
-				
-				
-				hiloVerifi= new HiloVerificacion(this,mundo.darSistemaLineal());
-				Thread h = new Thread(hiloVerifi);
-				h.start();
-			}
+			int poolSize = 4;
+		      ExecutorService service = Executors.newFixedThreadPool(poolSize);
+		      List<Future<Runnable>> futures = new ArrayList<Future<Runnable>>();
+		
+		      Future f1 = service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(), m1.length/2, 0));
+		      futures.add(f1);
+		      Future f2=service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(), m1.length,m1.length/2));
+		      futures.add(f2);
+		      
+		      // wait for all tasks to complete before continuing
+		      for (Future<Runnable> fe : futures)
+		      {
+		         fe.get();
+		      }
+		      service.shutdownNow();
+		      mostrarMatrizProducto(mundo.darMatrizProducto());
 		} catch (NoEsNumeroException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage()+e.darIndice());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	public void calcularDeterminanteMatriz1(){
@@ -110,11 +121,6 @@ public class InterfazMathy extends JFrame{
 			JOptionPane.showMessageDialog(this, e.getMessage()+e.darIndice());
 		}
 	}
-	
-	public void mostrarMatrizProducto(double[][] matriz){
-		venMatrizPro= new VentanaMatriz(matriz);
-		venMatrizPro.setVisible(true);
-	}
 	public static void main(String[] args) {
 		InterfazMathy im=new InterfazMathy(); 
 		im.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -133,19 +139,35 @@ public class InterfazMathy extends JFrame{
 		}
 	}
 	public void iniciarMultiplicacionMatricesGigantes(){
+		try{
+			long tiempo=System.currentTimeMillis();
 			int m1=mundo.darSistemaLineal().darMatrizCoeficientes1().length;
-			if(mundo.darSistemaLineal().darHilosEnEjecucion()==(2)){
-				
-				hiloMul = new HiloMultiplicacion(mundo.darSistemaLineal(), (m1-1)/2, 0);
-				Thread m= new Thread(hiloMul);
-				m.start();
-				hiloMul=new HiloMultiplicacion(mundo.darSistemaLineal(), m1,(m1-1)/2);
-				m= new Thread(hiloMul);
-				m.start();
-				hiloVerifi= new HiloVerificacion(this,mundo.darSistemaLineal());
-				Thread h = new Thread(hiloVerifi);
-				h.start();
-			}
+			  //limit the number of actual threads
+		      int poolSize = 4;
+		      ExecutorService service = Executors.newFixedThreadPool(poolSize);
+		      List<Future<Runnable>> futures = new ArrayList<Future<Runnable>>();
+		
+		      Future f1 = service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(), 250, 0));
+		      futures.add(f1);
+		      Future f2=service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(), 500,250));
+		      futures.add(f2);
+		      Future f3=service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(),750,500));
+		      futures.add(f3);
+		      Future f4=service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(),1000,750));
+		      futures.add(f4);
+		    
+		      // wait for all tasks to complete before continuing
+		      for (Future<Runnable> fe : futures)
+		      {
+		         fe.get();
+		      }
+		      service.shutdownNow();
+			  tiempo= System.currentTimeMillis()-tiempo;
+			  desplegarMensaje("El tiempo de multiplicación de matrices es de:\n"+(tiempo/1000)+" segundos"+"\n"+"Espera a que se despliegue el resultado");
+			  mostrarMatrizProducto(mundo.darMatrizProducto());
+		}catch(Exception e){
+			
+		}
 	}
 	public void mostrarAcercaDelPrograma() {
 		JOptionPane.showMessageDialog(this,"Hecho por STEVENANDSEBAS");
@@ -155,7 +177,22 @@ public class InterfazMathy extends JFrame{
 		daf.setModalityType(ModalityType.DOCUMENT_MODAL);
 		daf.setVisible(true);
 	}
-	public void agregarFuncion(String form,int t) {
-		ppp.agregarFuncion(mundo.agregarFuncion(form,t));
+	
+	public void mostrarMatrizProducto(double[][] matriz){
+		venMatrizPro= new VentanaMatriz(matriz);
+		venMatrizPro.setVisible(true);
 	}
+	public void agregarFuncion(String form,Color color, int grosor, int tipo) {
+		ppp.agregarFuncion(mundo.agregarFuncion(form,color,grosor,tipo));
+	}
+	public void desplegarMensaje(String mensaje){
+		JOptionPane.showMessageDialog(this, mensaje);
+	}
+	public void agregarObjetoDibujable(Funcion f) {
+		ppp.agregarObjetoDibujable(f);
+	}
+	public void borrarObjetoDibujable(Funcion f) {
+		ppp.borrarObjetoDibujable(f);
+	}
+	
 }

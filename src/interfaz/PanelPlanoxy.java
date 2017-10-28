@@ -11,11 +11,13 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.border.StrokeBorder;
 import javax.swing.border.TitledBorder;
 
+import mundo.Dibujable;
 import mundo.MathyGen;
 
 public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWheelListener,MouseListener{
@@ -37,11 +39,15 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 	private MathyGen mundo;
 	
 	private int anchoAd;
+	
+	private ArrayList<Dibujable>objetosDibujables;
 	public PanelPlanoxy(MathyGen mun){
 		anchoAd=475;
 		mundo=mun;
 		setBorder(new TitledBorder("Plano XY"));
 		setPreferredSize(new Dimension(MathyGen.ANCHOPLANO+anchoAd,MathyGen.LARGOPLANO));
+		
+		objetosDibujables=new ArrayList<Dibujable>();
 		
 		traslX=0;
 		traslY=0;
@@ -56,7 +62,6 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 	}
 	@Override
 	protected void paintComponent(Graphics g) {
-		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		Graphics2D g2d=(Graphics2D)g;
 		g2d.setColor(Color.WHITE);
@@ -80,6 +85,20 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 			double wx=MathyGen.ANCHOPLANO*(Math.cos(i)-traslX+alcance)/(2*alcance);
 			double wy=(Math.sin(i)-traslY-alcance)*MathyGen.LARGOPLANO/(-2*alcance);
 			g2d.drawLine((int)(wx),(int)(wy),(int) wx,(int) wy);
+		}
+		for (int i = 0; i < objetosDibujables.size(); i++) {
+			objetosDibujables.get(i).dibujarse(g2d,alcance,traslY,traslX,MathyGen.ANCHOPLANO+anchoAd);
+		}
+	}
+	public void agregarObjetoDibujable(Dibujable d){
+		if(!objetosDibujables.contains(d)){
+			objetosDibujables.add(d);
+			repaint();
+		}
+	}
+	public void eliminarObjetoDibujable(Dibujable d){
+		if(objetosDibujables.contains(d)){
+			objetosDibujables.remove(d);
 		}
 	}
 	public void mouseWheelMoved(MouseWheelEvent e) {
