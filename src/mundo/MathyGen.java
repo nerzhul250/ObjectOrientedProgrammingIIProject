@@ -16,6 +16,7 @@ public class MathyGen {
 	public final static int ANCHOPLANO =625;
 	public final static int LARGOPLANO =625;
 
+	public long tiempo;
 	private Punto primerPunto;
 	private Funcion raizFuncion;
 	private ArrayList<Region> listaRegiones;
