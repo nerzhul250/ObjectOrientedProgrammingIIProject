@@ -24,7 +24,7 @@ public class Punto implements Dibujable {
 		g2d.setColor(getColor());
 		int w=(int) ((x+alcance-traslX)*(MathyGen.ANCHOPLANO)/(2*alcance));
 		int h=(int) ((alcance+traslY-y)*(MathyGen.LARGOPLANO)/(2*alcance));
-		g2d.fillOval(w,h,10,10);
+		g2d.fillOval(w-5,h-5,10,10);
 	}
 	public double getX() {
 		return x;

@@ -116,8 +116,8 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 		if(e.getClickCount()==2 && e.getButton()==MouseEvent.BUTTON1){
 			int w=e.getX();
 			int h=e.getY();
-			double x=((2*alcance*w)/MathyGen.ANCHOPLANO)-alcance+traslX;
-			double y=((-2*alcance*h)/MathyGen.LARGOPLANO)+alcance+traslY;
+			double x=((2*alcance*(w))/MathyGen.ANCHOPLANO)-alcance+traslX;
+			double y=((-2*alcance*(h))/MathyGen.LARGOPLANO)+alcance+traslY;
 			principal.crearPunto(x,y);
 		}
 	}

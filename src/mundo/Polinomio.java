@@ -94,6 +94,7 @@ public class Polinomio extends Funcion {
 		        	while ((c >= '0' && c <= '9')) {
 		        		double ke=(c - '0')/Math.pow(10,counter);
 			            nam+=ke;
+			            counter++;
 			            c=a[++i];
 			        }
 		        }
@@ -125,6 +126,7 @@ public class Polinomio extends Funcion {
 			if(num &&!pow){
 				paw=0;
 				pow=true;
+				i--;
 			}
 			i++;
 		}
@@ -137,7 +139,7 @@ public class Polinomio extends Funcion {
 	@Override
 	public String toString() {
 		DecimalFormat df=new DecimalFormat("0.00");
-		String nim=""+coeficientes.get(0);
+		String nim=""+df.format(coeficientes.get(0));
 		for (int i = 1; i <coeficientes.size() ; i++) {
 			if(coeficientes.get(i)!=0){
 				if(coeficientes.get(i)<0){
@@ -150,11 +152,11 @@ public class Polinomio extends Funcion {
 		return nim;
 	}
 	public int comparar(Polinomio g2) {
-		int dif=0;
+		double dif=0;
 		if(coeficientes.size()==g2.getCoeficientes().size()){
 			for (int i = coeficientes.size()-1; i>=0; i++) {
 				if(coeficientes.get(i)!=g2.getCoeficientes().get(i)){
-					dif=(int) (coeficientes.get(i)-g2.getCoeficientes().get(i));
+					dif=(coeficientes.get(i)-g2.getCoeficientes().get(i));
 					if(dif!=0){
 						dif=(dif<0)?-1:1;
 					}
@@ -167,6 +169,6 @@ public class Polinomio extends Funcion {
 				dif=(dif<0)?-1:1;
 			}
 		}
-		return dif;
+		return (int)dif;
 	}
 }
