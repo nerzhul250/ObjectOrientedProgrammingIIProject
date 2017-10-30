@@ -6,7 +6,8 @@ import java.awt.Graphics2D;
 import java.io.Serializable;
 
 public abstract class Funcion implements Dibujable, Computable, Comparable, Serializable  {
-
+	
+	private String forma;
 	private String nombre;
 	private Color color;
 	private double grosor;
@@ -15,6 +16,15 @@ public abstract class Funcion implements Dibujable, Computable, Comparable, Seri
 	private Funcion funDe;
 	private Funcion funDad;
 	
+	
+	public String getForma() {
+		return forma;
+	}
+
+	public void setForma(String forma) {
+		this.forma = forma;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}

@@ -13,6 +13,8 @@ import javax.swing.JScrollPane;
 
 import mundo.Dibujable;
 import mundo.Funcion;
+import mundo.Punto;
+import mundo.Region;
 
 public class PanelObjetoDibujable extends JPanel{
 	private PanelObjDibFuncion podf;
@@ -34,5 +36,11 @@ public class PanelObjetoDibujable extends JPanel{
 	}
 	public void agregarFuncion(Funcion fun) {
 		podf.agregarFuncion(fun);
+	}
+	public void agregarRegion(Region r) {
+		podr.agregarRegion(r);
+	}
+	public void agregarPunto(Punto p) {
+		podp.agregarPunto(p);
 	}
 }
