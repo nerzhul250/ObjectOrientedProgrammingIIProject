@@ -5,13 +5,15 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 
 public class Polinomio extends Funcion {
-
+	
+	
 	private ArrayList<Double> coeficientes;
 	private HashMap<Integer,Double>gradosACoeficientes;
 	private int grado;
@@ -26,7 +28,6 @@ public class Polinomio extends Funcion {
 			coeficientes.add(val);
 		}
 	}
-	
 	public ArrayList<Double> getCoeficientes() {
 		return coeficientes;
 	}
@@ -37,7 +38,7 @@ public class Polinomio extends Funcion {
 
 	@Override
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY,
-			double traslX, int ancho, int largo) {
+			double traslX, int ancho) {
 		g2d.setColor(getColor());
 		g2d.setStroke(new BasicStroke((float) getGrosor()));
 		double valx1=alcance+traslX;
@@ -65,7 +66,7 @@ public class Polinomio extends Funcion {
 	 * @param a
 	 */
 	private void parsearPolinomio(int i,char[] a) {
-		int nam=0;
+		double nam=0;
 		int paw=0;
 		boolean num=false;
 		boolean pow=false;
@@ -86,10 +87,20 @@ public class Polinomio extends Funcion {
 		            integer += c - '0';
 		            c=a[++i];
 		        }
-		        i--;
-			    nam=neg * integer;
+		        nam=integer;
+		        if(c=='.'){
+		        	c=a[++i];
+		        	int counter=1;
+		        	while ((c >= '0' && c <= '9')) {
+		        		double ke=(c - '0')/Math.pow(10,counter);
+			            nam+=ke;
+			            c=a[++i];
+			        }
+		        }
+			    nam=neg * nam;
 				num=true;
-			}else if(c=='x'){
+			}
+			if(c=='x'){
 				if(a[++i]=='^'){
 					c=a[++i];
 					int integer=0;
@@ -110,7 +121,8 @@ public class Polinomio extends Funcion {
 				}
 				i--;
 				pow=true;
-			}else if(num && (c=='-' || c=='+' || c=='T')){
+			}
+			if(num &&!pow){
 				paw=0;
 				pow=true;
 			}
@@ -124,20 +136,37 @@ public class Polinomio extends Funcion {
 	}
 	@Override
 	public String toString() {
+		DecimalFormat df=new DecimalFormat("0.00");
 		String nim=""+coeficientes.get(0);
 		for (int i = 1; i <coeficientes.size() ; i++) {
 			if(coeficientes.get(i)!=0){
 				if(coeficientes.get(i)<0){
-					nim=nim+coeficientes.get(i)+"x^"+i;
+					nim=nim+df.format(coeficientes.get(i))+"x^"+i;
 				}else{
-					nim=nim+"+"+coeficientes.get(i)+"x^"+i;
+					nim=nim+"+"+df.format(coeficientes.get(i))+"x^"+i;
 				}
 			}
 		}
 		return nim;
 	}
 	public int comparar(Polinomio g2) {
-		// TODO Auto-generated method stub
-		return 0;
+		int dif=0;
+		if(coeficientes.size()==g2.getCoeficientes().size()){
+			for (int i = coeficientes.size()-1; i>=0; i++) {
+				if(coeficientes.get(i)!=g2.getCoeficientes().get(i)){
+					dif=(int) (coeficientes.get(i)-g2.getCoeficientes().get(i));
+					if(dif!=0){
+						dif=(dif<0)?-1:1;
+					}
+					break;
+				}
+			}
+		}else{
+			dif=coeficientes.size()-g2.getCoeficientes().size();
+			if(dif!=0){
+				dif=(dif<0)?-1:1;
+			}
+		}
+		return dif;
 	}
 }

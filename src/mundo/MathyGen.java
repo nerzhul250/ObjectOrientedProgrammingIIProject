@@ -49,6 +49,7 @@ public class MathyGen {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		raizFuncion=null;
 		objetosDibujables=new ArrayList<Dibujable>();
 		double[][]m1=new double[1][1];
 		sistemaLineal= new SistemaLineal(m1, null);
@@ -90,7 +91,7 @@ public class MathyGen {
 		}
 	}
 
-	public Funcion agregarFuncion(String form, Color color, int grosor, int tipo){
+	public Funcion agregarFuncion(String form, Color color, int grosor, int tipo) throws FuncionYaExisteException{
 		Funcion fun=null;
 		switch (tipo) {
 		case 3:
@@ -99,18 +100,37 @@ public class MathyGen {
 		}
 		fun.setColor(color);
 		fun.setGrosor(grosor);
+		fun.setForma(form);
+		if(estaEnElArbol(fun,raizFuncion)) throw new FuncionYaExisteException(fun.getForma());
 		agregarFuncionAlArbol(fun,raizFuncion);
 		return fun;
 	}
-	
-	public void agregarFuncionAlArbol(Funcion f,Funcion actual){
-		if(actual==null){
-			actual=f;
+	public boolean estaEnElArbol(Funcion f,Funcion actual){
+		if(raizFuncion==null){
+			return false;
+		}else if(actual!=null && actual.compareTo(f)==0){
+			return true;
+		}else if(actual!=null){
+			return estaEnElArbol(f,actual.getFunDe()) || estaEnElArbol(f,actual.getFunIz());
+		}
+		return false;
+	}
+	public void agregarFuncionAlArbol(Funcion f,Funcion actual) throws FuncionYaExisteException{
+		if(raizFuncion==null){
+			raizFuncion=f;
 		}else{
 			if(f.compareTo(actual)==-1){
-				agregarFuncionAlArbol(f,actual.getFunIz());
+				if(actual.getFunIz()==null){
+					actual.setFunIz(f);
+				}else{
+					agregarFuncionAlArbol(f,actual.getFunIz());
+				}
 			}else if(f.compareTo(actual)==1){
-				agregarFuncionAlArbol(f,actual.getFunDe());
+				if(actual.getFunDe()==null){
+					actual.setFunDe(f);
+				}else{
+					agregarFuncionAlArbol(f,actual.getFunDe());
+				}
 			}
 		}
 	}
@@ -201,20 +221,36 @@ public class MathyGen {
 		log.close();
 		System.out.println("terminado 2");
 	}
+	
 	public void agregarObjetoDibujable(Dibujable d){
 		if(!objetosDibujables.contains(d)){
 			objetosDibujables.add(d);
 		}
 	}
+	
 	public void eliminarObjetoDibujable(Dibujable d){
 		if(objetosDibujables.contains(d)){
 			objetosDibujables.remove(d);
 		}
 	}
+	
 	public ArrayList<Dibujable> darObjetosDibujables() {
 		return objetosDibujables;
 	}
+	
 	public double[][] darMatrizProducto() {
 		return sistemaLineal.darMatrizProducto();
+	}
+
+	public Punto agregarPunto(double x, double y) {
+		Punto p=new Punto(x,y);
+		if(primerPunto==null){
+			primerPunto=p;
+		}else{
+			p.setSgtPunto(primerPunto);
+			primerPunto=p;
+		}
+		agregarObjetoDibujable(p);
+		return p;
 	}
 }

@@ -27,7 +27,7 @@ public class PanelObjDibFuncion extends JPanel implements MouseListener {
 		
 		JScrollPane scrollMostrar = new JScrollPane(listaFuncion);
 		scrollMostrar.setBackground(Color.WHITE);
-		scrollMostrar.setPreferredSize(new Dimension(260,100));
+		scrollMostrar.setPreferredSize(new Dimension(260,200));
 		
 		add(scrollMostrar);
 	}
@@ -75,7 +75,7 @@ public class PanelObjDibFuncion extends JPanel implements MouseListener {
 		
 	}
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
 		
 	}
 	public void mouseExited(MouseEvent e) {

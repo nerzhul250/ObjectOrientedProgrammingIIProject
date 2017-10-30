@@ -1,6 +1,7 @@
 package interfaz;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -21,12 +22,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import hilos.HiloMultiplicacion;
+<<<<<<< HEAD
 import mundo.Circunferencia;
 import mundo.FormulaParaParametrizarIncompleta;
+=======
+import mundo.Dibujable;
+>>>>>>> dcc9db085fc2c622a333460ba266325cc3308115
 import mundo.Funcion;
+import mundo.FuncionYaExisteException;
 import mundo.MathyGen;
 import mundo.MatrizNoInvertibleException;
 import mundo.NoEsNumeroException;
+import mundo.Punto;
 
 public class InterfazMathy extends JFrame{
 	private PanelPrincipalPlano ppp;
@@ -181,18 +188,28 @@ public class InterfazMathy extends JFrame{
 		venMatrizPro.setVisible(true);
 	}
 	public void agregarFuncion(String form,Color color, int grosor, int tipo) {
-		ppp.agregarFuncion(mundo.agregarFuncion(form,color,grosor,tipo));
+		try {
+			ppp.agregarFuncion(mundo.agregarFuncion(form,color,grosor,tipo));
+		} catch (FuncionYaExisteException e) {
+			JOptionPane.showMessageDialog(this,e.getMessage());
+		}
 	}
 	public void desplegarMensaje(String mensaje){
 		JOptionPane.showMessageDialog(this, mensaje);
 	}
-	public void agregarObjetoDibujable(Funcion f) {
+	public void agregarObjetoDibujable(Dibujable f) {
 		mundo.agregarObjetoDibujable(f);
 		ppp.refrescarPlano();
 	}
-	public void borrarObjetoDibujable(Funcion f) {
+	public void borrarObjetoDibujable(Dibujable f) {
 		mundo.eliminarObjetoDibujable(f);
 		ppp.refrescarPlano();
+	}
+	public ArrayList<Dibujable> darObjetosDibujables() {
+		return mundo.darObjetosDibujables();
+	}
+	public void crearPunto(double x, double y) {
+		ppp.agregarPunto(mundo.agregarPunto(x,y));
 	}
 	
 }
