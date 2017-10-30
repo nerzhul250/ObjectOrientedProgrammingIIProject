@@ -20,6 +20,10 @@ public class PanelPrincipalPlano extends JPanel{
 		add(ppxy,BorderLayout.EAST);
 	}
 	
+	public PanelPlanoxy darPpxy() {
+		return ppxy;
+	}
+
 	public void agregarFuncion(Funcion fun) {
 		pod.agregarFuncion(fun);
 	}

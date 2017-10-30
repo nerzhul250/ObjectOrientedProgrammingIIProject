@@ -14,5 +14,4 @@ public class FormulaParaParametrizarIncompleta extends Exception {
 		this.formula = formula;
 	}
 	
-	
 }

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.HeadlessException;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -21,7 +22,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import hilos.HiloMultiplicacion;
+<<<<<<< HEAD
+import mundo.Circunferencia;
+import mundo.FormulaParaParametrizarIncompleta;
+=======
 import mundo.Dibujable;
+>>>>>>> dcc9db085fc2c622a333460ba266325cc3308115
 import mundo.Funcion;
 import mundo.FuncionYaExisteException;
 import mundo.MathyGen;
@@ -44,7 +50,6 @@ public class InterfazMathy extends JFrame{
 		mundo=new MathyGen();
 		ppp=new PanelPrincipalPlano(this,mundo);
 		psl=new PanelSistemaLineal(this);
-		
 		JTabbedPane jtp=new JTabbedPane();
 		jtp.add(ppp,"Plano");
 		jtp.add(psl,"Sistema lineal");
