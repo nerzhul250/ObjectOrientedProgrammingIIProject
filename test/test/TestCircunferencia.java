@@ -32,6 +32,21 @@ public class TestCircunferencia {
 			fail("No debería lanzar excepción");
 		}
 	}
+	
+	private void setupEscenario4(){
+		try {
+			circunferencia= new Circunferencia("(x-2)^2+(y)^2=16");
+		} catch (FormulaParaParametrizarIncompleta e) {
+			fail("No debería lanzar excepción");
+		}
+	}
+	private void setupEscenario5(){
+		try {
+			circunferencia= new Circunferencia("(x-2.5)^2+(y-2.6)^2=16.4");
+		} catch (FormulaParaParametrizarIncompleta e) {
+			fail("No debería lanzar excepción");
+		}
+	}
 	@Test
 	public void probarMetodoParser(){
 		setupEscenario1();
@@ -48,6 +63,14 @@ public class TestCircunferencia {
 		assertTrue(circunferencia.darCentroX()==-12);
 		assertTrue(circunferencia.darCentroY()==-12);
 		assertTrue(circunferencia.darRadio()==4);
+		setupEscenario4();
+		assertTrue(circunferencia.darCentroX()==2);
+		assertTrue(circunferencia.darCentroY()==0);
+		assertTrue(circunferencia.darRadio()==4);
+		setupEscenario5();
+		assertTrue(circunferencia.darCentroX()==2.5);
+		assertTrue(circunferencia.darCentroY()==2.6);
+		assertTrue(circunferencia.darRadio()==Math.sqrt(16.4));
 		
 	}
 	

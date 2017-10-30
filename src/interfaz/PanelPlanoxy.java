@@ -17,7 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.border.StrokeBorder;
 import javax.swing.border.TitledBorder;
 
+import mundo.Circunferencia;
 import mundo.Dibujable;
+import mundo.FormulaParaParametrizarIncompleta;
 import mundo.MathyGen;
 
 public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWheelListener,MouseListener{
@@ -78,10 +80,16 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 		g2d.setColor(Color.BLACK);
 		g2d.drawString("x="+df.format(mousePosx)+" "+"y="+df.format(mousePosy),30,30);
 		
-		for(int i=1;i<MathyGen.ANCHOPLANO+anchoAd;i++){
-			double wx=MathyGen.ANCHOPLANO*(Math.cos(i)-traslX+alcance)/(2*alcance);
-			double wy=(Math.sin(i)-traslY-alcance)*MathyGen.LARGOPLANO/(-2*alcance);
-			g2d.drawLine((int)(wx),(int)(wy),(int) wx,(int) wy);
+		try {
+			mundo.modificarCirculo(new Circunferencia("(x)^2+(y)^2=4"));
+			mundo.darCirculo().modificarColor(Color.BLACK);
+			mundo.darCirculo().dibujarse(g2d, alcance, traslY, traslX, 1);
+			mundo.modificarCirculo(new Circunferencia("(x-2)^2+(y)^2=9"));
+			mundo.darCirculo().modificarColor(Color.BLACK);
+			mundo.darCirculo().dibujarse(g2d, alcance, traslY, traslX, 1);
+		} catch (FormulaParaParametrizarIncompleta e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		for (int i = 0; i < mundo.darObjetosDibujables().size(); i++) {
 			mundo.darObjetosDibujables().get(i).dibujarse(g2d,alcance,traslY,traslX,MathyGen.ANCHOPLANO+anchoAd);
@@ -112,6 +120,36 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 		mousePosx=(2*alcance/MathyGen.ANCHOPLANO)*e.getX()-alcance+traslX;
 		mousePosy=(-2*alcance/MathyGen.LARGOPLANO)*e.getY()+alcance+traslY;
 		repaint();
+	}
+	public int darCentroW() {
+		return centroW;
+	}
+	public void modificarCentroW(int centroW) {
+		this.centroW = centroW;
+	}
+	public int darCentroH() {
+		return centroH;
+	}
+	public void modificarCentroH(int centroH) {
+		this.centroH = centroH;
+	}
+	public double darAlcance() {
+		return alcance;
+	}
+	public void modificarAlcance(double alcance) {
+		this.alcance = alcance;
+	}
+	public double darTraslX() {
+		return traslX;
+	}
+	public void modificarTraslX(double traslX) {
+		this.traslX = traslX;
+	}
+	public double darTraslY() {
+		return traslY;
+	}
+	public void modificarTraslY(double traslY) {
+		this.traslY = traslY;
 	}
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub

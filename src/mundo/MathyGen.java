@@ -26,6 +26,15 @@ public class MathyGen {
 	private ArrayList<Region> listaRegiones;
 	private SistemaLineal sistemaLineal;
 	private ArrayList<Dibujable>objetosDibujables;
+	private Circunferencia circulo;
+
+	public Circunferencia darCirculo() {
+		return circulo;
+	}
+
+	public void modificarCirculo(Circunferencia circulo) {
+		this.circulo = circulo;
+	}
 
 	public MathyGen(){
 //		try {

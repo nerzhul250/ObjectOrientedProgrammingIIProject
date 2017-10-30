@@ -1,5 +1,6 @@
 package mundo;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -56,7 +57,9 @@ public class Circunferencia extends CurvaParametrica {
 				try{
 					devolver+= Integer.parseInt(form.charAt(indice)+"");
 				}catch(Exception e){
-					
+					if(form.charAt(indice)=='.'){
+						devolver+='.';
+					}
 				}
 				indice++;
 				devolver= buscarNumero(indice, form, devolver);
@@ -82,11 +85,15 @@ public class Circunferencia extends CurvaParametrica {
 
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY, double traslX, int ancho) {
 		g2d.setColor(darColor());
-		for(int i =0; i<MathyGen.ANCHOPLANO;i++){
+		for(int i =1; i<MathyGen.ANCHOPLANO*6*radio;i++){
 			double wx=MathyGen.ANCHOPLANO*(darPosicionX(i)+alcance-traslX)/(2*alcance);
 			double wy=MathyGen.LARGOPLANO*(darPosicionY(i)-alcance-traslY)/(-2*alcance);
+			g2d.setStroke(new BasicStroke(2));
 			g2d.drawLine((int)wx, (int)wy,(int) wx, (int)wy);
+			
 		}
+			
+		
 	}
 
 	
