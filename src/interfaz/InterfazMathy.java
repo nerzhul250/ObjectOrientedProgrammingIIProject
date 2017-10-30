@@ -22,12 +22,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import hilos.HiloMultiplicacion;
-<<<<<<< HEAD
 import mundo.Circunferencia;
 import mundo.FormulaParaParametrizarIncompleta;
-=======
 import mundo.Dibujable;
->>>>>>> dcc9db085fc2c622a333460ba266325cc3308115
 import mundo.Funcion;
 import mundo.FuncionYaExisteException;
 import mundo.MathyGen;
