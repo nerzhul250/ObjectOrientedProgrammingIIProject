@@ -79,17 +79,6 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 		g2d.setColor(Color.BLACK);
 		g2d.drawString("x="+df.format(mousePosx)+" "+"y="+df.format(mousePosy),30,30);
 		
-		try {
-			mundo.modificarCirculo(new Circunferencia("(x)^2+(y)^2=4"));
-			mundo.darCirculo().modificarColor(Color.BLACK);
-			mundo.darCirculo().dibujarse(g2d, alcance, traslY, traslX, 1);
-			mundo.modificarCirculo(new Circunferencia("(x-2)^2+(y)^2=9"));
-			mundo.darCirculo().modificarColor(Color.BLACK);
-			mundo.darCirculo().dibujarse(g2d, alcance, traslY, traslX, 1);
-		} catch (FormulaParaParametrizarIncompleta e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		for (int i = 0; i < principal.darObjetosDibujables().size(); i++) {
 			principal.darObjetosDibujables().get(i).dibujarse(g2d,alcance,traslY,traslX,MathyGen.ANCHOPLANO+anchoAd);
 		}

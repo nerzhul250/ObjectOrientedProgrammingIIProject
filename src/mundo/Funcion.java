@@ -16,7 +16,6 @@ public abstract class Funcion implements Dibujable, Computable, Comparable, Seri
 	private Funcion funDe;
 	private Funcion funDad;
 	
-	
 	public String getForma() {
 		return forma;
 	}

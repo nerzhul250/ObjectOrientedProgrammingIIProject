@@ -50,6 +50,7 @@ public class MathyGen {
 //			e.printStackTrace();
 //		}
 		raizFuncion=null;
+		listaRegiones=new ArrayList<Region>();
 		objetosDibujables=new ArrayList<Dibujable>();
 		double[][]m1=new double[1][1];
 		sistemaLineal= new SistemaLineal(m1, null);
@@ -252,5 +253,11 @@ public class MathyGen {
 		}
 		agregarObjetoDibujable(p);
 		return p;
+	}
+
+	public Region agregarRegion(ArrayList<Punto> frontera, Color color) {
+		Region r=new Region(frontera, color);
+		listaRegiones.add(r);
+		return r;
 	}
 }

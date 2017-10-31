@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import mundo.Funcion;
 import mundo.MathyGen;
 import mundo.Punto;
+import mundo.Region;
 
 public class PanelPrincipalPlano extends JPanel{
 	private PanelPlanoxy ppxy;
@@ -32,5 +33,8 @@ public class PanelPrincipalPlano extends JPanel{
 	}
 	public void refrescarPlano() {
 		ppxy.repaint();;
+	}
+	public void agregarRegion(Region region) {
+		pod.agregarRegion(region);
 	}
 }
