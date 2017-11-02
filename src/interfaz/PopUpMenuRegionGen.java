@@ -7,21 +7,21 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 public class PopUpMenuRegionGen extends JPopupMenu implements ActionListener {
-	public final static String AGREGAR="AGREGAR";
-	private JMenuItem itAgregar;
+	public final static String ORGANIZAR="ORGANIZAR";
+	private JMenuItem itOrganizar;
 	
 	private InterfazMathy principal;
     public PopUpMenuRegionGen(InterfazMathy in){
     	principal=in;
-        itAgregar = new JMenuItem("Agregar nueva funcion");
-        itAgregar.addActionListener(this);
-        itAgregar.setActionCommand(AGREGAR);
-        add(itAgregar);
+        itOrganizar = new JMenuItem("Agregar nueva funcion");
+        itOrganizar.addActionListener(this);
+        itOrganizar.setActionCommand(ORGANIZAR);
+        add(itOrganizar);
     }
     
 	public void actionPerformed(ActionEvent e) {
-		if(e.getActionCommand().equals(AGREGAR)){
-			principal.abrirDialogoAgregarFuncion();
+		if(e.getActionCommand().equals(ORGANIZAR)){
+			principal.organizarRegiones();
 		}
 	}
 }

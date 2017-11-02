@@ -42,18 +42,13 @@ public class PanelObjDibPunto extends JPanel implements MouseListener {
 	public void removerTodosLosElementos(){
 		listModel.removeAllElements();
 	}
-	/**
-	 * <pre>:primerPunto!=null, no hay ningun elemento en listModel
-	 * @param primerPunto
-	 */
 	public void refrescarLista(Punto primerPunto){
 		Punto current=primerPunto;
 		while(current!=null){
-			listModel.addElement(current);
+			agregarPunto(current);
 			current=current.getSgtPunto();
 		}
 	}
-
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton()==MouseEvent.BUTTON3){
 			if(!listaPunto.isSelectionEmpty()){

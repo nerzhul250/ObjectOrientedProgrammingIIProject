@@ -1,6 +1,7 @@
 package interfaz;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -36,5 +37,17 @@ public class PanelPrincipalPlano extends JPanel{
 	}
 	public void agregarRegion(Region region) {
 		pod.agregarRegion(region);
+	}
+
+	public void refrescarListaFunciones(Funcion raizFuncion) {
+		pod.refrescarListaFunciones(raizFuncion);
+	}
+
+	public void refrescarListaRegiones(ArrayList<Region> listaRegiones) {
+		pod.refrescarListaRegiones(listaRegiones);
+	}
+
+	public void refrescarListaPuntos(Punto primerPunto) {
+		pod.refrescarListaPuntos(primerPunto);
 	}
 }

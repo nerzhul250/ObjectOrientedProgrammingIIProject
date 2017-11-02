@@ -43,4 +43,13 @@ public class PanelObjetoDibujable extends JPanel{
 	public void agregarPunto(Punto p) {
 		podp.agregarPunto(p);
 	}
+	public void refrescarListaFunciones(Funcion raizFuncion) {
+		podf.refrescarLista(raizFuncion);
+	}
+	public void refrescarListaRegiones(ArrayList<Region> listaRegiones) {
+		podr.refrescarLista(listaRegiones);
+	}
+	public void refrescarListaPuntos(Punto primerPunto) {
+		podp.refrescarLista(primerPunto);
+	}
 }

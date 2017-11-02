@@ -3,9 +3,10 @@ package mundo;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 import java.text.DecimalFormat;
 
-public class Punto implements Dibujable {
+public class Punto implements Dibujable,Serializable{
 	
 	private Color color;
 	private Punto sgtPunto;

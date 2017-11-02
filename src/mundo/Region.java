@@ -4,10 +4,11 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class Region implements Dibujable,Comparable {
+public class Region implements Dibujable,Comparable,Serializable {
 
 	private double area;
 	private Color color;
@@ -64,7 +65,7 @@ public class Region implements Dibujable,Comparable {
 	}
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		DecimalFormat df=new DecimalFormat("0.00");
+		return "Region con area: "+df.format(area);
 	}
 }

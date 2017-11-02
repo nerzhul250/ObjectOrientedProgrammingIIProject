@@ -8,14 +8,18 @@ import java.awt.Graphics2D;
 import java.awt.HeadlessException;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
@@ -47,16 +51,43 @@ public class InterfazMathy extends JFrame{
 		mundo=new MathyGen();
 		ppp=new PanelPrincipalPlano(this,mundo);
 		psl=new PanelSistemaLineal(this);
+
+		
+		try {
+			boolean[] dec=mundo.cargarEstado();
+			if(dec[0]){
+				ppp.refrescarListaPuntos(mundo.getPrimerPunto());
+			}
+			if(dec[1]){
+				ppp.refrescarListaFunciones(mundo.getRaizFuncion());
+			}
+			if(dec[2]){				
+				ppp.refrescarListaRegiones(mundo.getListaRegiones());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this,"Error Fatal en la carga de archivos");
+		}
+		
 		JTabbedPane jtp=new JTabbedPane();
 		jtp.add(ppp,"Plano");
 		jtp.add(psl,"Sistema lineal");
 		
 		JMenuBar miMenuBar = new JMenuBar();
+		miMenuBar.add(new MenuArchivo(this));
 		miMenuBar.add(new MenuVer(this));
 		setJMenuBar(miMenuBar);		
 		
 		add(jtp);
 		pack();
+	}
+	public void guardarArchivo(){
+		try {
+			mundo.guardarEstado();
+		} catch (IOException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this,"Error fatal en la guardada de estado");
+		}
 	}
 	public int darTamanoMatrizB(){
 		return mundo.darSistemaLineal().darMatrizCoeficientes1()[0].length;
@@ -210,5 +241,9 @@ public class InterfazMathy extends JFrame{
 	}
 	public ArrayList<Dibujable> darObjetosDibujables() {
 		return mundo.darObjetosDibujables();
+	}
+	public void organizarRegiones() {
+		mundo.organizarRegiones();
+		ppp.refrescarListaRegiones(mundo.getListaRegiones());
 	}
 }

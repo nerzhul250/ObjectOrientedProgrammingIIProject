@@ -44,7 +44,7 @@ public class Polinomio extends Funcion {
 		double valx1=alcance+traslX;
 		double valy1=computarValor(valx1);
 		int h1=(int)((valy1-alcance-traslY)*MathyGen.LARGOPLANO/(-2*alcance));
-		for (int i = 1; i < MathyGen.ANCHOPLANO; i++) {
+		for (int i = 1; i < ancho; i++) {
 			double valx=(2*alcance/MathyGen.ANCHOPLANO)*i-alcance+traslX;
 			double valy=computarValor(valx);
 			int h=(int)((valy-alcance-traslY)*MathyGen.LARGOPLANO/(-2*alcance));

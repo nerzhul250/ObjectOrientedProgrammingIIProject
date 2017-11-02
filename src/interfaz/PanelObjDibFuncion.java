@@ -34,25 +34,21 @@ public class PanelObjDibFuncion extends JPanel implements MouseListener {
 	public void agregarFuncion(Funcion f){
 		listModel.addElement(f);
 	}
-	public Funcion darFuncionSeleccionado() {
-		Funcion p=listaFuncion.getSelectedValue();
-		return p;
-	}
-	public void removerTodosLosElementos(){
-		listModel.removeAllElements();
-	}
-	/**
-	 * <pre>:raiz!=null, no hay ningun elemento en listModel 
-	 * @param raiz
-	 */
 	public void refrescarLista(Funcion raiz){
-		agregarFuncion(raiz);;
+		agregarFuncion(raiz);
 		if(raiz.getFunDe()!=null){
 			refrescarLista(raiz.getFunDe());
 		}
 		if(raiz.getFunIz()!=null){
 			refrescarLista(raiz.getFunIz());
 		}
+	}
+	public Funcion darFuncionSeleccionado() {
+		Funcion p=listaFuncion.getSelectedValue();
+		return p;
+	}
+	public void removerTodosLosElementos(){
+		listModel.removeAllElements();
 	}
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton()==MouseEvent.BUTTON3){
