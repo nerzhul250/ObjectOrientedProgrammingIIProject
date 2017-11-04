@@ -13,7 +13,7 @@ public class PopUpMenuRegionGen extends JPopupMenu implements ActionListener {
 	private InterfazMathy principal;
     public PopUpMenuRegionGen(InterfazMathy in){
     	principal=in;
-        itOrganizar = new JMenuItem("Agregar nueva funcion");
+        itOrganizar = new JMenuItem("Organizar regiones");
         itOrganizar.addActionListener(this);
         itOrganizar.setActionCommand(ORGANIZAR);
         add(itOrganizar);

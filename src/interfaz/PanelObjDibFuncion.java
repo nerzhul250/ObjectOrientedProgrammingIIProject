@@ -54,10 +54,10 @@ public class PanelObjDibFuncion extends JPanel implements MouseListener {
 		if(e.getButton()==MouseEvent.BUTTON3){
 			if(listaFuncion.isSelectionEmpty()){
 				PopUpMenuFuncionGen menu = new PopUpMenuFuncionGen(principal);
-				menu.show(this,e.getX(),e.getY());
+				menu.show(listaFuncion,e.getX(),e.getY());
 			}else{
 				PopUpMenuFuncionPar menu = new PopUpMenuFuncionPar(principal,darFuncionSeleccionado());
-				menu.show(this,e.getX(),e.getY());
+				menu.show(listaFuncion,e.getX(),e.getY());
 				listaFuncion.clearSelection();
 			}
 		}

@@ -55,13 +55,13 @@ public class PanelObjDibPunto extends JPanel implements MouseListener {
 				ArrayList<Punto>puntos=darPuntosSeleccionados();
 				if(puntos.size()==1){
 					PopUpMenuPunto1 menu = new PopUpMenuPunto1(principal,puntos.get(0));
-					menu.show(this,e.getX(),e.getY());
+					menu.show(listaPunto,e.getX(),e.getY());
 				}else if(puntos.size()==2){
 					PopUpMenuPunto2 menu = new PopUpMenuPunto2(principal,puntos);
-					menu.show(this,e.getX(),e.getY());					
+					menu.show(listaPunto,e.getX(),e.getY());					
 				}else{
 					PopUpMenuPuntos menu = new PopUpMenuPuntos(principal,puntos);
-					menu.show(this,e.getX(),e.getY());
+					menu.show(listaPunto,e.getX(),e.getY());
 				}
 				listaPunto.clearSelection();
 			}

@@ -42,6 +42,7 @@ public class PanelObjDibRegion extends JPanel implements MouseListener {
 		listModel.removeAllElements();
 	}
 	public void refrescarLista(ArrayList<Region> regiones){
+		listModel.removeAllElements();
 		for (int i = 0; i < regiones.size(); i++) {
 			agregarRegion(regiones.get(i));
 		}
@@ -50,10 +51,10 @@ public class PanelObjDibRegion extends JPanel implements MouseListener {
 		if(e.getButton()==MouseEvent.BUTTON3){
 			if(listaRegion.isSelectionEmpty()){
 				PopUpMenuRegionGen menu = new PopUpMenuRegionGen(principal);
-				menu.show(this,e.getX(),e.getY());
+				menu.show(listaRegion,e.getX(),e.getY());
 			}else{
 				PopUpMenuRegionPar menu = new PopUpMenuRegionPar(principal,darRegionSeleccionado());
-				menu.show(this,e.getX(),e.getY());
+				menu.show(listaRegion,e.getX(),e.getY());
 				listaRegion.clearSelection();
 			}
 		}
