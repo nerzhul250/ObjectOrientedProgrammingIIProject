@@ -83,32 +83,6 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 			principal.darObjetosDibujables().get(i).dibujarse(g2d,alcance,traslY,traslX,MathyGen.ANCHOPLANO+anchoAd);
 		}
 	}
-	public void mouseWheelMoved(MouseWheelEvent e) {
-//		mousePosx=(((e.getX()-centroW)*(alcanceX))/(MathyGen.ANCHOPLANO-centroW));
-//		mousePosy=(((centroH-e.getY())*(alcanceY))/(MathyGen.LARGOPLANO-centroH));
-//		centroW-=(e.getX()-centroW)*(1/2.0);
-//		centroH-=(centroH-e.getY())*(1/2.0);
-//		double k=e.getWheelRotation();
-//		alcanceX+=k*(1/2.0);
-//		alcanceY+=k*(1/2.0);
-//		repaint();l
-	}
-	public void mouseDragged(MouseEvent e) {
-		double difw=e.getX()-priorPosw;
-		double difh=e.getY()-priorPosh;
-		traslX-=difw/50;
-		traslY+=difh/50;
-		centroW=(int) (MathyGen.ANCHOPLANO*(alcance-traslX)/(2*alcance));
-		centroH=(int) (MathyGen.LARGOPLANO*(alcance+traslY)/(2*alcance));
-		priorPosw=e.getX();
-		priorPosh=e.getY();
-		repaint();
-	}
-	public void mouseMoved(MouseEvent e) {
-		mousePosx=(2*alcance/MathyGen.ANCHOPLANO)*e.getX()-alcance+traslX;
-		mousePosy=(-2*alcance/MathyGen.LARGOPLANO)*e.getY()+alcance+traslY;
-		repaint();
-	}
 	public int darCentroW() {
 		return centroW;
 	}
@@ -138,6 +112,27 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 	}
 	public void modificarTraslY(double traslY) {
 		this.traslY = traslY;
+	}
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		double k=e.getWheelRotation();
+		alcance+=k*(1/2.0);
+		repaint();
+	}
+	public void mouseDragged(MouseEvent e) {
+		double difw=e.getX()-priorPosw;
+		double difh=e.getY()-priorPosh;
+		traslX-=difw/50;
+		traslY+=difh/50;
+		centroW=(int) (MathyGen.ANCHOPLANO*(alcance-traslX)/(2*alcance));
+		centroH=(int) (MathyGen.LARGOPLANO*(alcance+traslY)/(2*alcance));
+		priorPosw=e.getX();
+		priorPosh=e.getY();
+		repaint();
+	}
+	public void mouseMoved(MouseEvent e) {
+		mousePosx=(2*alcance/MathyGen.ANCHOPLANO)*e.getX()-alcance+traslX;
+		mousePosy=(-2*alcance/MathyGen.LARGOPLANO)*e.getY()+alcance+traslY;
+		repaint();
 	}
 	public void mouseClicked(MouseEvent e) {
 		if(e.getClickCount()==2 && e.getButton()==MouseEvent.BUTTON1){
