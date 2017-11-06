@@ -42,7 +42,6 @@ public class PanelObjDibRegion extends JPanel implements MouseListener {
 		listModel.removeAllElements();
 	}
 	public void refrescarLista(ArrayList<Region> regiones){
-		listModel.removeAllElements();
 		for (int i = 0; i < regiones.size(); i++) {
 			agregarRegion(regiones.get(i));
 		}

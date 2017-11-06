@@ -25,6 +25,10 @@ public class MathyGen {
 	public final static String RUTA_MATRIZ_GIGANTE_1="./data/matricesGigantes/MATRIZ11.txt";
 	public final static String RUTA_MATRIZ_GIGANTE_2="./data/matricesGigantes/MATRIZ2.txt";
 
+	public static String getRutaMatrizGigante2() {
+		return RUTA_MATRIZ_GIGANTE_2;
+	}
+	
 	public final static int ANCHOPLANO =625;
 	public final static int LARGOPLANO =625;
 	
@@ -183,8 +187,14 @@ public class MathyGen {
 	public Punto getPrimerPunto() {
 		return primerPunto;
 	}
+	public void setPrimerPunto(Punto primerPunto) {
+		this.primerPunto = primerPunto;
+	}
 	public Funcion getRaizFuncion() {
 		return raizFuncion;
+	}
+	public void setRaizFuncion(Funcion raizFuncion) {
+		this.raizFuncion = raizFuncion;
 	}
 	public ArrayList<Region> getListaRegiones() {
 		return listaRegiones;
@@ -211,19 +221,29 @@ public class MathyGen {
 		fun.setColor(color);
 		fun.setGrosor(grosor);
 		fun.setForma(form);
-		if(estaEnElArbol(fun,raizFuncion)) throw new FuncionYaExisteException(fun.getForma());
+		if(estaEnElArbol(fun,raizFuncion)!=null) throw new FuncionYaExisteException(fun.getForma());
 		agregarFuncionAlArbol(fun,raizFuncion);
 		return fun;
 	}
-	public boolean estaEnElArbol(Funcion f,Funcion actual){
+	public Funcion estaEnElArbol(Funcion f,Funcion actual){
 		if(raizFuncion==null){
-			return false;
+			return null;
 		}else if(actual!=null && actual.compareTo(f)==0){
-			return true;
+			return actual;
 		}else if(actual!=null){
-			return estaEnElArbol(f,actual.getFunDe()) || estaEnElArbol(f,actual.getFunIz());
+			Funcion fa=estaEnElArbol(f,actual.getFunDe());
+			Funcion fe=estaEnElArbol(f,actual.getFunIz());
+			if(fa==null && fe==null){
+				return null;
+			}else{
+				if(fa!=null){
+					return fa;
+				}else{
+					return fe;
+				}
+			}
 		}
-		return false;
+		return null;
 	}
 	public void agregarFuncionAlArbol(Funcion f,Funcion actual) throws FuncionYaExisteException{
 		if(raizFuncion==null){
@@ -232,12 +252,14 @@ public class MathyGen {
 			if(f.compareTo(actual)==-1){
 				if(actual.getFunIz()==null){
 					actual.setFunIz(f);
+					f.setPadre(actual);
 				}else{
 					agregarFuncionAlArbol(f,actual.getFunIz());
 				}
 			}else if(f.compareTo(actual)==1){
 				if(actual.getFunDe()==null){
 					actual.setFunDe(f);
+					f.setPadre(actual);
 				}else{
 					agregarFuncionAlArbol(f,actual.getFunDe());
 				}
@@ -343,5 +365,47 @@ public class MathyGen {
 			listaRegiones.set(i,r);
 			listaRegiones.set(cual,ra);
 		}
+	}
+	public void eliminarPunto(Punto d) {
+		Punto before=null;
+		Punto current=getPrimerPunto();
+		if(current==d){
+			this.setPrimerPunto(current.getSgtPunto());
+		}else{
+			before=current;
+			current=current.getSgtPunto();
+			while(current!=null){
+				if(current==d){
+					before.setSgtPunto(current.getSgtPunto());
+					break;
+				}
+				before=current;
+				current=current.getSgtPunto();
+			}
+		}
+	}
+	public void recorridoDeAgregacion(Funcion A,Funcion laRaiz) {
+		try {
+			agregarFuncionAlArbol(A,laRaiz);
+		} catch (FuncionYaExisteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(laRaiz==null){
+			laRaiz=getRaizFuncion();
+		}
+		Funcion de=A.getFunDe();
+		Funcion iz=A.getFunIz();
+		A.setFunDe(null);
+		A.setFunIz(null);
+		if(de!=null){
+			recorridoDeAgregacion(de,laRaiz);
+		}
+		if(iz!=null){
+			recorridoDeAgregacion(iz,laRaiz);
+		}		
+	}
+	public void eliminarRegion(Region d) {
+		getListaRegiones().remove(d);
 	}
 }

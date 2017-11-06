@@ -16,9 +16,11 @@ public class PopUpMenuPunto1 extends JPopupMenu implements ActionListener{
 
 	public final static String DIBUJAR="DIBUJAR";
 	public final static String BORRAR="BORRAR";
+	public final static String ELIMINAR="ELIMINAR";
 	
 	private JMenuItem itDibujar;
 	private JMenuItem itBorrar;
+	private JMenuItem itEliminar;	
 	
 	private InterfazMathy principal;
 	
@@ -29,13 +31,21 @@ public class PopUpMenuPunto1 extends JPopupMenu implements ActionListener{
 		
         itDibujar = new JMenuItem("Dibujar punto");
         itBorrar =new JMenuItem("Borrar punto");
+        itEliminar =new JMenuItem("Eliminar punto");
+        
         
         itDibujar.addActionListener(this);
         itDibujar.setActionCommand(DIBUJAR);
+        
         itBorrar.addActionListener(this);
         itBorrar.setActionCommand(BORRAR);
+        
+        itEliminar.addActionListener(this);
+        itEliminar.setActionCommand(ELIMINAR);
+        
         add(itDibujar);
         add(itBorrar);
+        add(itEliminar);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -43,6 +53,8 @@ public class PopUpMenuPunto1 extends JPopupMenu implements ActionListener{
 			principal.agregarObjetoDibujable(punto);
 		}else if(e.getActionCommand().equals(BORRAR)){
 			principal.borrarObjetoDibujable(punto);
+		}else if(e.getActionCommand().equals(ELIMINAR)){
+			principal.eliminarObjetoDibujable(punto);
 		}
 	}
 }

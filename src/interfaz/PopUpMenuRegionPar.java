@@ -13,9 +13,13 @@ public class PopUpMenuRegionPar extends JPopupMenu implements ActionListener {
 	
 	public final static String DIBUJAR="DIBUJAR";
 	public final static String BORRAR="BORRAR";
+	public final static String ELIMINAR="ELIMINAR";
+
 	
 	private JMenuItem itDibujar;
 	private JMenuItem itBorrar;
+	private JMenuItem itEliminar;	
+
 	
 	private Region r;
 	
@@ -24,16 +28,25 @@ public class PopUpMenuRegionPar extends JPopupMenu implements ActionListener {
 	public PopUpMenuRegionPar(InterfazMathy principal,Region region) {
 		r=region;
 		this.principal=principal;
+		
         itDibujar = new JMenuItem("Dibujar Region");
         itBorrar=new JMenuItem("Borrar Region");
+        itEliminar =new JMenuItem("Eliminar Region");
+        
         
         itDibujar.addActionListener(this);
         itDibujar.setActionCommand(DIBUJAR);
+        
         itBorrar.addActionListener(this);
         itBorrar.setActionCommand(BORRAR);
         
+        itEliminar.addActionListener(this);
+        itEliminar.setActionCommand(ELIMINAR);
+        
+        
         add(itDibujar);
         add(itBorrar);
+        add(itEliminar);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -41,6 +54,8 @@ public class PopUpMenuRegionPar extends JPopupMenu implements ActionListener {
 			principal.agregarObjetoDibujable(r);
 		}else if(e.getActionCommand().equals(BORRAR)){
 			principal.borrarObjetoDibujable(r);
+		}else if(e.getActionCommand().equals(ELIMINAR)){
+			principal.eliminarObjetoDibujable(r);
 		}
 	}
 }

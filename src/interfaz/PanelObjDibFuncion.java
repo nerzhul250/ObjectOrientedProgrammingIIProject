@@ -35,12 +35,14 @@ public class PanelObjDibFuncion extends JPanel implements MouseListener {
 		listModel.addElement(f);
 	}
 	public void refrescarLista(Funcion raiz){
-		agregarFuncion(raiz);
-		if(raiz.getFunDe()!=null){
-			refrescarLista(raiz.getFunDe());
-		}
-		if(raiz.getFunIz()!=null){
-			refrescarLista(raiz.getFunIz());
+		if(raiz!=null){
+			agregarFuncion(raiz);
+			if(raiz.getFunDe()!=null){
+				refrescarLista(raiz.getFunDe());
+			}
+			if(raiz.getFunIz()!=null){
+				refrescarLista(raiz.getFunIz());
+			}
 		}
 	}
 	public Funcion darFuncionSeleccionado() {

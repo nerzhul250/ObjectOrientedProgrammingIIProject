@@ -19,14 +19,14 @@ public class TestMathyGen {
 	@Test
 	public void testAgregarFuncion() {
 		setUpEscenario1();
-		assertFalse(mathyGen.estaEnElArbol(new Polinomio("1x^2"),mathyGen.getRaizFuncion()));
+		assertFalse(mathyGen.estaEnElArbol(new Polinomio("1x^2"),mathyGen.getRaizFuncion())!=null);
 		try {
 			mathyGen.agregarFuncion("1x^2",Color.white,2,3);
 		} catch (FuncionYaExisteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		assertTrue(mathyGen.estaEnElArbol(new Polinomio("1x^2"),mathyGen.getRaizFuncion()));
+		assertTrue(mathyGen.estaEnElArbol(new Polinomio("1x^2"),mathyGen.getRaizFuncion())!=null);
 	}
 
 }

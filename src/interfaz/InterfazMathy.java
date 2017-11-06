@@ -35,6 +35,7 @@ import mundo.MathyGen;
 import mundo.MatrizNoInvertibleException;
 import mundo.NoEsNumeroException;
 import mundo.Punto;
+import mundo.Region;
 
 public class InterfazMathy extends JFrame{
 	private PanelPrincipalPlano ppp;
@@ -245,5 +246,32 @@ public class InterfazMathy extends JFrame{
 	public void organizarRegiones() {
 		mundo.organizarRegiones();
 		ppp.refrescarListaRegiones(mundo.getListaRegiones());
+	}
+	public void eliminarObjetoDibujable(Dibujable d) {
+		mundo.eliminarObjetoDibujable(d);
+		if(d instanceof Punto){
+			mundo.eliminarPunto((Punto)d);
+			ppp.refrescarListaPuntos(mundo.getPrimerPunto());
+		}else if(d instanceof Funcion){
+			Funcion dad=((Funcion)d).getPadre();
+			if(dad==null){
+				mundo.setRaizFuncion(null);
+			}else if(dad.getFunDe()==d){
+				dad.setFunDe(null);
+			}else{
+				dad.setFunIz(null);
+			}
+			if(((Funcion)d).getFunDe()!=null){
+				mundo.recorridoDeAgregacion(((Funcion)d).getFunDe(),dad);
+			}
+			if(((Funcion)d).getFunIz()!=null){
+				mundo.recorridoDeAgregacion(((Funcion)d).getFunIz(),dad);
+			}	
+			ppp.refrescarListaFunciones(mundo.getRaizFuncion());
+		}else if(d instanceof Region){
+			mundo.eliminarRegion((Region)d);
+			ppp.refrescarListaRegiones(mundo.getListaRegiones());
+		}
+		ppp.refrescarPlano();
 	}
 }

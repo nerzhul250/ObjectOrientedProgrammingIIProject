@@ -8,13 +8,21 @@ import java.io.Serializable;
 public abstract class Funcion implements Dibujable, Computable, Comparable, Serializable  {
 	
 	private String forma;
+	public Funcion getPadre() {
+		return padre;
+	}
+
+	public void setPadre(Funcion padre) {
+		this.padre = padre;
+	}
+
 	private String nombre;
 	private Color color;
 	private double grosor;
 	private int nivelDeBelleza;
 	private Funcion funIz;
 	private Funcion funDe;
-	private Funcion funDad;
+	private Funcion padre;
 	
 	public String getForma() {
 		return forma;
@@ -35,15 +43,6 @@ public abstract class Funcion implements Dibujable, Computable, Comparable, Seri
 	public Color getColor() {
 		return color;
 	}
-
-	public Funcion getFunDad() {
-		return funDad;
-	}
-
-	public void setFunDad(Funcion funDad) {
-		this.funDad = funDad;
-	}
-
 	public void setColor(Color color) {
 		this.color = color;
 	}
