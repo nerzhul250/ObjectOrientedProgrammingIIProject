@@ -9,11 +9,24 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Region implements Dibujable,Comparable,Serializable {
-
-	private double area;
-	private Color color;
-	private ArrayList<Punto>frontera;
 	
+	/**
+	 * El area de la region
+	 */
+	private double area;
+	/**
+	 * El color de la region
+	 */
+	private Color color;
+	/**
+	 * Los puntos que definen a la region
+	 */
+	private ArrayList<Punto>frontera;
+	/**
+	 * Construye una nueva region
+	 * @param fr la lista de puntos que definen a la region
+	 * @param color
+	 */
 	public Region(ArrayList<Punto> fr,Color color){
 		frontera=fr;
 		double sum=0;
@@ -28,8 +41,9 @@ public class Region implements Dibujable,Comparable,Serializable {
 		area=Math.abs(sum);
 		this.color=color;
 	}
-	//TODO
-	//COMPLETE MOTHERFUCKER
+	/**
+	 * Dibuja la region en el plano XY
+	 */
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY,
 			double traslX, int ancho) {
 		g2d.setColor(getColor());
@@ -42,7 +56,17 @@ public class Region implements Dibujable,Comparable,Serializable {
 		}
 		g2d.fillPolygon(w,h,n);
 	}
-	
+	/**
+	 * Compara dos regiones por su area
+	 */
+	public int compareTo(Object o) {
+		Region r=(Region)o;
+		double dif=area-r.getArea();
+		if(dif!=0){
+			dif=(dif<0)?-1:1;
+		}
+		return (int)dif;
+	}
 	public Color getColor() {
 		return color;
 	}
@@ -55,17 +79,9 @@ public class Region implements Dibujable,Comparable,Serializable {
 	public void setArea(double area) {
 		this.area = area;
 	}
-	public int compareTo(Object o) {
-		Region r=(Region)o;
-		double dif=area-r.getArea();
-		if(dif!=0){
-			dif=(dif<0)?-1:1;
-		}
-		return (int)dif;
-	}
 	@Override
 	public String toString() {
 		DecimalFormat df=new DecimalFormat("0.00");
 		return "Region con area: "+df.format(area);
 	}
-}
+} 

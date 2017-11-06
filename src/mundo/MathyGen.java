@@ -28,6 +28,7 @@ public class MathyGen {
 	public final static int ANCHOPLANO =625;
 	public final static int LARGOPLANO =625;
 	
+	public static final int TRIGONOMETRICO = 1;
 	public final static int TIPOPOLINOMIO=3;
 
 	public long tiempo;
@@ -55,7 +56,6 @@ public class MathyGen {
 		double[][]m1=new double[1][1];
 		sistemaLineal= new SistemaLineal(m1, null);
 	}
-	
 	public SistemaLineal darSistemaLineal(){
 		return sistemaLineal;
 	}
@@ -180,9 +180,30 @@ public class MathyGen {
 	public double[][] darMatrizProducto() {
 		return sistemaLineal.darMatrizProducto();
 	}
+	public Punto getPrimerPunto() {
+		return primerPunto;
+	}
+	public Funcion getRaizFuncion() {
+		return raizFuncion;
+	}
+	public ArrayList<Region> getListaRegiones() {
+		return listaRegiones;
+	}
+	public Circunferencia darCirculo() {
+		return circulo;
+	}
+	public void modificarCirculo(Circunferencia circulo) {
+		this.circulo = circulo;
+	}
+	public ArrayList<Dibujable> darObjetosDibujables() {
+		return objetosDibujables;
+	}
 	public Funcion agregarFuncion(String form, Color color, int grosor, int tipo) throws FuncionYaExisteException{
 		Funcion fun=null;
 		switch (tipo) {
+		case 1:
+			fun=new Trigonometrico(form);
+			break;
 		case 3:
 			fun=new Polinomio(form);
 			break;
@@ -239,21 +260,6 @@ public class MathyGen {
 		listaRegiones.add(r);
 		return r;
 	}
-	public Punto getPrimerPunto() {
-		return primerPunto;
-	}
-	public Funcion getRaizFuncion() {
-		return raizFuncion;
-	}
-	public ArrayList<Region> getListaRegiones() {
-		return listaRegiones;
-	}
-	public Circunferencia darCirculo() {
-		return circulo;
-	}
-	public void modificarCirculo(Circunferencia circulo) {
-		this.circulo = circulo;
-	}
 	public void agregarObjetoDibujable(Dibujable d){
 		if(!objetosDibujables.contains(d)){
 			objetosDibujables.add(d);
@@ -263,9 +269,6 @@ public class MathyGen {
 		if(objetosDibujables.contains(d)){
 			objetosDibujables.remove(d);
 		}
-	}
-	public ArrayList<Dibujable> darObjetosDibujables() {
-		return objetosDibujables;
 	}
 	public boolean[] cargarEstado() throws Exception{
 		boolean[] res=new boolean[3];
