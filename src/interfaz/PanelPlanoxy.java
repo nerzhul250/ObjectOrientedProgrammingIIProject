@@ -115,7 +115,9 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 	}
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		double k=e.getWheelRotation();
-		alcance+=k*(1/2.0);
+		alcance=alcance*Math.pow(Math.E,k/10);
+		centroW=(int) (MathyGen.ANCHOPLANO*(alcance-traslX)/(2*alcance));
+		centroH=(int) (MathyGen.LARGOPLANO*(alcance+traslY)/(2*alcance));
 		repaint();
 	}
 	public void mouseDragged(MouseEvent e) {
