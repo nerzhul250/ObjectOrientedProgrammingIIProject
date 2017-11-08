@@ -8,7 +8,26 @@ public class SistemaLineal {
 	private double[] matrizB;
 	private double[][] matrizProducto;
 	private double[][] matrizCoeficientes2;
+	private String nombreSistema;
+	private SistemaLineal anterior;
+	private SistemaLineal siguiente;
 	
+	public SistemaLineal darAnterior() {
+		return anterior;
+	}
+	public void modificarAnterior(SistemaLineal anterior) {
+		this.anterior = anterior;
+	}
+	public SistemaLineal darSiguiente() {
+		return siguiente;
+	}
+	public void modificarSiguiente(SistemaLineal siguiente) {
+		this.siguiente = siguiente;
+	}
+	public void modificarNombre(String n){
+		nombreSistema= n;
+	}
+
 	private int filaEjecutada;
 	private int columnaEjecutada;
 	private double[] solucionSistema;

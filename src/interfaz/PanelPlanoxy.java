@@ -19,6 +19,7 @@ import javax.swing.border.TitledBorder;
 
 import mundo.Circunferencia;
 import mundo.Dibujable;
+import mundo.Elipse;
 import mundo.FormulaParaParametrizarIncompleta;
 import mundo.MathyGen;
 
@@ -33,11 +34,9 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 	
 	private int priorPosw;
 	private int priorPosh;
-	
 	private double traslX;
 	private double traslY;
 	private DecimalFormat df;
-	
 	private int anchoAd;
 	
 	private InterfazMathy principal;
@@ -79,10 +78,10 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 		g2d.setColor(Color.BLACK);
 		g2d.drawString("x="+df.format(mousePosx)+" "+"y="+df.format(mousePosy),30,30);
 		
-
 		for (int i = 0; i < principal.darObjetosDibujables().size(); i++) {
 			principal.darObjetosDibujables().get(i).dibujarse(g2d,alcance,traslY,traslX,MathyGen.ANCHOPLANO+anchoAd);
 		}
+	
 	}
 	public void mouseWheelMoved(MouseWheelEvent e) {
 //		mousePosx=(((e.getX()-centroW)*(alcanceX))/(MathyGen.ANCHOPLANO-centroW));

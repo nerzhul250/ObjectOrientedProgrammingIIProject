@@ -27,6 +27,8 @@ public class MathyGen {
 	private SistemaLineal sistemaLineal;
 	private ArrayList<Dibujable>objetosDibujables;
 	private Circunferencia circulo;
+	private SistemaLineal historialSistema;
+	
 
 	public Circunferencia darCirculo() {
 		return circulo;
@@ -34,6 +36,32 @@ public class MathyGen {
 
 	public void modificarCirculo(Circunferencia circulo) {
 		this.circulo = circulo;
+	}
+	/**
+	 * agrega ordenadamente por nombre
+	 * @param s
+	 * @param nombre
+	 * @return
+	 * @throws NombreFaltanteSistemaLinealException
+	 */
+	public boolean agregarSistemaLinealAlHistorial(SistemaLineal s,String nombre) throws NombreFaltanteSistemaLinealException{
+		boolean agregado= false;
+		if(s== null){
+			throw new NullPointerException("No has creado ninguna matriz");
+		}else if(s.darMatrizCoeficientes1()== null){
+			throw new NullPointerException("No puedes guardar un sistema lineal cuya matriz"
+					+ "uno esté vacia");
+		}else if(nombre== null || nombre.equals("")){
+			throw new NombreFaltanteSistemaLinealException("Debes colocarle un nombre a tu sistema lineal");
+		}else{
+			if(historialSistema==null){
+				historialSistema= s;
+				s.modificarNombre(nombre);
+			}else{
+				//TODO
+			}
+		}
+		return agregado;
 	}
 
 	public MathyGen(){
@@ -90,6 +118,7 @@ public class MathyGen {
 			}
 		}
 	}
+	
 
 	public Funcion agregarFuncion(String form, Color color, int grosor, int tipo) throws FuncionYaExisteException{
 		Funcion fun=null;

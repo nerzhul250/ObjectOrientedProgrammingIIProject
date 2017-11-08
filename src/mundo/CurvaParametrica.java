@@ -8,6 +8,7 @@ public abstract class CurvaParametrica implements Parametrizable, Dibujable {
 	private Color color;
 	private Double centroX;
 	private Double centroY;
+
 	public String darNombre() {
 		return nombre;
 	}
