@@ -3,22 +3,43 @@ package mundo;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 import java.text.DecimalFormat;
 
-public class Punto implements Dibujable {
+public class Punto implements Dibujable,Serializable{
 	
+	/**
+	 * Color del punto en el planoXY
+	 */
 	private Color color;
+	/**
+	 * El punto siguiente en la lista enlazada simple
+	 */
 	private Punto sgtPunto;
 	
+	/**
+	 * Componente x de las coordenadas cartesianas
+	 */
 	private double x;
+	/**
+	 * Componente y de las coordenadas cartesianas
+	 */
 	private double y;
 	
+	/**
+	 * Construye un punto a partir de una coordenada XY
+	 * @param x
+	 * @param y
+	 */
 	public Punto(double x,double y){
 		int R=(int) (Math.random()*256),G=(int) (Math.random()*256),B=(int) (Math.random()*256);
 		color=new Color(R,G,B);
 		this.x=x;
 		this.y=y;
 	}
+	/**
+	 * Metodo encargado de dibujar el punto en el planoXY
+	 */
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY,
 			double traslX, int ancho) {
 		g2d.setColor(getColor());

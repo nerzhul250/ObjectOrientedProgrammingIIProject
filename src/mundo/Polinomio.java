@@ -13,11 +13,22 @@ import java.util.Scanner;
 
 public class Polinomio extends Funcion {
 	
-	
+	/**
+	 * Los coeficientes que definen al polinomio de manera ascendente
+	 */
 	private ArrayList<Double> coeficientes;
+	/**
+	 * Relaciona el grado de un termino con su coeficiente
+	 */
 	private HashMap<Integer,Double>gradosACoeficientes;
+	/**
+	 * Grado del polinomio
+	 */
 	private int grado;
-	
+	/**
+	 * Construye un nuevo polinomio
+	 * @param form expresion que contiene al polinomio
+	 */
 	public Polinomio(String form){
 	     grado=0;
 	     coeficientes=new ArrayList<Double>();
@@ -28,14 +39,9 @@ public class Polinomio extends Funcion {
 			coeficientes.add(val);
 		}
 	}
-	public ArrayList<Double> getCoeficientes() {
-		return coeficientes;
-	}
-
-	public void setCoeficientes(ArrayList<Double> coeficientes) {
-		this.coeficientes = coeficientes;
-	}
-
+	/**
+	 * Dibuja el polinomio en el planoXY
+	 */
 	@Override
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY,
 			double traslX, int ancho) {
@@ -44,7 +50,7 @@ public class Polinomio extends Funcion {
 		double valx1=alcance+traslX;
 		double valy1=computarValor(valx1);
 		int h1=(int)((valy1-alcance-traslY)*MathyGen.LARGOPLANO/(-2*alcance));
-		for (int i = 1; i < MathyGen.ANCHOPLANO; i++) {
+		for (int i = 1; i < ancho; i++) {
 			double valx=(2*alcance/MathyGen.ANCHOPLANO)*i-alcance+traslX;
 			double valy=computarValor(valx);
 			int h=(int)((valy-alcance-traslY)*MathyGen.LARGOPLANO/(-2*alcance));
@@ -52,6 +58,9 @@ public class Polinomio extends Funcion {
 			h1=h;
 		}
 	}
+	/**
+	 * Computa el valor del polinomio para un x
+	 */
 	@Override
 	public double computarValor(double x) {
 		double valy=coeficientes.get(coeficientes.size()-1);
@@ -136,21 +145,12 @@ public class Polinomio extends Funcion {
 			parsearPolinomio(i,a);
 		}
 	}
-	@Override
-	public String toString() {
-		DecimalFormat df=new DecimalFormat("0.00");
-		String nim=""+df.format(coeficientes.get(0));
-		for (int i = 1; i <coeficientes.size() ; i++) {
-			if(coeficientes.get(i)!=0){
-				if(coeficientes.get(i)<0){
-					nim=nim+df.format(coeficientes.get(i))+"x^"+i;
-				}else{
-					nim=nim+"+"+df.format(coeficientes.get(i))+"x^"+i;
-				}
-			}
-		}
-		return nim;
-	}
+	/**
+	 * Compara este polinomio con g2 por medio de sus coeficientes
+	 * @param g2
+	 * @return 1 si g2 es de menor grado que this
+	 * 1 si son de igual grado y this tiene algun coeficiente mayor revisando de manera descendente
+	 */
 	public int comparar(Polinomio g2) {
 		double dif=0;
 		if(coeficientes.size()==g2.getCoeficientes().size()){
@@ -170,5 +170,27 @@ public class Polinomio extends Funcion {
 			}
 		}
 		return (int)dif;
+	}
+	@Override
+	public String toString() {
+		DecimalFormat df=new DecimalFormat("0.00");
+		String nim=""+df.format(coeficientes.get(0));
+		for (int i = 1; i <coeficientes.size() ; i++) {
+			if(coeficientes.get(i)!=0){
+				if(coeficientes.get(i)<0){
+					nim=nim+df.format(coeficientes.get(i))+"x^"+i;
+				}else{
+					nim=nim+"+"+df.format(coeficientes.get(i))+"x^"+i;
+				}
+			}
+		}
+		return nim;
+	}
+	public ArrayList<Double> getCoeficientes() {
+		return coeficientes;
+	}
+
+	public void setCoeficientes(ArrayList<Double> coeficientes) {
+		this.coeficientes = coeficientes;
 	}
 }

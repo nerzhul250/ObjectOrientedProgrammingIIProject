@@ -72,6 +72,8 @@ public class DialogoAgregarFuncion extends JDialog implements ActionListener{
 			String fun=(String) funciones.getSelectedItem();
 			if(fun.equals("Polinomio")){
 				principal.agregarFuncion(txtAgrFun.getText(),jccPaleta.getColor(),grosor.getSelectedIndex(),MathyGen.TIPOPOLINOMIO);
+			}else if(fun.equals("Trigonometrico")){
+				principal.agregarFuncion(txtAgrFun.getText(),jccPaleta.getColor(),grosor.getSelectedIndex(),MathyGen.TRIGONOMETRICO);
 			}
 			dispose();
 		}

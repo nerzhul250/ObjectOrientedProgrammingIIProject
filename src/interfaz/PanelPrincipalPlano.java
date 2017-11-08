@@ -1,12 +1,14 @@
 package interfaz;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 import mundo.Funcion;
 import mundo.MathyGen;
 import mundo.Punto;
+import mundo.Region;
 
 public class PanelPrincipalPlano extends JPanel{
 	private PanelPlanoxy ppxy;
@@ -32,5 +34,20 @@ public class PanelPrincipalPlano extends JPanel{
 	}
 	public void refrescarPlano() {
 		ppxy.repaint();;
+	}
+	public void agregarRegion(Region region) {
+		pod.agregarRegion(region);
+	}
+
+	public void refrescarListaFunciones(Funcion raizFuncion) {
+		pod.refrescarListaFunciones(raizFuncion);
+	}
+
+	public void refrescarListaRegiones(ArrayList<Region> listaRegiones) {
+		pod.refrescarListaRegiones(listaRegiones);
+	}
+
+	public void refrescarListaPuntos(Punto primerPunto) {
+		pod.refrescarListaPuntos(primerPunto);
 	}
 }

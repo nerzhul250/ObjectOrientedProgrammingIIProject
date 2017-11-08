@@ -3,21 +3,36 @@ package mundo;
 import java.awt.Color;
 import java.awt.Component;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class MathyGen {
-
+	
+	public final static String RUTA_REGION_GUARDADA="./data/EstadoGraficadora/listaRegion.mat";
+	public final static String RUTA_FUNCION_GUARDADA="./data/EstadoGraficadora/funcionRaiz.mat";
+	public final static String RUTA_PUNTOS_GUARDADA="./data/EstadoGraficadora/puntos.txt";
 	public final static String RUTA_MATRIZ_GIGANTE_1="./data/matricesGigantes/MATRIZ11.txt";
 	public final static String RUTA_MATRIZ_GIGANTE_2="./data/matricesGigantes/MATRIZ2.txt";
 
+	public static String getRutaMatrizGigante2() {
+		return RUTA_MATRIZ_GIGANTE_2;
+	}
+	
 	public final static int ANCHOPLANO =625;
 	public final static int LARGOPLANO =625;
 	
+	public static final int TRIGONOMETRICO = 1;
 	public final static int TIPOPOLINOMIO=3;
 
 	public long tiempo;
@@ -30,6 +45,7 @@ public class MathyGen {
 	private SistemaLineal historialSistema;
 	
 
+<<<<<<< HEAD
 	public Circunferencia darCirculo() {
 		return circulo;
 	}
@@ -64,6 +80,8 @@ public class MathyGen {
 		return agregado;
 	}
 
+=======
+>>>>>>> a935045a4ac43620bdffb0ef2ff36153067f8c0b
 	public MathyGen(){
 //		try {
 //			crearMatrizGigante1();
@@ -77,12 +95,10 @@ public class MathyGen {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		raizFuncion=null;
 		objetosDibujables=new ArrayList<Dibujable>();
 		double[][]m1=new double[1][1];
 		sistemaLineal= new SistemaLineal(m1, null);
 	}
-	
 	public SistemaLineal darSistemaLineal(){
 		return sistemaLineal;
 	}
@@ -117,6 +133,7 @@ public class MathyGen {
 				sistemaLineal.modificarValorMatrizProducto(i,k, multiplicacion);
 			}
 		}
+<<<<<<< HEAD
 	}
 	
 
@@ -164,6 +181,9 @@ public class MathyGen {
 		}
 	}
 	
+=======
+	}	
+>>>>>>> a935045a4ac43620bdffb0ef2ff36153067f8c0b
 	public void cargarMatricesGigantes() throws IOException{
 		sistemaLineal=new SistemaLineal(cargarMatrizGigante1(), cargarMatrizGigante2());
 	}
@@ -250,27 +270,91 @@ public class MathyGen {
 		log.close();
 		System.out.println("terminado 2");
 	}
-	
-	public void agregarObjetoDibujable(Dibujable d){
-		if(!objetosDibujables.contains(d)){
-			objetosDibujables.add(d);
-		}
-	}
-	
-	public void eliminarObjetoDibujable(Dibujable d){
-		if(objetosDibujables.contains(d)){
-			objetosDibujables.remove(d);
-		}
-	}
-	
-	public ArrayList<Dibujable> darObjetosDibujables() {
-		return objetosDibujables;
-	}
-	
 	public double[][] darMatrizProducto() {
 		return sistemaLineal.darMatrizProducto();
 	}
-
+	public Punto getPrimerPunto() {
+		return primerPunto;
+	}
+	public void setPrimerPunto(Punto primerPunto) {
+		this.primerPunto = primerPunto;
+	}
+	public Funcion getRaizFuncion() {
+		return raizFuncion;
+	}
+	public void setRaizFuncion(Funcion raizFuncion) {
+		this.raizFuncion = raizFuncion;
+	}
+	public ArrayList<Region> getListaRegiones() {
+		return listaRegiones;
+	}
+	public Circunferencia darCirculo() {
+		return circulo;
+	}
+	public void modificarCirculo(Circunferencia circulo) {
+		this.circulo = circulo;
+	}
+	public ArrayList<Dibujable> darObjetosDibujables() {
+		return objetosDibujables;
+	}
+	public Funcion agregarFuncion(String form, Color color, int grosor, int tipo) throws FuncionYaExisteException{
+		Funcion fun=null;
+		switch (tipo) {
+		case 1:
+			fun=new Trigonometrico(form);
+			break;
+		case 3:
+			fun=new Polinomio(form);
+			break;
+		}
+		fun.setColor(color);
+		fun.setGrosor(grosor);
+		fun.setForma(form);
+		if(estaEnElArbol(fun,raizFuncion)!=null) throw new FuncionYaExisteException(fun.getForma());
+		agregarFuncionAlArbol(fun,raizFuncion);
+		return fun;
+	}
+	public Funcion estaEnElArbol(Funcion f,Funcion actual){
+		if(raizFuncion==null){
+			return null;
+		}else if(actual!=null && actual.compareTo(f)==0){
+			return actual;
+		}else if(actual!=null){
+			Funcion fa=estaEnElArbol(f,actual.getFunDe());
+			Funcion fe=estaEnElArbol(f,actual.getFunIz());
+			if(fa==null && fe==null){
+				return null;
+			}else{
+				if(fa!=null){
+					return fa;
+				}else{
+					return fe;
+				}
+			}
+		}
+		return null;
+	}
+	public void agregarFuncionAlArbol(Funcion f,Funcion actual) throws FuncionYaExisteException{
+		if(raizFuncion==null){
+			raizFuncion=f;
+		}else{
+			if(f.compareTo(actual)==-1){
+				if(actual.getFunIz()==null){
+					actual.setFunIz(f);
+					f.setPadre(actual);
+				}else{
+					agregarFuncionAlArbol(f,actual.getFunIz());
+				}
+			}else if(f.compareTo(actual)==1){
+				if(actual.getFunDe()==null){
+					actual.setFunDe(f);
+					f.setPadre(actual);
+				}else{
+					agregarFuncionAlArbol(f,actual.getFunDe());
+				}
+			}
+		}
+	}
 	public Punto agregarPunto(double x, double y) {
 		Punto p=new Punto(x,y);
 		if(primerPunto==null){
@@ -281,5 +365,136 @@ public class MathyGen {
 		}
 		agregarObjetoDibujable(p);
 		return p;
+	}
+	public Region agregarRegion(ArrayList<Punto> frontera, Color color) {
+		Region r=new Region(frontera, color);
+		listaRegiones.add(r);
+		return r;
+	}
+	public void agregarObjetoDibujable(Dibujable d){
+		if(!objetosDibujables.contains(d)){
+			objetosDibujables.add(d);
+		}
+	}
+	public void eliminarObjetoDibujable(Dibujable d){
+		if(objetosDibujables.contains(d)){
+			objetosDibujables.remove(d);
+		}
+	}
+	public boolean[] cargarEstado() throws Exception{
+		boolean[] res=new boolean[3];
+		File f=new File(MathyGen.RUTA_PUNTOS_GUARDADA);
+		if(f.exists()){
+			BufferedReader br= new BufferedReader(new FileReader(f));
+			String a=br.readLine();
+			while(a!=null && !a.isEmpty()){
+				String[] b=a.split("\\s+");
+				double x=Double.parseDouble(b[0]);
+				double y=Double.parseDouble(b[1]);
+				agregarPunto(x, y);
+				a=br.readLine();
+			}
+			res[0]=true;
+			br.close();
+		}else{
+			primerPunto=null;
+		}
+		f=new File(MathyGen.RUTA_FUNCION_GUARDADA);
+		if(f.exists()){
+			ObjectInputStream ois=new ObjectInputStream(new FileInputStream(MathyGen.RUTA_FUNCION_GUARDADA));
+			raizFuncion=(Funcion)ois.readObject();
+			res[1]=true;
+		}else{
+			raizFuncion=null;
+		}
+		f=new File(MathyGen.RUTA_REGION_GUARDADA);
+		if(f.exists()){
+			ObjectInputStream ois=new ObjectInputStream(new FileInputStream(MathyGen.RUTA_REGION_GUARDADA));
+			listaRegiones=(ArrayList<Region>)ois.readObject();
+			res[2]=true;
+		}else{
+			listaRegiones=new ArrayList<Region>();
+		}
+		return res;
+	}
+	public void guardarEstado() throws IOException{
+		if(primerPunto!=null){
+			BufferedWriter bw=new BufferedWriter(new FileWriter(MathyGen.RUTA_PUNTOS_GUARDADA));
+			Punto current=primerPunto;
+			while(current!=null){
+				bw.write(current.getX()+" "+current.getY()+"\n");
+				current=current.getSgtPunto();
+			}
+			bw.close();
+		}
+		ObjectOutputStream oos=null;
+		if(raizFuncion!=null){
+			oos=new ObjectOutputStream(new FileOutputStream(MathyGen.RUTA_FUNCION_GUARDADA));
+			oos.writeObject(raizFuncion);
+			oos.close();
+		}
+		if(listaRegiones.size()!=0){
+			oos=new ObjectOutputStream(new FileOutputStream(MathyGen.RUTA_REGION_GUARDADA));
+			oos.writeObject(listaRegiones);
+			oos.close();
+		}
+	}
+
+	public void organizarRegiones() {
+		for (int i = 0; i < listaRegiones.size()-1; i++) {
+			Region r=listaRegiones.get(i);
+			int cual=i;
+			for (int j = i+1; j < listaRegiones.size(); j++) {
+				if(listaRegiones.get(j).compareTo(r)<0){
+					r=listaRegiones.get(j);
+					cual=j;
+				}
+			}
+			Region ra=listaRegiones.get(i);
+			listaRegiones.set(i,r);
+			listaRegiones.set(cual,ra);
+		}
+	}
+	public void eliminarPunto(Punto d) {
+		Punto before=null;
+		Punto current=getPrimerPunto();
+		if(current==d){
+			this.setPrimerPunto(current.getSgtPunto());
+		}else{
+			before=current;
+			current=current.getSgtPunto();
+			while(current!=null){
+				if(current==d){
+					before.setSgtPunto(current.getSgtPunto());
+					break;
+				}
+				before=current;
+				current=current.getSgtPunto();
+			}
+		}
+	}
+	public void recorridoDeAgregacion(Funcion A,Funcion laRaiz) {
+		try {
+			agregarFuncionAlArbol(A,laRaiz);
+		} catch (FuncionYaExisteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(laRaiz==null){
+			laRaiz=getRaizFuncion();
+		}
+		Funcion de=A.getFunDe();
+		Funcion iz=A.getFunIz();
+		A.setFunDe(null);
+		A.setFunIz(null);
+		if(de!=null){
+			recorridoDeAgregacion(de,laRaiz);
+		}
+		if(iz!=null){
+			recorridoDeAgregacion(iz,laRaiz);
+		}		
+	}
+	public void eliminarRegion(Region d) {
+		getListaRegiones().remove(d);
 	}
 }

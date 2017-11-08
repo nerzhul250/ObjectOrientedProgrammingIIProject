@@ -34,6 +34,17 @@ public class PanelObjDibFuncion extends JPanel implements MouseListener {
 	public void agregarFuncion(Funcion f){
 		listModel.addElement(f);
 	}
+	public void refrescarLista(Funcion raiz){
+		if(raiz!=null){
+			agregarFuncion(raiz);
+			if(raiz.getFunDe()!=null){
+				refrescarLista(raiz.getFunDe());
+			}
+			if(raiz.getFunIz()!=null){
+				refrescarLista(raiz.getFunIz());
+			}
+		}
+	}
 	public Funcion darFuncionSeleccionado() {
 		Funcion p=listaFuncion.getSelectedValue();
 		return p;
@@ -41,27 +52,14 @@ public class PanelObjDibFuncion extends JPanel implements MouseListener {
 	public void removerTodosLosElementos(){
 		listModel.removeAllElements();
 	}
-	/**
-	 * <pre>:raiz!=null, no hay ningun elemento en listModel 
-	 * @param raiz
-	 */
-	public void refrescarLista(Funcion raiz){
-		agregarFuncion(raiz);;
-		if(raiz.getFunDe()!=null){
-			refrescarLista(raiz.getFunDe());
-		}
-		if(raiz.getFunIz()!=null){
-			refrescarLista(raiz.getFunIz());
-		}
-	}
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton()==MouseEvent.BUTTON3){
 			if(listaFuncion.isSelectionEmpty()){
 				PopUpMenuFuncionGen menu = new PopUpMenuFuncionGen(principal);
-				menu.show(this,e.getX(),e.getY());
+				menu.show(listaFuncion,e.getX(),e.getY());
 			}else{
 				PopUpMenuFuncionPar menu = new PopUpMenuFuncionPar(principal,darFuncionSeleccionado());
-				menu.show(this,e.getX(),e.getY());
+				menu.show(listaFuncion,e.getX(),e.getY());
 				listaFuncion.clearSelection();
 			}
 		}

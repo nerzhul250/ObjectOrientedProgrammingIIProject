@@ -14,8 +14,7 @@ public abstract class Funcion implements Dibujable, Computable, Comparable, Seri
 	private int nivelDeBelleza;
 	private Funcion funIz;
 	private Funcion funDe;
-	private Funcion funDad;
-	
+	private Funcion padre;
 	
 	public String getForma() {
 		return forma;
@@ -36,15 +35,6 @@ public abstract class Funcion implements Dibujable, Computable, Comparable, Seri
 	public Color getColor() {
 		return color;
 	}
-
-	public Funcion getFunDad() {
-		return funDad;
-	}
-
-	public void setFunDad(Funcion funDad) {
-		this.funDad = funDad;
-	}
-
 	public void setColor(Color color) {
 		this.color = color;
 	}
@@ -79,6 +69,13 @@ public abstract class Funcion implements Dibujable, Computable, Comparable, Seri
 
 	public void setGrosor(double grosor) {
 		this.grosor = grosor;
+	}
+	public Funcion getPadre() {
+		return padre;
+	}
+
+	public void setPadre(Funcion padre) {
+		this.padre = padre;
 	}
 	
 	public int compareTo(Object o) {

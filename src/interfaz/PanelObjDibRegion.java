@@ -41,23 +41,19 @@ public class PanelObjDibRegion extends JPanel implements MouseListener {
 	public void removerTodosLosElementos(){
 		listModel.removeAllElements();
 	}
-	/**
-	 * <pre>:regiones!=null, no hay ningun elemento en listModel
-	 * @param regiones
-	 */
-	public void refrescarLista(ArrayList<Region>regiones){
+	public void refrescarLista(ArrayList<Region> regiones){
 		for (int i = 0; i < regiones.size(); i++) {
-			listModel.addElement(regiones.get(i));
+			agregarRegion(regiones.get(i));
 		}
 	}
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton()==MouseEvent.BUTTON3){
 			if(listaRegion.isSelectionEmpty()){
-//				PopUpMenuFuncionGen menu = new PopUpMenuRegionGen(principal);
-//				menu.show(this,e.getX(),e.getY());
+				PopUpMenuRegionGen menu = new PopUpMenuRegionGen(principal);
+				menu.show(listaRegion,e.getX(),e.getY());
 			}else{
 				PopUpMenuRegionPar menu = new PopUpMenuRegionPar(principal,darRegionSeleccionado());
-				menu.show(this,e.getX(),e.getY());
+				menu.show(listaRegion,e.getX(),e.getY());
 				listaRegion.clearSelection();
 			}
 		}

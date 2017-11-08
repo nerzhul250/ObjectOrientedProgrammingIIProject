@@ -1,37 +1,37 @@
 package interfaz;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import mundo.Funcion;
-import mundo.Region;
+import mundo.MathyGen;
+import mundo.Punto;
 
-public class PopUpMenuRegionPar extends JPopupMenu implements ActionListener {
-	
+public class PopUpMenuPunto1 extends JPopupMenu implements ActionListener{
+
 	public final static String DIBUJAR="DIBUJAR";
 	public final static String BORRAR="BORRAR";
 	public final static String ELIMINAR="ELIMINAR";
-
 	
 	private JMenuItem itDibujar;
 	private JMenuItem itBorrar;
 	private JMenuItem itEliminar;	
-
-	
-	private Region r;
 	
 	private InterfazMathy principal;
-    
-	public PopUpMenuRegionPar(InterfazMathy principal,Region region) {
-		r=region;
+	
+	private Punto punto;
+	public PopUpMenuPunto1(InterfazMathy principal,Punto punto) {
 		this.principal=principal;
+		this.punto=punto;
 		
-        itDibujar = new JMenuItem("Dibujar Region");
-        itBorrar=new JMenuItem("Borrar Region");
-        itEliminar =new JMenuItem("Eliminar Region");
+        itDibujar = new JMenuItem("Dibujar punto");
+        itBorrar =new JMenuItem("Borrar punto");
+        itEliminar =new JMenuItem("Eliminar punto");
         
         
         itDibujar.addActionListener(this);
@@ -43,19 +43,18 @@ public class PopUpMenuRegionPar extends JPopupMenu implements ActionListener {
         itEliminar.addActionListener(this);
         itEliminar.setActionCommand(ELIMINAR);
         
-        
         add(itDibujar);
         add(itBorrar);
         add(itEliminar);
 	}
-
+	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals(DIBUJAR)){
-			principal.agregarObjetoDibujable(r);
+			principal.agregarObjetoDibujable(punto);
 		}else if(e.getActionCommand().equals(BORRAR)){
-			principal.borrarObjetoDibujable(r);
+			principal.borrarObjetoDibujable(punto);
 		}else if(e.getActionCommand().equals(ELIMINAR)){
-			principal.eliminarObjetoDibujable(r);
+			principal.eliminarObjetoDibujable(punto);
 		}
 	}
 }
