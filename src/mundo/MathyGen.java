@@ -45,12 +45,12 @@ public class MathyGen {
 	private SistemaLineal historialSistema;
 	
 
-<<<<<<< HEAD
-	public Circunferencia darCirculo() {
+
+	public Circunferencia darCirculo1() {
 		return circulo;
 	}
 
-	public void modificarCirculo(Circunferencia circulo) {
+	public void modificarCirculo1(Circunferencia circulo) {
 		this.circulo = circulo;
 	}
 	/**
@@ -72,16 +72,84 @@ public class MathyGen {
 		}else{
 			if(historialSistema==null){
 				historialSistema= s;
+				agregado=true;
 				s.modificarNombre(nombre);
 			}else{
-				//TODO
+				//TODO revisar
+				s.modificarNombre(nombre);
+				SistemaLineal actual= historialSistema;
+				while(actual.darSiguiente()!= null&&!actual.darNombre().equals(nombre)){
+					actual= actual.darSiguiente();
+				}
+				if(actual.darNombre().equals(nombre)){
+					agregado=false;
+				}else{
+					actual.modificarSiguiente(s);
+					s.modificarAnterior(actual);
+					agregado =true;
+				}
 			}
 		}
 		return agregado;
 	}
-
-=======
->>>>>>> a935045a4ac43620bdffb0ef2ff36153067f8c0b
+	//TODO REVISAR
+	public void eliminarSistemaLinealDelHistorial(String nombre) throws Exception{
+		SistemaLineal actual= historialSistema;
+		if(actual!= null&&historialSistema.darNombre().equals(nombre)){
+			if(historialSistema.darSiguiente()!= null){
+				historialSistema.modificarAnterior(null);
+			}
+			historialSistema= historialSistema.darSiguiente();
+		}else if(actual!= null){
+			while(actual!= null&&!actual.darNombre().equals(nombre)){
+				actual=actual.darSiguiente();
+			}
+			if(actual!= null){
+				if(actual.darSiguiente()!= null){
+					actual.darSiguiente().modificarAnterior(actual.darAnterior());
+				}
+				actual.darAnterior().modificarSiguiente(actual.darSiguiente());
+			}else{
+				throw new Exception("No se encontró el sistema lineal");
+			}
+		}else{
+			throw new Exception("No se encontró el sistema lineal");
+		}
+	}
+	
+	public void guardarHistorialSistemaLineal() throws IOException{
+		File ar=new File("./data/historialSistema/historialSistema.txt");
+		try {
+			ObjectOutputStream salida= new ObjectOutputStream(new FileOutputStream(ar));
+			salida.writeObject(historialSistema);
+			salida.close();
+		} catch (FileNotFoundException e) {
+			throw new FileNotFoundException("No se encontró el directorio para guardar el historial");
+		} catch (IOException e) {
+			throw new IOException("Error al guardar el historial de sistemas lineales");
+		}
+	}
+	
+	public void cargarHistorialSistemaLineal() throws IOException, ClassNotFoundException{
+		File ar = new File("./data/historialSistema/historialSistema.txt");
+		if(ar.exists()){
+			try {
+				ObjectInputStream entrada= new ObjectInputStream(new FileInputStream(ar));
+				historialSistema= (SistemaLineal)entrada.readObject();
+				entrada.close();
+			} catch (FileNotFoundException e) {
+				throw new FileNotFoundException("Error al tratar de encontrar el archivo para el historial"
+						+ "de sistemas lineales");
+			} catch (IOException e) {
+				throw new IOException("Error al leer el archivo de historial de sistemas");
+			} catch (ClassNotFoundException e) {
+				throw new ClassNotFoundException("Error al asignar el historial "
+						+ "contacte por favor con algún técnico");
+			}
+		}
+	}
+	
+	
 	public MathyGen(){
 //		try {
 //			crearMatrizGigante1();
@@ -133,11 +201,11 @@ public class MathyGen {
 				sistemaLineal.modificarValorMatrizProducto(i,k, multiplicacion);
 			}
 		}
-<<<<<<< HEAD
+
 	}
 	
 
-	public Funcion agregarFuncion(String form, Color color, int grosor, int tipo) throws FuncionYaExisteException{
+	public Funcion agregarFuncion1(String form, Color color, int grosor, int tipo) throws FuncionYaExisteException{
 		Funcion fun=null;
 		switch (tipo) {
 		case 3:
@@ -147,21 +215,21 @@ public class MathyGen {
 		fun.setColor(color);
 		fun.setGrosor(grosor);
 		fun.setForma(form);
-		if(estaEnElArbol(fun,raizFuncion)) throw new FuncionYaExisteException(fun.getForma());
-		agregarFuncionAlArbol(fun,raizFuncion);
+		if(estaEnElArbol1(fun,raizFuncion)) throw new FuncionYaExisteException(fun.getForma());
+		agregarFuncionAlArbol1(fun,raizFuncion);
 		return fun;
 	}
-	public boolean estaEnElArbol(Funcion f,Funcion actual){
+	public boolean estaEnElArbol1(Funcion f,Funcion actual){
 		if(raizFuncion==null){
 			return false;
 		}else if(actual!=null && actual.compareTo(f)==0){
 			return true;
 		}else if(actual!=null){
-			return estaEnElArbol(f,actual.getFunDe()) || estaEnElArbol(f,actual.getFunIz());
+			return estaEnElArbol1(f,actual.getFunDe()) || estaEnElArbol1(f,actual.getFunIz());
 		}
 		return false;
 	}
-	public void agregarFuncionAlArbol(Funcion f,Funcion actual) throws FuncionYaExisteException{
+	public void agregarFuncionAlArbol1(Funcion f,Funcion actual) throws FuncionYaExisteException{
 		if(raizFuncion==null){
 			raizFuncion=f;
 		}else{
@@ -169,21 +237,19 @@ public class MathyGen {
 				if(actual.getFunIz()==null){
 					actual.setFunIz(f);
 				}else{
-					agregarFuncionAlArbol(f,actual.getFunIz());
+					agregarFuncionAlArbol1(f,actual.getFunIz());
 				}
 			}else if(f.compareTo(actual)==1){
 				if(actual.getFunDe()==null){
 					actual.setFunDe(f);
 				}else{
-					agregarFuncionAlArbol(f,actual.getFunDe());
+					agregarFuncionAlArbol1(f,actual.getFunDe());
 				}
 			}
 		}
 	}
-	
-=======
-	}	
->>>>>>> a935045a4ac43620bdffb0ef2ff36153067f8c0b
+
+		
 	public void cargarMatricesGigantes() throws IOException{
 		sistemaLineal=new SistemaLineal(cargarMatrizGigante1(), cargarMatrizGigante2());
 	}
@@ -310,8 +376,9 @@ public class MathyGen {
 		fun.setColor(color);
 		fun.setGrosor(grosor);
 		fun.setForma(form);
-		if(estaEnElArbol(fun,raizFuncion)!=null) throw new FuncionYaExisteException(fun.getForma());
-		agregarFuncionAlArbol(fun,raizFuncion);
+		//TODO
+//		if(estaEnElArbol1(fun,raizFuncion)!=null) throw new FuncionYaExisteException(fun.getForma());
+		agregarFuncionAlArbol1(fun,raizFuncion);
 		return fun;
 	}
 	public Funcion estaEnElArbol(Funcion f,Funcion actual){
@@ -320,17 +387,18 @@ public class MathyGen {
 		}else if(actual!=null && actual.compareTo(f)==0){
 			return actual;
 		}else if(actual!=null){
-			Funcion fa=estaEnElArbol(f,actual.getFunDe());
-			Funcion fe=estaEnElArbol(f,actual.getFunIz());
-			if(fa==null && fe==null){
-				return null;
-			}else{
-				if(fa!=null){
-					return fa;
-				}else{
-					return fe;
-				}
-			}
+			//TODO
+//			Funcion fa=estaEnElArbol1(f,actual.getFunDe());
+//			Funcion fe=estaEnElArbol1(f,actual.getFunIz());
+//			if(fa==null && fe==null){
+//				return null;
+//			}else{
+//				if(fa!=null){
+//					return fa;
+//				}else{
+//					return fe;
+//				}
+//			}
 		}
 		return null;
 	}
@@ -343,14 +411,14 @@ public class MathyGen {
 					actual.setFunIz(f);
 					f.setPadre(actual);
 				}else{
-					agregarFuncionAlArbol(f,actual.getFunIz());
+					agregarFuncionAlArbol1(f,actual.getFunIz());
 				}
 			}else if(f.compareTo(actual)==1){
 				if(actual.getFunDe()==null){
 					actual.setFunDe(f);
 					f.setPadre(actual);
 				}else{
-					agregarFuncionAlArbol(f,actual.getFunDe());
+					agregarFuncionAlArbol1(f,actual.getFunDe());
 				}
 			}
 		}
@@ -475,7 +543,7 @@ public class MathyGen {
 	}
 	public void recorridoDeAgregacion(Funcion A,Funcion laRaiz) {
 		try {
-			agregarFuncionAlArbol(A,laRaiz);
+			agregarFuncionAlArbol1(A,laRaiz);
 		} catch (FuncionYaExisteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -47,7 +47,6 @@ public class InterfazMathy extends JFrame{
 	private VentanaMatrizB ventanaMaB;
 	public InterfazMathy(){
 		setTitle("MathyGen");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		mundo=new MathyGen();
 		ppp=new PanelPrincipalPlano(this,mundo);
@@ -75,10 +74,17 @@ public class InterfazMathy extends JFrame{
 		jtp.add(psl,"Sistema lineal");
 		
 		JMenuBar miMenuBar = new JMenuBar();
-		miMenuBar.add(new MenuArchivo(this));
+//		miMenuBar.add(new MenuArchivo(this));
+		//TODO
 		miMenuBar.add(new MenuVer(this));
 		setJMenuBar(miMenuBar);		
-		
+		try {
+			mundo.cargarHistorialSistemaLineal();
+		} catch (ClassNotFoundException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
 		add(jtp);
 		pack();
 	}
@@ -92,6 +98,14 @@ public class InterfazMathy extends JFrame{
 	}
 	public int darTamanoMatrizB(){
 		return mundo.darSistemaLineal().darMatrizCoeficientes1()[0].length;
+	}
+	@Override
+	public void dispose(){
+		try {
+			mundo.guardarHistorialSistemaLineal();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
 	}
 	public void iniciarProductoEntreMatrices(){
 		try {

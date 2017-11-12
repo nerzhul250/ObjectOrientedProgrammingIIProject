@@ -27,6 +27,9 @@ public class SistemaLineal {
 	public void modificarNombre(String n){
 		nombreSistema= n;
 	}
+	public String darNombre(){
+		return nombreSistema;
+	}
 
 	private int filaEjecutada;
 	private int columnaEjecutada;
