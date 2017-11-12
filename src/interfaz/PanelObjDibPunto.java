@@ -49,25 +49,25 @@ public class PanelObjDibPunto extends JPanel implements MouseListener {
 			current=current.getSgtPunto();
 		}
 	}
-	//TODO
-//	public void mouseClicked(MouseEvent e) {
-//		if(e.getButton()==MouseEvent.BUTTON3){
-//			if(!listaPunto.isSelectionEmpty()){
-//				ArrayList<Punto>puntos=darPuntosSeleccionados();
-//				if(puntos.size()==1){
-//					PopUpMenuPunto1 menu = new PopUpMenuPunto1(principal,puntos.get(0));
-//					menu.show(listaPunto,e.getX(),e.getY());
-//				}else if(puntos.size()==2){
-//					PopUpMenuPunto2 menu = new PopUpMenuPunto2(principal,puntos);
-//					menu.show(listaPunto,e.getX(),e.getY());					
-//				}else{
-//					PopUpMenuPuntos menu = new PopUpMenuPuntos(principal,puntos);
-//					menu.show(listaPunto,e.getX(),e.getY());
-//				}
-//				listaPunto.clearSelection();
-//			}
-//		}
-//	}
+	
+	public void mouseClicked(MouseEvent e) {
+		if(e.getButton()==MouseEvent.BUTTON3){
+			if(!listaPunto.isSelectionEmpty()){
+				ArrayList<Punto>puntos=darPuntosSeleccionados();
+				if(puntos.size()==1){
+					PopUpMenuPunto1 menu = new PopUpMenuPunto1(principal,puntos.get(0));
+					menu.show(listaPunto,e.getX(),e.getY());
+				}else if(puntos.size()==2){
+					PopUpMenuPunto2 menu = new PopUpMenuPunto2(principal,puntos);
+					menu.show(listaPunto,e.getX(),e.getY());					
+				}else{
+					PopUpMenuPuntos menu = new PopUpMenuPuntos(principal,puntos);
+					menu.show(listaPunto,e.getX(),e.getY());
+				}
+				listaPunto.clearSelection();
+			}
+		}
+	}
 
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -85,11 +85,6 @@ public class PanelObjDibPunto extends JPanel implements MouseListener {
 	}
 
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}

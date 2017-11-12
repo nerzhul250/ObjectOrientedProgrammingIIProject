@@ -74,8 +74,7 @@ public class InterfazMathy extends JFrame{
 		jtp.add(psl,"Sistema lineal");
 		
 		JMenuBar miMenuBar = new JMenuBar();
-//		miMenuBar.add(new MenuArchivo(this));
-		//TODO
+		miMenuBar.add(new MenuArchivo(this));
 		miMenuBar.add(new MenuVer(this));
 		setJMenuBar(miMenuBar);		
 		try {
