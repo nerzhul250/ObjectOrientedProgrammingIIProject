@@ -14,6 +14,7 @@ public class MenuArchivo extends JMenu implements ActionListener{
 	
 	private InterfazMathy principal;
 	
+	
 	public MenuArchivo(InterfazMathy ventana) {
 		super("Archivo");
 		
