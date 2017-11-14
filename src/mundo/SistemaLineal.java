@@ -1,8 +1,9 @@
 package mundo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class SistemaLineal {
+public class SistemaLineal implements Serializable{
 
 	private double[][] matrizCoeficientes1;
 	private double[] matrizB;

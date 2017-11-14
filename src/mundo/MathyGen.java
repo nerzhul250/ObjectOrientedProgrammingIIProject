@@ -149,6 +149,18 @@ public class MathyGen {
 		}
 	}
 	
+	public SistemaLineal buscarSistemaLineal(String nombre){
+		SistemaLineal actual= historialSistema;
+		if(actual!= null){
+			if(!actual.darNombre().equals(nombre)){
+				while(actual!= null&& !actual.darNombre().equals(nombre)){
+					actual= actual.darSiguiente();
+				}
+			}
+		}
+		return actual;
+	}
+	
 	
 	public MathyGen(){
 //		try {

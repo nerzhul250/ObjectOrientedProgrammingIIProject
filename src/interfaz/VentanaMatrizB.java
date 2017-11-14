@@ -19,6 +19,7 @@ public class VentanaMatrizB extends JFrame implements ActionListener{
 	public VentanaMatrizB(InterfazMathy p){
 		principal=p;
 		btnCalcSolucion=new JButton("Calcular solución");
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		btnCalcSolucion.setActionCommand(CAL_SOLUCION);
 		btnCalcSolucion.addActionListener(this);
 		int tamano=principal.darTamanoMatrizB();

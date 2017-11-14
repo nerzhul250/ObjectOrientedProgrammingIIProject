@@ -34,8 +34,10 @@ import mundo.FuncionYaExisteException;
 import mundo.MathyGen;
 import mundo.MatrizNoInvertibleException;
 import mundo.NoEsNumeroException;
+import mundo.NombreFaltanteSistemaLinealException;
 import mundo.Punto;
 import mundo.Region;
+import mundo.SistemaLineal;
 
 public class InterfazMathy extends JFrame{
 	private PanelPrincipalPlano ppp;
@@ -48,11 +50,11 @@ public class InterfazMathy extends JFrame{
 	public InterfazMathy(){
 		setTitle("MathyGen");
 		
+		
 		mundo=new MathyGen();
 		ppp=new PanelPrincipalPlano(this,mundo);
 		psl=new PanelSistemaLineal(this);
-
-		
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		try {
 			boolean[] dec=mundo.cargarEstado();
 			if(dec[0]){
@@ -98,14 +100,48 @@ public class InterfazMathy extends JFrame{
 	public int darTamanoMatrizB(){
 		return mundo.darSistemaLineal().darMatrizCoeficientes1()[0].length;
 	}
+
 	@Override
-	public void dispose(){
+	public void dispose() {
 		try {
 			mundo.guardarHistorialSistemaLineal();
 		} catch (IOException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+		super.dispose();
+	}
+	
+	public void guardarSistema(String nombre){
+		double[][] m1;
+		try {
+			m1 = psl.darMatriz1();
+			double[][] m2=psl.darMatriz2();
+			mundo.iniciarSistemaLineal(m1, m2);
+			boolean agregado=mundo.agregarSistemaLinealAlHistorial(mundo.darSistemaLineal(), nombre);
+			if(agregado)
+				JOptionPane.showMessageDialog(this, "Guardado exitosamente");
+			else
+				JOptionPane.showMessageDialog(this, "El nombre ya existe");
+		} catch (NoEsNumeroException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage()+e.darIndice());
+		} catch (NombreFaltanteSistemaLinealException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
 	}
+	
+	public void buscarSistema(String nombre){
+		SistemaLineal buscado= mundo.buscarSistemaLineal(nombre);
+		if(buscado!= null){
+			psl.inicializarMatrices(buscado.darMatrizCoeficientes1().length);
+			psl.mostrarMatriz1(buscado.darMatrizCoeficientes1());
+			psl.mostrarMatriz2(buscado.darMatrizCoeficientes2());
+			pack();
+		}else{
+			JOptionPane.showMessageDialog(this, "Sistema no encontrado");
+		}
+	}
+	
 	public void iniciarProductoEntreMatrices(){
 		try {
 			double[][] m1=psl.darMatriz1();
@@ -174,7 +210,6 @@ public class InterfazMathy extends JFrame{
 	}
 	public static void main(String[] args) {
 		InterfazMathy im=new InterfazMathy(); 
-		im.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		im.setVisible(true);
 		im.setResizable(false);
 	}
