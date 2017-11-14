@@ -50,6 +50,14 @@ public class Circunferencia extends CurvaParametrica {
 		}
 	}
 	
+	@Override
+	public String toString(){
+		String men="(x"+((super.darCentroX()<0)?"+"+super.darCentroX():"-"+super.darCentroX())+
+				")+(y"+((super.darCentroY()<0)?"+"+super.darCentroY():"-"+super.darCentroX())+"="+
+				(radio*radio);
+		return men;
+	}
+	
 	public String buscarNumero(int indice,String form, String num){
 		String devolver= num;
 		if(indice<form.length()){

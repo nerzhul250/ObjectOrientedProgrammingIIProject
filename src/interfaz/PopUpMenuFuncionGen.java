@@ -22,6 +22,7 @@ public class PopUpMenuFuncionGen extends JPopupMenu implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals(AGREGAR)){
 			principal.abrirDialogoAgregarFuncion();
+//			principal.abrirDialogoAgregarCurvaParametrica();
 		}
 	}
 }

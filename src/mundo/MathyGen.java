@@ -34,6 +34,8 @@ public class MathyGen {
 	
 	public static final int TRIGONOMETRICO = 1;
 	public final static int TIPOPOLINOMIO=3;
+	public final static int CIRCUNFERENCIA=2;
+	public final static int ELIPSE=4;
 
 	public long tiempo;
 	private Punto primerPunto;
@@ -41,18 +43,11 @@ public class MathyGen {
 	private ArrayList<Region> listaRegiones;
 	private SistemaLineal sistemaLineal;
 	private ArrayList<Dibujable>objetosDibujables;
-	private Circunferencia circulo;
 	private SistemaLineal historialSistema;
+	private ArrayList<CurvaParametrica> curvasParametricas;
 	
 
 
-	public Circunferencia darCirculo1() {
-		return circulo;
-	}
-
-	public void modificarCirculo1(Circunferencia circulo) {
-		this.circulo = circulo;
-	}
 	/**
 	 * agrega ordenadamente por nombre
 	 * @param s
@@ -75,7 +70,6 @@ public class MathyGen {
 				agregado=true;
 				s.modificarNombre(nombre);
 			}else{
-				//TODO revisar
 				s.modificarNombre(nombre);
 				SistemaLineal actual= historialSistema;
 				while(actual.darSiguiente()!= null&&!actual.darNombre().equals(nombre)){
@@ -92,7 +86,21 @@ public class MathyGen {
 		}
 		return agregado;
 	}
-	//TODO REVISAR
+	
+	public ArrayList<CurvaParametrica> darCurvasParametricas(){
+		return curvasParametricas;
+	}
+	public void añadirCurvaParametrica(CurvaParametrica a){
+		curvasParametricas.add(a);
+	}
+	public void eliminarCurvaParametrica(CurvaParametrica a){
+		for(int i =0;i<curvasParametricas.size();i++){
+			if(curvasParametricas.get(i)==a){
+				curvasParametricas.remove(i);
+				break;
+			}
+		}
+	}
 	public void eliminarSistemaLinealDelHistorial(String nombre) throws Exception{
 		SistemaLineal actual= historialSistema;
 		if(actual!= null&&historialSistema.darNombre().equals(nombre)){
@@ -166,13 +174,12 @@ public class MathyGen {
 //		try {
 //			crearMatrizGigante1();
 //		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 //		try {
 //			crearMatrizGigante2();
 //		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
+
 //			e.printStackTrace();
 //		}
 		objetosDibujables=new ArrayList<Dibujable>();
@@ -215,12 +222,23 @@ public class MathyGen {
 		}
 
 	}
+	//TODO INCOMPLETO
+	public CurvaParametrica agregarCurvaParametrica(String form, Color color, int tipo) throws FormulaParaParametrizarIncompleta{
+		CurvaParametrica cur=null;
+		switch(tipo){
+		case CIRCUNFERENCIA:
+			cur= new Circunferencia(form);
+			break;
+		}
+		cur.modificarColor(color);
+		return cur;
+	}
 	
 
 	public Funcion agregarFuncion1(String form, Color color, int grosor, int tipo) throws FuncionYaExisteException{
 		Funcion fun=null;
 		switch (tipo) {
-		case 3:
+		case TIPOPOLINOMIO:
 			fun=new Polinomio(form);
 			break;
 		}
@@ -308,7 +326,6 @@ public class MathyGen {
 		}
 		return matriz;
 	}
-	//TODO
 	public void crearMatrizGigante1() throws FileNotFoundException{
 		File aEscribir= new File(RUTA_MATRIZ_GIGANTE_1);
 		PrintWriter log= new PrintWriter(aEscribir);
@@ -328,7 +345,6 @@ public class MathyGen {
 		log.close();
 		System.out.println("terminado 1");
 	}
-	//TODO
 	public void crearMatrizGigante2() throws FileNotFoundException{
 		File aEscribir= new File(RUTA_MATRIZ_GIGANTE_2);
 		PrintWriter log= new PrintWriter(aEscribir);
@@ -365,12 +381,6 @@ public class MathyGen {
 	}
 	public ArrayList<Region> getListaRegiones() {
 		return listaRegiones;
-	}
-	public Circunferencia darCirculo() {
-		return circulo;
-	}
-	public void modificarCirculo(Circunferencia circulo) {
-		this.circulo = circulo;
 	}
 	public ArrayList<Dibujable> darObjetosDibujables() {
 		return objetosDibujables;
@@ -557,7 +567,6 @@ public class MathyGen {
 		try {
 			agregarFuncionAlArbol1(A,laRaiz);
 		} catch (FuncionYaExisteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if(laRaiz==null){

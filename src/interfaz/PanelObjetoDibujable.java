@@ -20,19 +20,25 @@ public class PanelObjetoDibujable extends JPanel{
 	private PanelObjDibFuncion podf;
 	private PanelObjDibRegion podr;
 	private PanelObjDibPunto podp;
-	
+	private PanelObjDibCurvaParametrica podc;
 	private InterfazMathy principal;
 	public PanelObjetoDibujable(InterfazMathy in){
 		principal=in;
-		setLayout(new GridLayout(3,1));
-		
+		setLayout(new BorderLayout());
+		JPanel aux= new JPanel();
+		aux.setLayout(new GridLayout(4,1));
 		podf=new PanelObjDibFuncion(principal);
 		podr=new PanelObjDibRegion(principal);
 		podp=new PanelObjDibPunto(principal);
+		podc= new PanelObjDibCurvaParametrica(principal);
 		
-		add(podf);
-		add(podr);
-		add(podp);
+		aux.add(podf);
+		aux.add(podc);
+		aux.add(podr);
+		aux.add(podp);
+		JScrollPane scroll= new JScrollPane(aux);
+		scroll.setPreferredSize(new Dimension(270,600));
+		add(scroll, BorderLayout.CENTER);
 	}
 	public void agregarFuncion(Funcion fun) {
 		podf.agregarFuncion(fun);

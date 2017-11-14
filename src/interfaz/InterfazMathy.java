@@ -260,6 +260,12 @@ public class InterfazMathy extends JFrame{
 		daf.setVisible(true);
 	}
 	
+	public void abrirDialogoAgregarCurvaParametrica(){
+		DialogoAgregarCurvaParametrica daf= new DialogoAgregarCurvaParametrica(this);
+		daf.setModalityType(ModalityType.DOCUMENT_MODAL);
+		daf.setVisible(true);
+	}
+	
 	public void mostrarMatrizProducto(double[][] matriz){
 		venMatrizPro= new VentanaMatriz(matriz);
 		venMatrizPro.setVisible(true);

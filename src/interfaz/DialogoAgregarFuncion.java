@@ -34,13 +34,14 @@ public class DialogoAgregarFuncion extends JDialog implements ActionListener{
 	private JLabel lblGrosor;
 	
 	public DialogoAgregarFuncion(InterfazMathy in, String title){
-		super(in, title);
+		super(in,title);
 		principal=in;
 		setLocation(principal.getX()+100,principal.getY()+100);
 		JPanel aux=new JPanel();
 		JPanel aux2=new JPanel();
 		aux.setLayout(new GridLayout(6,1));
 		Integer[] fon={1,2,3,4};
+		//TODO AGREGAR CIRCUNFERENCIA y elipse
 		String[] fan={"Polinomio","Trigonometrico","Exponencial","General"};
 		
 		grosor=new JComboBox<Integer>(fon);
