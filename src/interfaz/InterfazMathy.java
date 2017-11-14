@@ -27,6 +27,7 @@ import javax.swing.JTabbedPane;
 
 import hilos.HiloMultiplicacion;
 import mundo.Circunferencia;
+import mundo.CurvaParametrica;
 import mundo.FormulaParaParametrizarIncompleta;
 import mundo.Dibujable;
 import mundo.Funcion;
@@ -277,6 +278,13 @@ public class InterfazMathy extends JFrame{
 			JOptionPane.showMessageDialog(this,e.getMessage());
 		}
 	}
+	public void agregarCurvaParametrica(String form, Color color, int tipo){
+		try {
+			ppp.agregarCurvaParametrica(mundo.agregarCurvaParametrica(form, color, tipo));
+		} catch (FormulaParaParametrizarIncompleta e) {
+			JOptionPane.showMessageDialog(this,e.getMessage());
+		}
+	}
 	public void crearPunto(double x, double y) {
 		ppp.agregarPunto(mundo.agregarPunto(x,y));
 	}
@@ -325,6 +333,9 @@ public class InterfazMathy extends JFrame{
 		}else if(d instanceof Region){
 			mundo.eliminarRegion((Region)d);
 			ppp.refrescarListaRegiones(mundo.getListaRegiones());
+		}else if(d instanceof CurvaParametrica){
+			mundo.eliminarCurvaParametrica((CurvaParametrica)d);
+			ppp.refrescarListaCurvasParametricas(mundo.darCurvasParametricas());
 		}
 		ppp.refrescarPlano();
 	}

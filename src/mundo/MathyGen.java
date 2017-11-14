@@ -183,6 +183,7 @@ public class MathyGen {
 //			e.printStackTrace();
 //		}
 		objetosDibujables=new ArrayList<Dibujable>();
+		curvasParametricas= new ArrayList<CurvaParametrica>();
 		double[][]m1=new double[1][1];
 		sistemaLineal= new SistemaLineal(m1, null);
 	}
@@ -222,6 +223,7 @@ public class MathyGen {
 		}
 
 	}
+	
 	//TODO INCOMPLETO
 	public CurvaParametrica agregarCurvaParametrica(String form, Color color, int tipo) throws FormulaParaParametrizarIncompleta{
 		CurvaParametrica cur=null;
@@ -229,8 +231,11 @@ public class MathyGen {
 		case CIRCUNFERENCIA:
 			cur= new Circunferencia(form);
 			break;
+		case ELIPSE:
+			cur= new Elipse(form);
 		}
 		cur.modificarColor(color);
+		curvasParametricas.add(cur);
 		return cur;
 	}
 	

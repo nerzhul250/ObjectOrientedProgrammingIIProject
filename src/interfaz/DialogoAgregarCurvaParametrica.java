@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import mundo.MathyGen;
+
 public class DialogoAgregarCurvaParametrica extends JDialog implements ActionListener {
 
 	private InterfazMathy principal;
@@ -43,7 +45,6 @@ public class DialogoAgregarCurvaParametrica extends JDialog implements ActionLis
 		txtFormula= new JTextField();
 		
 		curvas = new JComboBox<String>(opciones);
-		
 		colores= new JColorChooser();
 		colores.setPreviewPanel(new JPanel());
 		JPanel aux= new JPanel();
@@ -62,7 +63,10 @@ public class DialogoAgregarCurvaParametrica extends JDialog implements ActionLis
 	public void actionPerformed(ActionEvent arg0) {
 		String comando=arg0.getActionCommand();
 		if(comando.equals(DialogoAgregarFuncion.AGREGAR)){
-			//TODO ACCIONAR EL BOTON
+			int curva=MathyGen.CIRCUNFERENCIA;
+			if(curvas.getSelectedItem().toString().equals("Elipse"))
+				curva=MathyGen.ELIPSE;
+			principal.agregarCurvaParametrica(txtFormula.getText(), colores.getColor(), curva);
 		}
 		dispose();
 	}

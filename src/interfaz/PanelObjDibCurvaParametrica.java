@@ -48,8 +48,16 @@ public class PanelObjDibCurvaParametrica extends JPanel implements MouseListener
 	
 	
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(e.getButton()==MouseEvent.BUTTON3){
+			if(lista.isSelectionEmpty()){
+				PopUpMenuCurvaParametrica menu = new PopUpMenuCurvaParametrica(principal);
+				menu.show(lista, e.getX(), e.getY());
+			}else{
+				PopUpMenuCuvaParametricaGeneral menu= new PopUpMenuCuvaParametricaGeneral(principal, lista.getSelectedValue());
+				menu.show(lista, e.getX(), e.getY());
+				lista.clearSelection();
+			}
+		}
 	}
 
 	public void mouseEntered(MouseEvent e) {

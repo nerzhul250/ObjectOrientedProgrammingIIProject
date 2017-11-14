@@ -52,8 +52,9 @@ public class Circunferencia extends CurvaParametrica {
 	
 	@Override
 	public String toString(){
-		String men="(x"+((super.darCentroX()<0)?"+"+super.darCentroX():"-"+super.darCentroX())+
-				")+(y"+((super.darCentroY()<0)?"+"+super.darCentroY():"-"+super.darCentroX())+"="+
+		
+		String men="(x"+((super.darCentroX()*-1<0)?+super.darCentroX()*-1:"+"+super.darCentroX()*-1)+
+				")^2+(y"+((super.darCentroY()*-1<0)?+super.darCentroY()*-1:"+"+super.darCentroY()*-1)+")^2="+
 				(radio*radio);
 		return men;
 	}
@@ -93,7 +94,7 @@ public class Circunferencia extends CurvaParametrica {
 
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY, double traslX, int ancho) {
 		g2d.setColor(darColor());
-		for(int i =1; i<MathyGen.ANCHOPLANO*6*radio;i++){
+		for(int i =1; i<MathyGen.ANCHOPLANO*12*radio;i++){
 			double wx=MathyGen.ANCHOPLANO*(darPosicionX(i)+alcance-traslX)/(2*alcance);
 			double wy=MathyGen.LARGOPLANO*(darPosicionY(i)-alcance-traslY)/(-2*alcance);
 			g2d.setStroke(new BasicStroke(2));

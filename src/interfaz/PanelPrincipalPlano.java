@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import mundo.CurvaParametrica;
 import mundo.Funcion;
 import mundo.MathyGen;
 import mundo.Punto;
@@ -32,6 +33,9 @@ public class PanelPrincipalPlano extends JPanel{
 	public void agregarPunto(Punto punto) {
 		pod.agregarPunto(punto);
 	}
+	public void agregarCurvaParametrica(CurvaParametrica cur){
+		pod.agregarCurvaParametrica(cur);
+	}
 	public void refrescarPlano() {
 		ppxy.repaint();;
 	}
@@ -45,6 +49,9 @@ public class PanelPrincipalPlano extends JPanel{
 
 	public void refrescarListaRegiones(ArrayList<Region> listaRegiones) {
 		pod.refrescarListaRegiones(listaRegiones);
+	}
+	public void refrescarListaCurvasParametricas(ArrayList<CurvaParametrica>c){
+		pod.refrescarListaCurvasParametricas(c);
 	}
 
 	public void refrescarListaPuntos(Punto primerPunto) {

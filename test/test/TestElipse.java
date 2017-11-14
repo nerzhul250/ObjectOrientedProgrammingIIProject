@@ -5,22 +5,43 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import mundo.Elipse;
+import mundo.FormulaParaParametrizarIncompleta;
 
 public class TestElipse {
 
 	private Elipse elipse;
 	
 	private void setupEscenario1(){
-		elipse = new Elipse("0.1111(x-3.5)^2+0.25(y-4)^2=1");
+		try {
+			elipse = new Elipse("0.1111(x-3.5)^2+0.25(y-4)^2=1");
+		} catch (FormulaParaParametrizarIncompleta e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	private void setupEscenario2(){
-		elipse = new Elipse("(x-3)^2+0.25(y-4.4)^2=1");
+		try {
+			elipse = new Elipse("(x-3)^2+0.25(y-4.4)^2=1");
+		} catch (FormulaParaParametrizarIncompleta e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	private void setupEscenario3(){
-		elipse = new Elipse("(x)^2+(y)^2=1");
+		try {
+			elipse = new Elipse("(x)^2+(y)^2=1");
+		} catch (FormulaParaParametrizarIncompleta e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	private void setupEscenario4(){
-		elipse = new Elipse("(y+4)^2+0.0625(x-3)^2=1");
+		try {
+			elipse = new Elipse("(y+4)^2+0.0625(x-3)^2=1");
+		} catch (FormulaParaParametrizarIncompleta e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	@Test
 	public void probarMetodoParser(){

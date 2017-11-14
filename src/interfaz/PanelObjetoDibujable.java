@@ -11,6 +11,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import mundo.CurvaParametrica;
 import mundo.Dibujable;
 import mundo.Funcion;
 import mundo.Punto;
@@ -43,11 +44,18 @@ public class PanelObjetoDibujable extends JPanel{
 	public void agregarFuncion(Funcion fun) {
 		podf.agregarFuncion(fun);
 	}
+	public void agregarCurvaParametrica(CurvaParametrica cur){
+		podc.agregarCurva(cur);
+	}
 	public void agregarRegion(Region r) {
 		podr.agregarRegion(r);
 	}
 	public void agregarPunto(Punto p) {
 		podp.agregarPunto(p);
+	}
+	public void refrescarListaCurvasParametricas(ArrayList<CurvaParametrica> c){
+		podc.eliminarTodosLosElementos();
+		podc.refrescarLista(c);
 	}
 	public void refrescarListaFunciones(Funcion raizFuncion) {
 		podf.removerTodosLosElementos();

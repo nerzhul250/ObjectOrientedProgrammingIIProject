@@ -8,11 +8,17 @@ public class Elipse extends CurvaParametrica {
 	private Double coeficienteX;
 	private Double coeficienteY;
 	
-	public Elipse(String form){
+	public Elipse(String form) throws FormulaParaParametrizarIncompleta{
 		parserElipse(0, form);
+		if(coeficienteX== null || coeficienteY== null){
+			throw new FormulaParaParametrizarIncompleta("Ingrese una formula valida", form);
+		}
 	}
 	
-	public void parserElipse(int indice, String form){
+	
+	public void parserElipse(int indice, String form) throws FormulaParaParametrizarIncompleta{
+		if(form==null|| form.equals(""))
+			throw new FormulaParaParametrizarIncompleta("Ingrese una formula válida", form);
 		if(indice<form.length()){
 			if(form.charAt(indice)=='X'||form.charAt(indice)=='x'){
 				String centroX= encontrarNumeroParaCentro(indice, form, "");
@@ -96,14 +102,21 @@ public class Elipse extends CurvaParametrica {
 
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY, double traslX, int ancho) {
 		g2d.setColor(darColor());
-		for(int i =1; i<MathyGen.ANCHOPLANO*6*(1/coeficienteX);i++){
+		for(int i =1; i<MathyGen.ANCHOPLANO*6;i++){
 			double wx=MathyGen.ANCHOPLANO*(darPosicionX(i)+alcance-traslX)/(2*alcance);
 			double wy=MathyGen.LARGOPLANO*(darPosicionY(i)-alcance-traslY)/(-2*alcance);
-			g2d.setStroke(new BasicStroke(2));
-			g2d.drawLine((int)wx, (int)wy,(int) wx, (int)wy);
+			g2d.setStroke(new BasicStroke(5));
+			g2d.drawLine((int)(wx+1), (int)(1+wy),(int) (2+wx), (int)(2+wy));
 			
 		}
 		
+	}
+	@Override
+	public String toString(){
+		String centroX= (super.darCentroX()*-1<0)?""+super.darCentroX()*-1:"+"+super.darCentroX()*-1;
+		String centroY=(super.darCentroY()*-1<0)?""+super.darCentroY()*-1:"+"+super.darCentroY()*-1;
+		String men=coeficienteX+"(x"+centroX+")^2+"+coeficienteY+"(y"+centroY+")^2=1";
+		return men;
 	}
 
 	public Double darCoeficienteX() {
