@@ -90,12 +90,12 @@ public class Elipse extends CurvaParametrica {
 		}
 		return devolver;
 	}
-	public double darPosicionX(int t) {
+	public double darPosicionX(double t) {
 		double numero= (Math.cos(t)/Math.sqrt(coeficienteX))+darCentroX();
 		return numero;
 	}
 
-	public double darPosicionY(int t) {
+	public double darPosicionY(double t) {
 		double numero= (Math.sin(t)/Math.sqrt(coeficienteY))+darCentroY();
 		return numero;
 	}
