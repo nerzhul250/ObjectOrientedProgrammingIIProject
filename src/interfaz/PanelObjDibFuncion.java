@@ -9,6 +9,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.TitledBorder;
 
 import mundo.Funcion;
 
@@ -20,6 +21,8 @@ public class PanelObjDibFuncion extends JPanel implements MouseListener {
 	
 	public PanelObjDibFuncion(InterfazMathy in){
 		principal=in;
+		
+		setBorder(new TitledBorder("Funciones"));
 		
 		listModel = new DefaultListModel<Funcion>();
 		listaFuncion = new JList<Funcion>(listModel);

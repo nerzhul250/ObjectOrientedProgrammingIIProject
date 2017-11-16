@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.ListModel;
+import javax.swing.border.TitledBorder;
 
 import mundo.CurvaParametrica;
 
@@ -22,6 +23,8 @@ public class PanelObjDibCurvaParametrica extends JPanel implements MouseListener
 	
 	public PanelObjDibCurvaParametrica(InterfazMathy p){
 		principal = p;
+		
+		setBorder(new TitledBorder("Parametrizables"));
 		
 		listModel= new DefaultListModel<CurvaParametrica>();
 		lista = new JList<CurvaParametrica>(listModel);

@@ -10,6 +10,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.TitledBorder;
 
 import mundo.Region;
 
@@ -21,6 +22,9 @@ public class PanelObjDibRegion extends JPanel implements MouseListener {
 	
 	public PanelObjDibRegion(InterfazMathy principal){
 		this.principal=principal;
+		
+		setBorder(new TitledBorder("Region"));
+		
 		listModel = new DefaultListModel<Region>();
 		listaRegion = new JList<Region>(listModel);
 		listaRegion.addMouseListener(this);
