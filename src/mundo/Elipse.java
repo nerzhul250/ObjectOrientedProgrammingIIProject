@@ -125,11 +125,16 @@ public class Elipse extends CurvaParametrica {
 
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY, double traslX, int ancho) {
 		g2d.setColor(darColor());
-		for(int i =1; i<MathyGen.ANCHOPLANO*6;i++){
-			double wx=MathyGen.ANCHOPLANO*(darPosicionX(i)+alcance-traslX)/(2*alcance);
-			double wy=MathyGen.LARGOPLANO*(darPosicionY(i)-alcance-traslY)/(-2*alcance);
-			g2d.setStroke(new BasicStroke(5));
-			g2d.drawLine((int)(wx+1), (int)(1+wy),(int) (2+wx), (int)(2+wy));
+		double wx1=MathyGen.ANCHOPLANO*(darPosicionX(0)+alcance-traslX)/(2*alcance);
+		double wy1=MathyGen.LARGOPLANO*(darPosicionY(0)-alcance-traslY)/(-2*alcance);
+		for(int i =1; i<1001;i++){
+			
+			double wx=MathyGen.ANCHOPLANO*(darPosicionX(i*Math.PI*2/1000)+alcance-traslX)/(2*alcance);
+			double wy=MathyGen.LARGOPLANO*(darPosicionY(i*Math.PI*2/1000)-alcance-traslY)/(-2*alcance);
+			g2d.setStroke(new BasicStroke(1));
+			g2d.drawLine((int)(wx1), (int)(wy1),(int) (wx), (int)(wy));
+			wx1=wx;
+			wy1=wy;
 			
 		}
 		
