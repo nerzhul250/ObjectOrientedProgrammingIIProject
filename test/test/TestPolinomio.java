@@ -23,5 +23,8 @@ public class TestPolinomio {
 				polinomio.getCoeficientes().get(2)==1 && polinomio.getCoeficientes().get(3)==1
 				&& polinomio.getCoeficientes().get(4)==1);
 	}
+	public void testComputarValor(){
+		
+	}
 
 }

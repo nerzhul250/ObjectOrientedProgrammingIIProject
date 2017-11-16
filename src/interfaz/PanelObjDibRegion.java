@@ -23,7 +23,7 @@ public class PanelObjDibRegion extends JPanel implements MouseListener {
 	public PanelObjDibRegion(InterfazMathy principal){
 		this.principal=principal;
 		
-		setBorder(new TitledBorder("Region"));
+		setBorder(new TitledBorder("Regiones"));
 		
 		listModel = new DefaultListModel<Region>();
 		listaRegion = new JList<Region>(listModel);
