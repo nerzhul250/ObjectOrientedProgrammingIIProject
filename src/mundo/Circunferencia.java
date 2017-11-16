@@ -82,27 +82,28 @@ public class Circunferencia extends CurvaParametrica {
 		return radio;
 	}
 
-	public double darPosicionX(int t) {
+	public double darPosicionX(double t) {
 		double numero =radio*Math.cos(t)+ darCentroX();
 		return numero;
 	}
 
-	public double darPosicionY(int t) {
+	public double darPosicionY(double t) {
 		double numero = radio*Math.sin(t)+darCentroY();
 		return numero;
 	}
 
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY, double traslX, int ancho) {
 		g2d.setColor(darColor());
-		for(int i =1; i<MathyGen.ANCHOPLANO*12*radio;i++){
-			double wx=MathyGen.ANCHOPLANO*(darPosicionX(i)+alcance-traslX)/(2*alcance);
-			double wy=MathyGen.LARGOPLANO*(darPosicionY(i)-alcance-traslY)/(-2*alcance);
-			g2d.setStroke(new BasicStroke(2));
-			g2d.drawLine((int)wx, (int)wy,(int) wx, (int)wy);
-			
+		g2d.setStroke(new BasicStroke(1));
+		int wx1=(int) (MathyGen.ANCHOPLANO*(darPosicionX(0)+alcance-traslX)/(2*alcance));
+		int wy1=(int) (MathyGen.LARGOPLANO*(darPosicionY(0)-alcance-traslY)/(-2*alcance));
+		for(int i =1; i<1001;i++){
+			int wx=(int) (MathyGen.ANCHOPLANO*(darPosicionX(i*2*Math.PI/1000.0)+alcance-traslX)/(2*alcance));
+			int wy=(int) (MathyGen.LARGOPLANO*(darPosicionY(i*2*Math.PI/1000.0)-alcance-traslY)/(-2*alcance));
+			g2d.drawLine(wx1,wy1, wx,wy);
+			wy1=wy;
+			wx1=wx;
 		}
-			
-		
 	}
 
 	
