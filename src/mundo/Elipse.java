@@ -80,7 +80,14 @@ public class Elipse extends CurvaParametrica {
 			parserElipse(indice, form);
 		}
 	}
-	
+	/**
+	 * Método encargado de encontrar el centro de x o de y según el índice
+	 * <b>pre:</b> la fórmula pasada por parámetro, los x y y deben estar delimitados con ()
+	 * @param indice indice desde donde el método empezará a rastrear
+	 * @param form fórmula a extraer los centros
+	 * @param num Es el centro que se busca
+	 * @return String representa el centro de la formula
+	 */
 	public String encontrarNumeroParaCentro(int indice, String form, String num){
 		String devolver= num;
 		if(indice<form.length()){
@@ -98,6 +105,13 @@ public class Elipse extends CurvaParametrica {
 		}
 		return devolver;
 	}
+	/**
+	 * Encuentra el coeficiente de la elipse ya sea el de x o de y
+	 * @param indice indice desde donde se empezará a analizar
+	 * @param form la fórmula. Debe estar en forma canónica y sus números expresados sin operaciones. Deben ser positivos
+	 * @param num Es el coeficiente parcial
+	 * @return String el coeficiente que se halló
+	 */
 	public String encontrarCoeficiente(int indice, String form, String num){
 		String devolver = num;
 		if(indice>=0&&form.charAt(indice)!='+'){
@@ -113,16 +127,32 @@ public class Elipse extends CurvaParametrica {
 		}
 		return devolver;
 	}
+	/**
+	 * Da la posición en x de la elipse según el parámetro t
+	 * @param t es el parámetro t que arrojará un número para x
+	 * @return double coordenada en x de la elipse según t
+	 */
 	public double darPosicionX(double t) {
 		double numero= (Math.cos(t)/Math.sqrt(coeficienteX))+darCentroX();
 		return numero;
 	}
-
+	/**
+	 * Da la posición en x de la elipse según el parámetro t
+	 * @param t Es el parámetro t
+	 * @return double posición en y de la elipse según el parámetro t
+	 */
 	public double darPosicionY(double t) {
 		double numero= (Math.sin(t)/Math.sqrt(coeficienteY))+darCentroY();
 		return numero;
 	}
 
+	/**
+	 * Método que dibuja en el panel la elipse
+	 * @param g2d es el graphics del plano donde se va a dibujar
+	 * @param alcance es el máximo alcance que se verá en el plano
+	 * @param traslY es dónde está dibujado el centro en el plano en y
+	 * @param traslX es donde esta dibujado el centro en el plano en x
+	 */
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY, double traslX, int ancho) {
 		g2d.setColor(darColor());
 		double wx1=MathyGen.ANCHOPLANO*(darPosicionX(0)+alcance-traslX)/(2*alcance);
@@ -139,6 +169,9 @@ public class Elipse extends CurvaParametrica {
 		}
 		
 	}
+	/**
+	 * Método que devuelve la fórmula de la elipse
+	 */
 	@Override
 	public String toString(){
 		String centroX= (super.darCentroX()*-1<0)?""+super.darCentroX()*-1:"+"+super.darCentroX()*-1;
@@ -147,18 +180,31 @@ public class Elipse extends CurvaParametrica {
 		return men;
 	}
 
+	/**
+	 * devuelve el coeficiente de la elipse en x
+	 * @return
+	 */
 	public Double darCoeficienteX() {
 		return coeficienteX;
 	}
-	
+	/**
+	 * modifica el coeficiente en x de la elipse
+	 * @param coeficienteX
+	 */
 	public void modificarCoeficienteX(Double coeficienteX) {
 		this.coeficienteX = coeficienteX;
 	}
-	
+	/**
+	 * Devuleve el coeficiente de Y de la elipse
+	 * @return
+	 */
 	public Double darCoeficienteY() {
 		return coeficienteY;
 	}
-	
+	/**
+	 * Modifica el coeficiente en y de la elipse
+	 * @param coeficienteY
+	 */
 	public void modificarCoeficienteY(Double coeficienteY) {
 		this.coeficienteY = coeficienteY;
 	}

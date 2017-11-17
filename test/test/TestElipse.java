@@ -115,7 +115,16 @@ public class TestElipse {
 	}
 	@Test
 	public void probarMetodoParametrizacionEnX(){
-		//TODO
+		setupEscenario1();
+		for(int i =0;i<1000;i++){
+			assertTrue(elipse.darPosicionX(i*2*Math.PI/1000)==Math.cos(i*2*Math.PI/1000)/Math.sqrt(0.1111)+3.5 );	
+			assertTrue(elipse.darPosicionY(i*2*Math.PI/1000)==Math.sin(i*2*Math.PI/1000)/Math.sqrt(0.25)+4);
+		}
+		setupEscenario4();
+		for(int i =0;i<1000;i++){
+			assertTrue(elipse.darPosicionX(i*2*Math.PI/1000)==Math.cos(i*2*Math.PI/1000)/Math.sqrt(0.0625)+3 );	
+			assertTrue(elipse.darPosicionY(i*2*Math.PI/1000)==Math.sin(i*2*Math.PI/1000)/Math.sqrt(1)-4);
+		}
 	}
 
 }

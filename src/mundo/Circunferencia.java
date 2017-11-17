@@ -3,6 +3,8 @@ package mundo;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class Circunferencia extends CurvaParametrica {
 
@@ -12,7 +14,13 @@ public class Circunferencia extends CurvaParametrica {
 		parsearFormula(0, form);
 		
 	}
-	
+	/**
+	 * Método encargado de extraer toda la información de la fórmula para circunferencias
+	 * @param indice indice de la letra en donde el método está analizando
+	 * @param form Formula de la circunferencia. La formula debe estár en forma canónica, si no
+	 * tiene centros igualmente encerrar el x y y en paréntesis.
+	 * @throws FormulaParaParametrizarIncompleta en caso de que no se cumpla con los requisitos
+	 */
 	public void parsearFormula(int indice, String form) throws FormulaParaParametrizarIncompleta{
 		if(indice<form.length()){
 			if(form.charAt(indice)=='x' || form.charAt(indice)=='X'){
@@ -49,16 +57,26 @@ public class Circunferencia extends CurvaParametrica {
 			throw new FormulaParaParametrizarIncompleta("La siguiente fórmula para parametrizar está incompleta o no es válida: ", form);
 		}
 	}
-	
+	/**
+	 * Método que retorna la fórmula de la circunferencia
+	 */
 	@Override
 	public String toString(){
-		
+		DecimalFormat df= new DecimalFormat();
+		df.setRoundingMode(RoundingMode.CEILING);
 		String men="(x"+((super.darCentroX()*-1<0)?+super.darCentroX()*-1:"+"+super.darCentroX()*-1)+
 				")^2+(y"+((super.darCentroY()*-1<0)?+super.darCentroY()*-1:"+"+super.darCentroY()*-1)+")^2="+
-				(radio*radio);
+				(df.format(radio*radio));
 		return men;
 	}
-	
+	/**
+	 * Rastrea un número empezándolo a analizar del indice que se pasa por parámetro
+	 * @param indice indice que indica donde está analizando el método
+	 * @param form fórmula del círculo. Los x y y deben estar delimitados con (). los números 
+	 * se deben expresar no en operaciones y los decimales con .
+	 * @param num es e numero que se está extrayendo
+	 * @return String número rastreado
+	 */
 	public String buscarNumero(int indice,String form, String num){
 		String devolver= num;
 		if(indice<form.length()){
@@ -78,20 +96,28 @@ public class Circunferencia extends CurvaParametrica {
 		return devolver;
 	}
 	
-	public double darRadio(){
-		return radio;
-	}
-
+	/**
+	 * Devuelve la posición de la elipse en x según el parámetro t
+	 */
 	public double darPosicionX(double t) {
 		double numero =radio*Math.cos(t)+ darCentroX();
 		return numero;
 	}
-
+	/**
+	 * Devuelve la posición de la elipse en y segúne l parámetro t
+	 */
 	public double darPosicionY(double t) {
 		double numero = radio*Math.sin(t)+darCentroY();
 		return numero;
 	}
 
+	/**
+	 * Método encargado de dibujar la circunferencia
+	 * @param g2d graphics del panel donde se dibbujará
+	 * @param alcance es el alcance que tiene el plano
+	 * @param tralY es la traslación en y del centro en el plano
+	 * @param tralX es la traslacion en x del centro en el plano
+	 */
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY, double traslX, int ancho) {
 		g2d.setColor(darColor());
 		g2d.setStroke(new BasicStroke(1));
@@ -106,5 +132,8 @@ public class Circunferencia extends CurvaParametrica {
 		}
 	}
 
+	public double darRadio(){
+		return radio;
+	}
 	
 }
