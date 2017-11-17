@@ -52,6 +52,7 @@ public class DialogoAgregarFuncion extends JDialog implements ActionListener{
 		butAgregar.setActionCommand(AGREGAR);
 		jccPaleta=new JColorChooser();
 		jccPaleta.setPreviewPanel(new JPanel());
+		jccPaleta.setColor(Color.black);
 		lblAgregar=new JLabel("Escriba su funcion");
 		lblGrosor=new JLabel("Elija el grosor de la funcion");
 		

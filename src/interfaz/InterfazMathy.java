@@ -315,20 +315,7 @@ public class InterfazMathy extends JFrame{
 			mundo.eliminarPunto((Punto)d);
 			ppp.refrescarListaPuntos(mundo.getPrimerPunto());
 		}else if(d instanceof Funcion){
-			Funcion dad=((Funcion)d).getPadre();
-			if(dad==null){
-				mundo.setRaizFuncion(null);
-			}else if(dad.getFunDe()==d){
-				dad.setFunDe(null);
-			}else{
-				dad.setFunIz(null);
-			}
-			if(((Funcion)d).getFunDe()!=null){
-				mundo.recorridoDeAgregacion(((Funcion)d).getFunDe(),dad);
-			}
-			if(((Funcion)d).getFunIz()!=null){
-				mundo.recorridoDeAgregacion(((Funcion)d).getFunIz(),dad);
-			}	
+			mundo.eliminarFuncion((Funcion)d);
 			ppp.refrescarListaFunciones(mundo.getRaizFuncion());
 		}else if(d instanceof Region){
 			mundo.eliminarRegion((Region)d);

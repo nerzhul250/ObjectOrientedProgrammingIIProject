@@ -186,6 +186,7 @@ public class Polinomio extends Funcion {
 		}
 		return nim;
 	}
+	
 	public ArrayList<Double> getCoeficientes() {
 		return coeficientes;
 	}

@@ -15,6 +15,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MathyGen {
@@ -24,10 +26,6 @@ public class MathyGen {
 	public final static String RUTA_PUNTOS_GUARDADA="./data/EstadoGraficadora/puntos.txt";
 	public final static String RUTA_MATRIZ_GIGANTE_1="./data/matricesGigantes/MATRIZ11.txt";
 	public final static String RUTA_MATRIZ_GIGANTE_2="./data/matricesGigantes/MATRIZ2.txt";
-
-	public static String getRutaMatrizGigante2() {
-		return RUTA_MATRIZ_GIGANTE_2;
-	}
 	
 	public final static int ANCHOPLANO =625;
 	public final static int LARGOPLANO =625;
@@ -45,8 +43,6 @@ public class MathyGen {
 	private ArrayList<Dibujable>objetosDibujables;
 	private SistemaLineal historialSistema;
 	private ArrayList<CurvaParametrica> curvasParametricas;
-	
-
 
 	/**
 	 * agrega ordenadamente por nombre
@@ -171,17 +167,6 @@ public class MathyGen {
 	
 	
 	public MathyGen(){
-//		try {
-//			crearMatrizGigante1();
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//		try {
-//			crearMatrizGigante2();
-//		} catch (FileNotFoundException e) {
-
-//			e.printStackTrace();
-//		}
 		objetosDibujables=new ArrayList<Dibujable>();
 		curvasParametricas= new ArrayList<CurvaParametrica>();
 		double[][]m1=new double[1][1];
@@ -189,6 +174,9 @@ public class MathyGen {
 	}
 	public SistemaLineal darSistemaLineal(){
 		return sistemaLineal;
+	}
+	public static String getRutaMatrizGigante2() {
+		return RUTA_MATRIZ_GIGANTE_2;
 	}
 	public void iniciarSistemaLineal(double[][] m1,double[][] m2){
 		sistemaLineal= new SistemaLineal(m1, m2);
@@ -223,8 +211,7 @@ public class MathyGen {
 		}
 
 	}
-	
-	//TODO INCOMPLETO
+
 	public CurvaParametrica agregarCurvaParametrica(String form, Color color, int tipo) throws FormulaParaParametrizarIncompleta{
 		CurvaParametrica cur=null;
 		switch(tipo){
@@ -239,52 +226,6 @@ public class MathyGen {
 		return cur;
 	}
 	
-
-	public Funcion agregarFuncion1(String form, Color color, int grosor, int tipo) throws FuncionYaExisteException{
-		Funcion fun=null;
-		switch (tipo) {
-		case TIPOPOLINOMIO:
-			fun=new Polinomio(form);
-			break;
-		}
-		fun.setColor(color);
-		fun.setGrosor(grosor);
-		fun.setForma(form);
-		if(estaEnElArbol1(fun,raizFuncion)) throw new FuncionYaExisteException(fun.getForma());
-		agregarFuncionAlArbol1(fun,raizFuncion);
-		return fun;
-	}
-	public boolean estaEnElArbol1(Funcion f,Funcion actual){
-		if(raizFuncion==null){
-			return false;
-		}else if(actual!=null && actual.compareTo(f)==0){
-			return true;
-		}else if(actual!=null){
-			return estaEnElArbol1(f,actual.getFunDe()) || estaEnElArbol1(f,actual.getFunIz());
-		}
-		return false;
-	}
-	public void agregarFuncionAlArbol1(Funcion f,Funcion actual) throws FuncionYaExisteException{
-		if(raizFuncion==null){
-			raizFuncion=f;
-		}else{
-			if(f.compareTo(actual)==-1){
-				if(actual.getFunIz()==null){
-					actual.setFunIz(f);
-				}else{
-					agregarFuncionAlArbol1(f,actual.getFunIz());
-				}
-			}else if(f.compareTo(actual)==1){
-				if(actual.getFunDe()==null){
-					actual.setFunDe(f);
-				}else{
-					agregarFuncionAlArbol1(f,actual.getFunDe());
-				}
-			}
-		}
-	}
-
-		
 	public void cargarMatricesGigantes() throws IOException{
 		sistemaLineal=new SistemaLineal(cargarMatrizGigante1(), cargarMatrizGigante2());
 	}
@@ -372,63 +313,100 @@ public class MathyGen {
 	public double[][] darMatrizProducto() {
 		return sistemaLineal.darMatrizProducto();
 	}
+	/**
+	 * Este metodo da el primer punto
+	 * @return
+	 */
 	public Punto getPrimerPunto() {
 		return primerPunto;
 	}
+	/**
+	 * Este metodo actualiza el primer punto
+	 * @param primerPunto
+	 */
 	public void setPrimerPunto(Punto primerPunto) {
 		this.primerPunto = primerPunto;
 	}
+	/**
+	 * Este metodo da la funcion raiz
+	 * @return
+	 */
 	public Funcion getRaizFuncion() {
 		return raizFuncion;
 	}
-	public void setRaizFuncion(Funcion raizFuncion) {
-		this.raizFuncion = raizFuncion;
-	}
+	/**
+	 * Este metodo da la lista de regiones
+	 * @return
+	 */
 	public ArrayList<Region> getListaRegiones() {
 		return listaRegiones;
 	}
+	/**
+	 * Este metodo da la lista de objetos dibujables
+	 * @return
+	 */
 	public ArrayList<Dibujable> darObjetosDibujables() {
 		return objetosDibujables;
 	}
+	/**
+	 * Este metodo se encarga de agregar una nueva funcion al mundo
+	 * @param form la forma de la funcion
+	 * @param color color de la funcion
+	 * @param grosor grosor de la funcion
+	 * @param tipo tipo de funcion
+	 * @return la funcion agregada
+	 * @throws FuncionYaExisteException
+	 */
 	public Funcion agregarFuncion(String form, Color color, int grosor, int tipo) throws FuncionYaExisteException{
 		Funcion fun=null;
 		switch (tipo) {
-		case 1:
+		case TRIGONOMETRICO:
 			fun=new Trigonometrico(form);
 			break;
-		case 3:
+		case TIPOPOLINOMIO:
 			fun=new Polinomio(form);
 			break;
 		}
 		fun.setColor(color);
 		fun.setGrosor(grosor);
 		fun.setForma(form);
-		//TODO
-//		if(estaEnElArbol1(fun,raizFuncion)!=null) throw new FuncionYaExisteException(fun.getForma());
-		agregarFuncionAlArbol1(fun,raizFuncion);
+		if(estaEnElArbol(fun,raizFuncion)!=null) throw new FuncionYaExisteException(fun.getForma());
+		agregarFuncionAlArbol(fun,raizFuncion);
 		return fun;
 	}
+	/**
+	 * Este metodo se encarga de retorna la funcion pasada por parametro si esta 
+	 * existe en el arbol
+	 * @param f la funcion a verificar si esta en el arbol
+	 * @param actual funcion actual del metodo recursivo
+	 * @return
+	 */
 	public Funcion estaEnElArbol(Funcion f,Funcion actual){
 		if(raizFuncion==null){
 			return null;
 		}else if(actual!=null && actual.compareTo(f)==0){
 			return actual;
 		}else if(actual!=null){
-			//TODO
-//			Funcion fa=estaEnElArbol1(f,actual.getFunDe());
-//			Funcion fe=estaEnElArbol1(f,actual.getFunIz());
-//			if(fa==null && fe==null){
-//				return null;
-//			}else{
-//				if(fa!=null){
-//					return fa;
-//				}else{
-//					return fe;
-//				}
-//			}
+			Funcion fa=estaEnElArbol(f,actual.getFunDe());
+			Funcion fe=estaEnElArbol(f,actual.getFunIz());
+			if(fa==null && fe==null){
+				return null;
+			}else{
+				if(fa!=null){
+					return fa;
+				}else{
+					return fe;
+				}
+			}
 		}
 		return null;
 	}
+	/**
+	 * Este metodo se encarga de agregar una nueva funcion al arbol de funciones
+	 * @param f la funcion a agregar
+	 * @param actual la funcion actual del metodo recursivo
+	 * @throws FuncionYaExisteException en caso de que ya existe la susodicha funcion
+	 */
 	public void agregarFuncionAlArbol(Funcion f,Funcion actual) throws FuncionYaExisteException{
 		if(raizFuncion==null){
 			raizFuncion=f;
@@ -438,18 +416,24 @@ public class MathyGen {
 					actual.setFunIz(f);
 					f.setPadre(actual);
 				}else{
-					agregarFuncionAlArbol1(f,actual.getFunIz());
+					agregarFuncionAlArbol(f,actual.getFunIz());
 				}
 			}else if(f.compareTo(actual)==1){
 				if(actual.getFunDe()==null){
 					actual.setFunDe(f);
 					f.setPadre(actual);
 				}else{
-					agregarFuncionAlArbol1(f,actual.getFunDe());
+					agregarFuncionAlArbol(f,actual.getFunDe());
 				}
 			}
 		}
 	}
+	/**
+	 * Este metodo agrega un nuevo punto a la lista enlazada de puntos
+	 * @param x coordenada x del punto
+	 * @param y coordenada y del punto
+	 * @return el punto agregado
+	 */
 	public Punto agregarPunto(double x, double y) {
 		Punto p=new Punto(x,y);
 		if(primerPunto==null){
@@ -461,21 +445,40 @@ public class MathyGen {
 		agregarObjetoDibujable(p);
 		return p;
 	}
+	/**
+	 * 	Este metodo se encarga de agregar una nueva region a la lista de regiones
+	 * @param frontera los puntos que definen a la region
+	 * @param color el color de la region
+	 * @return la region agregada
+	 */
 	public Region agregarRegion(ArrayList<Punto> frontera, Color color) {
 		Region r=new Region(frontera, color);
 		listaRegiones.add(r);
 		return r;
 	}
+	/**
+	 * Agrega un objeto dibujable a la lista objetosDibujables
+	 * @param d
+	 */
 	public void agregarObjetoDibujable(Dibujable d){
 		if(!objetosDibujables.contains(d)){
 			objetosDibujables.add(d);
 		}
 	}
+	/**
+	 * Este metodo se encarga de eliminar un objeto dibujable, de la lista objetosDibujable
+	 * @param d el objeto a eliminar
+	 */
 	public void eliminarObjetoDibujable(Dibujable d){
 		if(objetosDibujables.contains(d)){
 			objetosDibujables.remove(d);
 		}
 	}
+	/**
+	 * Este metodo se encarga de cargar el ultimo estado guardado de lod dibujable
+	 * @return arreglo de boolean para decisiones posteriores
+	 * @throws Exception en caso de que falle algo con los streams
+	 */
 	public boolean[] cargarEstado() throws Exception{
 		boolean[] res=new boolean[3];
 		File f=new File(MathyGen.RUTA_PUNTOS_GUARDADA);
@@ -512,6 +515,10 @@ public class MathyGen {
 		}
 		return res;
 	}
+	/**
+	 * Este metodo se encarga de guardar el estado actual de lo dibujable
+	 * @throws IOException
+	 */
 	public void guardarEstado() throws IOException{
 		if(primerPunto!=null){
 			BufferedWriter bw=new BufferedWriter(new FileWriter(MathyGen.RUTA_PUNTOS_GUARDADA));
@@ -534,7 +541,9 @@ public class MathyGen {
 			oos.close();
 		}
 	}
-
+	/**
+	 * Este metodo se encarga de organizar regiones por selection sort
+	 */
 	public void organizarRegiones() {
 		for (int i = 0; i < listaRegiones.size()-1; i++) {
 			Region r=listaRegiones.get(i);
@@ -550,6 +559,10 @@ public class MathyGen {
 			listaRegiones.set(cual,ra);
 		}
 	}
+	/**
+	 * Este metodo se encarga de eliminar un punto
+	 * @param d El punto a eliminar
+	 */
 	public void eliminarPunto(Punto d) {
 		Punto before=null;
 		Punto current=getPrimerPunto();
@@ -568,27 +581,61 @@ public class MathyGen {
 			}
 		}
 	}
-	public void recorridoDeAgregacion(Funcion A,Funcion laRaiz) {
-		try {
-			agregarFuncionAlArbol1(A,laRaiz);
-		} catch (FuncionYaExisteException e) {
-			e.printStackTrace();
-		}
-		if(laRaiz==null){
-			laRaiz=getRaizFuncion();
-		}
-		Funcion de=A.getFunDe();
-		Funcion iz=A.getFunIz();
-		A.setFunDe(null);
-		A.setFunIz(null);
-		if(de!=null){
-			recorridoDeAgregacion(de,laRaiz);
-		}
-		if(iz!=null){
-			recorridoDeAgregacion(iz,laRaiz);
-		}		
-	}
+	/**
+	 * Este metodo se encarga de eliminar una region
+	 * @param d La region a eliminar
+	 */
 	public void eliminarRegion(Region d) {
 		getListaRegiones().remove(d);
+	}
+	/**
+	 * Este metodo se encarga de eliminar una funcion
+	 * @param d La funcion a eliminar
+	 */
+	public void eliminarFuncion(Funcion d) {
+		Funcion padre=d.getPadre();
+		if(d.getFunDe()==null && d.getFunIz()==null){
+			if(padre!=null){
+				if(padre.getFunDe()==d){
+					padre.setFunDe(null);
+				}else{
+					padre.setFunIz(null);
+				}
+			}else{
+				raizFuncion=null;
+			}
+		}else if(d.getFunDe()!=null){
+			Funcion menor=d.getFunDe();
+			while(menor.getFunIz()!=null){
+				menor=menor.getFunIz();
+			}
+			Funcion padre2=menor.getPadre();
+			if(padre2.getFunDe()==menor){
+				padre2.setFunDe(menor.getFunDe());
+			}else{
+				padre2.setFunIz(menor.getFunDe());
+			}
+			if(padre!=null){
+				if(padre.getFunDe()==d){
+					padre.setFunDe(menor);
+				}else{
+					padre.setFunIz(menor);
+				}
+			}else{
+				raizFuncion=menor;
+			}
+			menor.setFunDe(d.getFunDe());
+			menor.setFunIz(d.getFunIz());
+		}else{
+			if(padre!=null){
+				if(padre.getFunDe()==d){
+					padre.setFunDe(d.getFunIz());
+				}else{
+					padre.setFunIz(d.getFunIz());
+				}
+			}else{
+				raizFuncion=raizFuncion.getFunIz();
+			}
+		}
 	}
 }

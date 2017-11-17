@@ -18,6 +18,12 @@ public class Trigonometrico extends Funcion {
 		velAng=0;
 	     parsearTrigonometrico(0,(form+"T").toCharArray());  
 	}
+	public String getFunTrig() {
+		return funTrig;
+	}
+	public void setFunTrig(String funTrig) {
+		this.funTrig = funTrig;
+	}
 	private void parsearTrigonometrico(int i, char[] a) {
 		while(a[i]!='T'){
 			char c=a[i];
