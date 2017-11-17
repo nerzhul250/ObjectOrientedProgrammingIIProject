@@ -27,19 +27,37 @@ public class MathyGen {
 	public final static String RUTA_MATRIZ_GIGANTE_1="./data/matricesGigantes/MATRIZ11.txt";
 	public final static String RUTA_MATRIZ_GIGANTE_2="./data/matricesGigantes/MATRIZ2.txt";
 	
+	/**
+	 * Ancho del planoXY
+	 */
 	public final static int ANCHOPLANO =625;
+	/**
+	 * Largo del planoXY
+	 */
 	public final static int LARGOPLANO =625;
-	
+
 	public static final int TRIGONOMETRICO = 1;
 	public final static int TIPOPOLINOMIO=3;
 	public final static int CIRCUNFERENCIA=2;
 	public final static int ELIPSE=4;
 
 	public long tiempo;
+	/**
+	 * El primer punto de la lista enlazada
+	 */
 	private Punto primerPunto;
+	/**
+	 * La raiz del arbol de funciones
+	 */
 	private Funcion raizFuncion;
+	/**
+	 * La lista de las regiones
+	 */
 	private ArrayList<Region> listaRegiones;
 	private SistemaLineal sistemaLineal;
+	/**
+	 * Las lista de objetos dibujables
+	 */
 	private ArrayList<Dibujable>objetosDibujables;
 	private SistemaLineal historialSistema;
 	private ArrayList<CurvaParametrica> curvasParametricas;

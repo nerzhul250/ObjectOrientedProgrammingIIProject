@@ -7,11 +7,23 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 public class MenuVer extends JMenu implements ActionListener{
-	private JMenuItem meitAcerca;
 	
+	/**
+	 * Constante de Acerca
+	 */
 	public final static String ACERCA="ACERCA";
+	/**
+	 * Item de acerca
+	 */
+	private JMenuItem meitAcerca;
+	/**
+	 * Ventana Principal
+	 */
 	private InterfazMathy principal;
-	
+	/**
+	 * Construye el menu de ver
+	 * @param ventana
+	 */
 	public MenuVer(InterfazMathy ventana) {
 		super("Ver");
 		
@@ -25,7 +37,9 @@ public class MenuVer extends JMenu implements ActionListener{
 		
 		add(meitAcerca);
 	}
-	
+	/**
+	 * ACTIONPERFORMED,EASTEREGG
+	 */
 	public void actionPerformed(ActionEvent evento) {
 		String comando = evento.getActionCommand();
 		if(comando.equals(ACERCA)){

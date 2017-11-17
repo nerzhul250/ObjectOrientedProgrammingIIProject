@@ -21,18 +21,50 @@ import mundo.MathyGen;
 
 public class DialogoAgregarFuncion extends JDialog implements ActionListener{
 	
+	/**
+	 * Constante de agregar
+	 */
 	public final static String AGREGAR="AGREGAR";
 	
+	/**
+	 * Ventana principal
+	 */
 	private InterfazMathy principal;
 	
+	/**
+	 * Lista de seleccion del tipo de funcion
+	 */
 	private JComboBox<String>funciones;
+	/**
+	 * lista de seleccion del grosor
+	 */
 	private JComboBox<Integer>grosor;
+	/**
+	 * campo para escribir la funcion
+	 */
 	private JTextField txtAgrFun;
+	/**
+	 * Paleta de colores
+	 */
 	private JColorChooser jccPaleta;
+	/**
+	 * Boton para agregar la funcion
+	 */
 	private JButton butAgregar;
+	/**
+	 * Muestra donde se va a hacer el agregar
+	 */
 	private JLabel lblAgregar;
+	/**
+	 * Muestra donde se seleccionara el grosor
+	 */
 	private JLabel lblGrosor;
 	
+	/**
+	 * Costruye el dialogo
+	 * @param in ventana principal
+	 * @param title titulo del dialogo
+	 */
 	public DialogoAgregarFuncion(InterfazMathy in, String title){
 		super(in,title);
 		principal=in;
@@ -69,6 +101,9 @@ public class DialogoAgregarFuncion extends JDialog implements ActionListener{
 		add(aux,BorderLayout.SOUTH);
 		pack();
 	}
+	/**
+	 * Metodo que decide que hacer segun el boton oprimido
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals(AGREGAR)){
 			String fun=(String) funciones.getSelectedItem();

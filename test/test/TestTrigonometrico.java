@@ -19,7 +19,6 @@ public class TestTrigonometrico {
 		assertTrue(trigonometrico.getFunTrig().equals("cos"));
 		trigonometrico=new Trigonometrico("36tan(-12x)");
 		assertTrue(trigonometrico.getFunTrig().equals("tan"));
-		
 	}
 
 }
