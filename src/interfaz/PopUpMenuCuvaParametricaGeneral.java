@@ -10,11 +10,31 @@ import mundo.CurvaParametrica;
 
 public class PopUpMenuCuvaParametricaGeneral extends JPopupMenu implements ActionListener {
 
+	/**
+	 * Interfaz principal
+	 */
 	private InterfazMathy principal;
+	/**
+	 * Curva paramétrica seleccionada
+	 */
 	private CurvaParametrica curv;
+	/**
+	 * item eliminar
+	 */
 	private JMenuItem itEliminar;
+	/**
+	 * item que da la orden de dibujar la curva
+	 */
 	private JMenuItem itDibujar;
+	/**
+	 * item que da la orden de borrar la curva seleccionada
+	 */
 	private JMenuItem itBorrar;
+	/**
+	 * Crea un nuevo popUpMenu para curva parametrica
+	 * @param p interfaz principal
+	 * @param c curva paramétrica seleccionada
+	 */
 	public PopUpMenuCuvaParametricaGeneral(InterfazMathy p, CurvaParametrica c){
 		curv=c;
 		principal=p;
@@ -35,6 +55,9 @@ public class PopUpMenuCuvaParametricaGeneral extends JPopupMenu implements Actio
 		add(itBorrar);
 		add(itEliminar);
 	}
+	/**
+	 * Escucha los items
+	 */
 	public void actionPerformed(ActionEvent e) {
 		String comando= e.getActionCommand();
 		if(comando.equals(PopUpMenuFuncionPar.ELIMINAR)){

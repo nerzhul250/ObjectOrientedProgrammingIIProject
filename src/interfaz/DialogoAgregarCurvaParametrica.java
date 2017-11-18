@@ -17,18 +17,43 @@ import javax.swing.JTextField;
 import mundo.MathyGen;
 
 public class DialogoAgregarCurvaParametrica extends JDialog implements ActionListener {
-	
+	/**
+	 * Es la interfaz principal
+	 */
 	private InterfazMathy principal;
-	
+	/**
+	 * Es el JcomboBox que permite seleccionar el tipo de curva a dibujar
+	 */
 	private JComboBox<String>curvas;
+	/**
+	 * Es el botón que permite agregar una nueva curva
+	 */
 	private JButton btnAgregar;
+	/**
+	 * Es el textField que permite ingresar la fóruma de la curva
+	 */
 	private JTextField txtFormula;
+	/**
+	 * Es el lbl que contiene el texto "Curvas"
+	 */
 	private JLabel lblCurvas;
+	/**
+	 * Es el lbl que contiene el texto "Formula"
+	 */
 	private JLabel lblFormula;
+	/**
+	 * Es el panel que contiene el seleccionador de colores
+	 */
 	private JColorChooser colores;
+	/**
+	 * Arreglo que tiene los tipos de curvas
+	 */
 	private String[] opciones={"Circunferencia","Elipse"};
 	
-	
+	/**
+	 * Crea un nuevo dialógo para crear una nueva curva paramétrica
+	 * @param p Interfaz principal
+	 */
 	public DialogoAgregarCurvaParametrica(InterfazMathy p){
 		super(p, "Agregar curva paramétrica");
 		setLayout(new BorderLayout());
@@ -59,6 +84,9 @@ public class DialogoAgregarCurvaParametrica extends JDialog implements ActionLis
 		add(aux, BorderLayout.SOUTH);
 		pack();
 	}
+	/**
+	 * Método que escucha los botones
+	 */
 	public void actionPerformed(ActionEvent arg0) {
 		String comando=arg0.getActionCommand();
 		if(comando.equals(DialogoAgregarFuncion.AGREGAR)){

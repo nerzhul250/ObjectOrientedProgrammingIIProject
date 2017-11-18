@@ -132,6 +132,10 @@ public class Circunferencia extends CurvaParametrica {
 		}
 	}
 
+	/**
+	 * Devuelve el radio
+	 * @return
+	 */
 	public double darRadio(){
 		return radio;
 	}

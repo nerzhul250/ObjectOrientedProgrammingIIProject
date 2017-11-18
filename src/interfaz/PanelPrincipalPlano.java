@@ -47,6 +47,10 @@ public class PanelPrincipalPlano extends JPanel{
 	public void agregarPunto(Punto punto) {
 		pod.agregarPunto(punto);
 	}
+	/**
+	 * Agrega una nueva curva paramétrica
+	 * @param cur curva a agregar
+	 */
 	public void agregarCurvaParametrica(CurvaParametrica cur){
 		pod.agregarCurvaParametrica(cur);
 	}
@@ -77,6 +81,10 @@ public class PanelPrincipalPlano extends JPanel{
 	public void refrescarListaRegiones(ArrayList<Region> listaRegiones) {
 		pod.refrescarListaRegiones(listaRegiones);
 	}
+	/**
+	 * refresca todas las curvas paramétricas
+	 * @param c lista de curvas parametricas
+	 */
 	public void refrescarListaCurvasParametricas(ArrayList<CurvaParametrica>c){
 		pod.refrescarListaCurvasParametricas(c);
 	}

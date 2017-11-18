@@ -8,8 +8,18 @@ import javax.swing.JPopupMenu;
 
 public class PopUpMenuCurvaParametrica extends JPopupMenu implements ActionListener {
 
+	/**
+	 * Es el item de agregar curvas
+	 */
 	private JMenuItem itAgregar;
+	/**
+	 * interfaz principal
+	 */
 	private InterfazMathy principal;
+	/**
+	 * crea un nuevo popUpMenu para las curvas parametricas
+	 * @param p interfaz principal
+	 */
 	public PopUpMenuCurvaParametrica(InterfazMathy p){
 		principal =p;
 		itAgregar= new JMenuItem("Agregar nueva curva paramétrica");
@@ -17,6 +27,9 @@ public class PopUpMenuCurvaParametrica extends JPopupMenu implements ActionListe
 		itAgregar.setActionCommand(PopUpMenuFuncionGen.AGREGAR);
 		add(itAgregar);
 	}
+	/**
+	 * Método que escuha los items
+	 */
 	public void actionPerformed(ActionEvent arg0) {
 		principal.abrirDialogoAgregarCurvaParametrica();
 	}

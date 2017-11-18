@@ -82,7 +82,7 @@ public class MathyGen {
 	/**
 	 * agrega un sistema lineal al historial
 	 * @param s sistema a agregr
-	 * @param nombre nombre del sistema lineal
+	 * @param nombre nombre del sistema lineal. Los nombres deben ser diferentes
 	 * @return boolean fue agregado
 	 * @throws NombreFaltanteSistemaLinealException en caso de que no se ingrese un nombre
 	 */

@@ -114,7 +114,7 @@ public class TestElipse {
 		assertTrue(elipse.toString().equals("1.0(x+-0.0)^2+1.0(y+-0.0)^2=1"));
 	}
 	@Test
-	public void probarMetodoParametrizacionEnX(){
+	public void probarMetodoParametrizaciones(){
 		setupEscenario1();
 		for(int i =0;i<1000;i++){
 			assertTrue(elipse.darPosicionX(i*2*Math.PI/1000)==Math.cos(i*2*Math.PI/1000)/Math.sqrt(0.1111)+3.5 );	

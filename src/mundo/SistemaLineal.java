@@ -114,20 +114,6 @@ public class SistemaLineal implements Serializable{
 				i=matriz.length;
 			}else{
 				double[][] nuevaMatriz=new double[matriz.length-1][matriz.length-1];
-//				int fila=0;
-//				int columna=0;
-//				for(int j=0;j<matriz.length;j++){
-//					for(int k=0;k<matriz.length;k++){
-//						if(j>0&&(k<i||k>i)){
-//							if(columna==nuevaMatriz.length){
-//								columna=0;
-//								fila++;
-//							}
-//							nuevaMatriz[fila][columna]=matriz[j][k];
-//							columna++;
-//						}
-//					}
-//				}
 				calcularMatrizFaltante(matriz, nuevaMatriz, 0, i, 0, 0, 0, 0, 0);
 				
 				determinante+=Math.pow(-1, i)*matriz[0][i]*calcularDeterminante(nuevaMatriz);
