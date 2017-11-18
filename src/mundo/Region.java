@@ -79,6 +79,10 @@ public class Region implements Dibujable,Comparable,Serializable {
 	public void setArea(double area) {
 		this.area = area;
 	}
+	public String area(){
+		DecimalFormat df=new DecimalFormat("0.00");
+		return df.format(area);
+	}
 	@Override
 	public String toString() {
 		DecimalFormat df=new DecimalFormat("0.00");

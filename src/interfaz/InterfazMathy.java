@@ -305,15 +305,37 @@ public class InterfazMathy extends JFrame{
 	public ArrayList<Dibujable> darObjetosDibujables() {
 		return mundo.darObjetosDibujables();
 	}
-	public void organizarRegiones() {
+	public void organizarRegionesAscendentemente() {
 		mundo.organizarRegiones();
 		ppp.refrescarListaRegiones(mundo.getListaRegiones());
 	}
+	public void organizarRegionesDescendientemente(){
+		mundo.ordenarRegionesDescendientemente();
+		ppp.refrescarListaRegiones(mundo.getListaRegiones());
+	}
+	
+	public void buscarRegion(){
+		String area = JOptionPane.showInputDialog("Ingresa el área de la región a buscar");
+		try{
+			if(area!= null && !area.equals("")){
+				Region buscada= mundo.buscarRegion(area);
+				if(buscada==null){
+					JOptionPane.showMessageDialog(this, "Región no encontrada");
+				}else{
+					agregarObjetoDibujable(buscada);
+				}
+			}
+			
+		}catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(this, "Ingresa un área válida");
+		}
+	}
 	public void eliminarObjetoDibujable(Dibujable d) {
-		mundo.eliminarObjetoDibujable(d);
 		if(d instanceof Punto){
+			mundo.eliminarObjetoDibujable(d);
 			mundo.eliminarPunto((Punto)d);
 			ppp.refrescarListaPuntos(mundo.getPrimerPunto());
+			
 		}else if(d instanceof Funcion){
 			Funcion dad=((Funcion)d).getPadre();
 			if(dad==null){

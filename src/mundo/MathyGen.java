@@ -24,6 +24,7 @@ public class MathyGen {
 	public final static String RUTA_PUNTOS_GUARDADA="./data/EstadoGraficadora/puntos.txt";
 	public final static String RUTA_MATRIZ_GIGANTE_1="./data/matricesGigantes/MATRIZ11.txt";
 	public final static String RUTA_MATRIZ_GIGANTE_2="./data/matricesGigantes/MATRIZ2.txt";
+	public final static String RUTA_HISTORIAL_SISTEMAS_LINEALES="./data/historialSistema/historialSistema.txt";
 
 	public static String getRutaMatrizGigante2() {
 		return RUTA_MATRIZ_GIGANTE_2;
@@ -46,14 +47,32 @@ public class MathyGen {
 	private SistemaLineal historialSistema;
 	private ArrayList<CurvaParametrica> curvasParametricas;
 	
+	public MathyGen(){
+//		try {
+//			crearMatrizGigante1();
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//		try {
+//			crearMatrizGigante2();
+//		} catch (FileNotFoundException e) {
+		
+//			e.printStackTrace();
+//		}
+		objetosDibujables=new ArrayList<Dibujable>();
+		curvasParametricas= new ArrayList<CurvaParametrica>();
+		listaRegiones= new ArrayList<Region>();
+		double[][]m1=new double[1][1];
+		sistemaLineal= new SistemaLineal(m1, null);
+	}
 
 
 	/**
-	 * agrega ordenadamente por nombre
-	 * @param s
-	 * @param nombre
-	 * @return
-	 * @throws NombreFaltanteSistemaLinealException
+	 * agrega un sistema lineal al historial
+	 * @param s sistema a agregr
+	 * @param nombre nombre del sistema lineal
+	 * @return boolean fue agregado
+	 * @throws NombreFaltanteSistemaLinealException en caso de que no se ingrese un nombre
 	 */
 	public boolean agregarSistemaLinealAlHistorial(SistemaLineal s,String nombre) throws NombreFaltanteSistemaLinealException{
 		boolean agregado= false;
@@ -86,13 +105,71 @@ public class MathyGen {
 		}
 		return agregado;
 	}
-	
+	/**
+	 * Devuelve todas las curvas parametricas actuales
+	 * @return
+	 */
 	public ArrayList<CurvaParametrica> darCurvasParametricas(){
 		return curvasParametricas;
 	}
+	/**
+	 * añade una curva parametrica a las curvas actules
+	 * @param a
+	 */
 	public void añadirCurvaParametrica(CurvaParametrica a){
 		curvasParametricas.add(a);
 	}
+	/**
+	 * busca la región según el área ingresada
+	 * @param area área de la región
+	 * @return devuelve la región que encuentra primero con esa área
+	 */
+	public Region buscarRegion(String area){
+		organizarRegiones();
+		boolean encontrado=false;
+		int inicio= 0;
+		Region buscada= null;
+		try{
+			double areaNumero=Double.parseDouble(conversionNumero(area));
+			int fin= listaRegiones.size()-1;
+			while(!encontrado&&inicio<=fin){
+				int medio=(inicio+fin)/2;
+				if(Double.parseDouble(conversionNumero(listaRegiones.get(medio).area()))== areaNumero){
+					encontrado= true;
+					buscada= listaRegiones.get(medio);
+				}else if(Double.parseDouble(conversionNumero(listaRegiones.get(medio).area()))<areaNumero){
+					inicio=medio+1;
+				}else{
+					fin=medio-1;
+				}
+			}
+			
+		}catch(NumberFormatException e){
+			throw new NumberFormatException();
+		}
+		return buscada;
+	}
+	/**
+	 * Método auxiliar que permite convertir un numero especifico para poder 
+	 * convertirlo luego a double. Ejemplo: "7,09" se convierte en "7.09".ss
+	 * @param n numero a convertir
+	 * @return numero convertido
+	 */
+	public String conversionNumero(String n){
+		String men="";
+		for(int i =0;i<n.length();i++){
+			if(n.charAt(i) ==','){
+				men+=".";
+			}else{
+				men+=n.charAt(i)+"";
+			}
+		}
+		return men;
+	}
+	/**
+	 * Elimina una curva parametrica de las curvas actuales
+	 * @param a curva parametrica a eliminar
+	 */
 	public void eliminarCurvaParametrica(CurvaParametrica a){
 		for(int i =0;i<curvasParametricas.size();i++){
 			if(curvasParametricas.get(i)==a){
@@ -101,11 +178,16 @@ public class MathyGen {
 			}
 		}
 	}
+	/**
+	 * Elimina un sistema lineal del historial según el nombres
+	 * @param nombre nombre del sistema
+	 * @throws Exception En caso de que no se encuentre el sistema lineal a eliminar
+	 */
 	public void eliminarSistemaLinealDelHistorial(String nombre) throws Exception{
 		SistemaLineal actual= historialSistema;
 		if(actual!= null&&historialSistema.darNombre().equals(nombre)){
 			if(historialSistema.darSiguiente()!= null){
-				historialSistema.modificarAnterior(null);
+				historialSistema.darSiguiente().modificarAnterior(null);
 			}
 			historialSistema= historialSistema.darSiguiente();
 		}else if(actual!= null){
@@ -124,9 +206,12 @@ public class MathyGen {
 			throw new Exception("No se encontró el sistema lineal");
 		}
 	}
-	
+	/**
+	 * Guarda en un archivo serializable el historial de sistemas lineales
+	 * @throws IOException
+	 */
 	public void guardarHistorialSistemaLineal() throws IOException{
-		File ar=new File("./data/historialSistema/historialSistema.txt");
+		File ar=new File(RUTA_HISTORIAL_SISTEMAS_LINEALES);
 		try {
 			ObjectOutputStream salida= new ObjectOutputStream(new FileOutputStream(ar));
 			salida.writeObject(historialSistema);
@@ -137,9 +222,13 @@ public class MathyGen {
 			throw new IOException("Error al guardar el historial de sistemas lineales");
 		}
 	}
-	
+	/**
+	 * Carga desde un archivo serailizable el historial De Sistemas Lineales
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public void cargarHistorialSistemaLineal() throws IOException, ClassNotFoundException{
-		File ar = new File("./data/historialSistema/historialSistema.txt");
+		File ar = new File(RUTA_HISTORIAL_SISTEMAS_LINEALES);
 		if(ar.exists()){
 			try {
 				ObjectInputStream entrada= new ObjectInputStream(new FileInputStream(ar));
@@ -156,7 +245,11 @@ public class MathyGen {
 			}
 		}
 	}
-	
+	/**
+	 * Busca un sistemaLineal según su nombre
+	 * @param nombre nombre del sistema lineal
+	 * @return sistema lineal. Si no lo encuentre retorna null
+	 */
 	public SistemaLineal buscarSistemaLineal(String nombre){
 		SistemaLineal actual= historialSistema;
 		if(actual!= null){
@@ -169,33 +262,48 @@ public class MathyGen {
 		return actual;
 	}
 	
-	
-	public MathyGen(){
-//		try {
-//			crearMatrizGigante1();
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//		try {
-//			crearMatrizGigante2();
-//		} catch (FileNotFoundException e) {
-
-//			e.printStackTrace();
-//		}
-		objetosDibujables=new ArrayList<Dibujable>();
-		curvasParametricas= new ArrayList<CurvaParametrica>();
-		double[][]m1=new double[1][1];
-		sistemaLineal= new SistemaLineal(m1, null);
+	/**
+	 * Ordena las regiones actuales descendientemente
+	 */
+	public void ordenarRegionesDescendientemente(){
+		for(int i =1;i<listaRegiones.size();i++){
+			for(int j=i;j>0&&listaRegiones.get(j-1).compareTo(listaRegiones.get(j))<0;j--){
+				Region temp= listaRegiones.get(j);
+				listaRegiones.set(j, listaRegiones.get(j-1));
+				listaRegiones.set(j-1, temp);
+			}
+		}
 	}
+	
+	//TODO buscar binariamente las regiones
+	/**
+	 * Devuleve el sistema lineal actual
+	 * @return
+	 */
 	public SistemaLineal darSistemaLineal(){
 		return sistemaLineal;
 	}
+	/**
+	 * Inicializa el sistema lineal actual
+	 * @param m1 matriz 1
+	 * @param m2 matriz 2
+	 */
 	public void iniciarSistemaLineal(double[][] m1,double[][] m2){
 		sistemaLineal= new SistemaLineal(m1, m2);
 	}
+	/**
+	 * Calcula el determinante de la matriz1
+	 * @return deterimante
+	 */
 	public double calcularDeterminanteMatriz1(){
 		return sistemaLineal.calcularDeterminante(sistemaLineal.darMatrizCoeficientes1());
 	}
+	/**
+	 * Utiliza el método calcularSolucionMatriz de la clase sistema lineal
+	 * para utilizar su resultado y mostrarlo en la interfaz
+	 * @return String mensaje con las soluciones dle sistema
+	 * @throws MatrizNoInvertibleException
+	 */
 	public String calcularSolucionesMatriz1() throws MatrizNoInvertibleException{
 		String mensaje="";
 		double[] soluciones=new double[sistemaLineal.darMatrizCoeficientes1()[0].length];
@@ -206,7 +314,11 @@ public class MathyGen {
 		}
 		return mensaje;
 	}
-	
+	/**
+	 * Es un método de prueba cuya funcionalidad es únicamente multiplicar las amtrices gigantes
+	 * con un solo hilo para luego compararlo con la multiplicación de matrices gigantes con
+	 * 2 hilos
+	 */
 	public void metodoPrueba(){
 		double multiplicacion=0;
 		double[][] matrizCoeficientes1= sistemaLineal.darMatrizCoeficientes1();
@@ -224,7 +336,14 @@ public class MathyGen {
 
 	}
 	
-	//TODO INCOMPLETO
+	/**
+	 * Agrega una curva parametrica
+	 * @param form formula de la curva parametrica. debe cumplir con los requisitos de las formulas
+	 * @param color color de la curva
+	 * @param tipo tipo de la curva
+	 * @return CurvaParametrica que se agrego
+	 * @throws FormulaParaParametrizarIncompleta
+	 */
 	public CurvaParametrica agregarCurvaParametrica(String form, Color color, int tipo) throws FormulaParaParametrizarIncompleta{
 		CurvaParametrica cur=null;
 		switch(tipo){
@@ -284,10 +403,18 @@ public class MathyGen {
 		}
 	}
 
-		
+	/**
+	 * Carga las matrices gigantes
+	 * @throws IOException
+	 */
 	public void cargarMatricesGigantes() throws IOException{
 		sistemaLineal=new SistemaLineal(cargarMatrizGigante1(), cargarMatrizGigante2());
 	}
+	/**
+	 * Carga la matriz gigante 1
+	 * @return matriz cargada
+	 * @throws IOException
+	 */
 	public double[][] cargarMatrizGigante1() throws IOException{
 		File cargar = new File(RUTA_MATRIZ_GIGANTE_1);
 		double[][] matriz=null;
@@ -309,6 +436,11 @@ public class MathyGen {
 		}
 		return matriz;
 	}
+	/**
+	 * Carga la matriz gigante 2 desde un archivo de texto
+	 * @return
+	 * @throws IOException
+	 */
 	public double[][] cargarMatrizGigante2() throws IOException{
 		File cargar = new File(RUTA_MATRIZ_GIGANTE_2);
 		double[][] matriz=null;
@@ -331,6 +463,10 @@ public class MathyGen {
 		}
 		return matriz;
 	}
+	/**
+	 * Crea una matriz gigante de 1000x1000 en un archivo de texto
+	 * @throws FileNotFoundException
+	 */
 	public void crearMatrizGigante1() throws FileNotFoundException{
 		File aEscribir= new File(RUTA_MATRIZ_GIGANTE_1);
 		PrintWriter log= new PrintWriter(aEscribir);
@@ -350,6 +486,10 @@ public class MathyGen {
 		log.close();
 		System.out.println("terminado 1");
 	}
+	/**
+	 * Crea una matriz gigante 2 en un archivo de texto
+	 * @throws FileNotFoundException
+	 */
 	public void crearMatrizGigante2() throws FileNotFoundException{
 		File aEscribir= new File(RUTA_MATRIZ_GIGANTE_2);
 		PrintWriter log= new PrintWriter(aEscribir);
@@ -590,5 +730,14 @@ public class MathyGen {
 	}
 	public void eliminarRegion(Region d) {
 		getListaRegiones().remove(d);
+	}
+	public SistemaLineal darHistorialSistemaLineal(){
+		return historialSistema;
+	}
+	public void modificarHistorialSistemaLineal(SistemaLineal m){
+		historialSistema=m;
+	}
+	public ArrayList<Region> darRegiones(){
+		return listaRegiones;
 	}
 }
