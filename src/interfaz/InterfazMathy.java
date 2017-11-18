@@ -484,6 +484,9 @@ public class InterfazMathy extends JFrame{
 	}
 	public void agregarNumero(String nam) {
 		try{
+			if(nam.equals("0") || nam.charAt(0)=='-' || nam.length()>=8){
+				throw new Exception();
+			}
 			if(!mundo.agregarNumero(nam)){
 				JOptionPane.showMessageDialog(this,"Genere mas primos");
 			}else{
@@ -491,6 +494,8 @@ public class InterfazMathy extends JFrame{
 			}
 		}catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(this,"No fue un numero lo que ingresó");
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(this,"Input invalido");
 		}
 	}
 	/**
