@@ -12,6 +12,11 @@ public class TestPolinomio {
 	private void setUpEscenario1(){
 		polinomio=null;
 	}
+	
+	private void setUpEscenario2(){
+		polinomio=new Polinomio("1x^2");
+	}
+	
 	@Test
 	public void testInicializacionPolinomio() {
 		setUpEscenario1();
@@ -24,7 +29,16 @@ public class TestPolinomio {
 				&& polinomio.getCoeficientes().get(4)==1);
 	}
 	public void testComputarValor(){
-		
+		setUpEscenario2();
+		assertTrue(polinomio.computarValor(2)==2);
+		assertTrue(polinomio.computarValor(3)==9);
+		assertTrue(polinomio.computarValor(4)==16);
+	}
+	
+	public void testCompararPolinomio(){
+		setUpEscenario2();
+		Polinomio p2=new Polinomio("2x^2");
+		assertTrue(p2.comparar(polinomio)==1);
 	}
 
 }

@@ -24,22 +24,57 @@ import mundo.FormulaParaParametrizarIncompleta;
 import mundo.MathyGen;
 
 public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWheelListener,MouseListener{
+	/**
+	 * Componente ancho del centro en pixeles del planp
+	 */
 	private int centroW;
+	/**
+	 * Componente altura del centro en pixeles del plano
+	 */
 	private int centroH;
 	
+	/**
+	 * Alcance del plano
+	 */
 	private double alcance;
 	
+	/**
+	 * Posicion x actual del puntero
+	 */
 	private double mousePosx;
+	/**
+	 * Posicion y actual del puntero
+	 */
 	private double mousePosy;
-	
+	/**
+	 * Posicion anterior del puntero en terminos de anchura
+	 */
 	private int priorPosw;
+	/**
+	 * Posicion anterior del puntero en terminos de altura
+	 */
 	private int priorPosh;
+	/**
+	 * Traslacion en x del planoXY
+	 */
 	private double traslX;
+	/**
+	 * Traslacion en y del planoXY
+	 */
 	private double traslY;
 	private DecimalFormat df;
+	/**
+	 * Ancho adicional del panelPlanoxy
+	 */
 	private int anchoAd;
-	
+	/**
+	 * Ventana principal
+	 */
 	private InterfazMathy principal;
+	/**
+	 * Construye el panel que contiene al planoXY
+	 * @param principal
+	 */
 	public PanelPlanoxy(InterfazMathy principal){
 		this.principal=principal;
 		anchoAd=475;
@@ -57,6 +92,9 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 		addMouseListener(this);
 		addMouseWheelListener(this);
 	}
+	/**
+	 * Dibuja todos los objetos dibujables y al planoxy
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -83,35 +121,26 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 		}
 	
 	}
+	/**
+	 * da el ancho en pixeles del planoxy
+	 * @return
+	 */
 	public int darCentroW() {
 		return centroW;
 	}
-	public void modificarCentroW(int centroW) {
-		this.centroW = centroW;
-	}
+	/**
+	 * da la altura en pixeles del planoxy
+	 * @return
+	 */
 	public int darCentroH() {
 		return centroH;
 	}
-	public void modificarCentroH(int centroH) {
-		this.centroH = centroH;
-	}
+	/**
+	 * da el alcance del planoxy
+	 * @return
+	 */
 	public double darAlcance() {
 		return alcance;
-	}
-	public void modificarAlcance(double alcance) {
-		this.alcance = alcance;
-	}
-	public double darTraslX() {
-		return traslX;
-	}
-	public void modificarTraslX(double traslX) {
-		this.traslX = traslX;
-	}
-	public double darTraslY() {
-		return traslY;
-	}
-	public void modificarTraslY(double traslY) {
-		this.traslY = traslY;
 	}
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		double k=e.getWheelRotation();

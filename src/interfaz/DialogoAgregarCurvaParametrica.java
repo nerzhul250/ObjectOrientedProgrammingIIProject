@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import mundo.MathyGen;
 
 public class DialogoAgregarCurvaParametrica extends JDialog implements ActionListener {
-
+	
 	private InterfazMathy principal;
 	
 	private JComboBox<String>curvas;

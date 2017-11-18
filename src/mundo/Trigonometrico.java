@@ -7,17 +7,56 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Trigonometrico extends Funcion {
-
-	private double amplitud;
-	private double velAng;
-	private String funTrig;
-	private int tipo;
+	/**
+	 * Constantes del tipo de funcion trigonometrica
+	 */
+	public final static int SEN=1;
+	public final static int COS=2;
+	public final static int TAN=3;
+	public final static int CSC=4;
+	public final static int SEC=5;
+	public final static int COT=6;
+	public final static int ARCSEN=7;
+	public final static int ARCCOS=8;
+	public final static int ARCTAN=9;
 	
+	/**
+	 * Numero que multiplica a la funcion trigonometrica
+	 */
+	private double amplitud;
+	/**
+	 * Numero que multiplica al argumento de la funcion trigonometrica
+	 */
+	private double velAng;
+	/**
+	 * la funcion trigonometrica
+	 */
+	private String funTrig;
+	/**
+	 * Tipo de funcion trigonometrica
+	 */
+	private int tipo;
+	/**
+	 * Construye la funcion trigonometrica
+	 * @param form
+	 */
 	public Trigonometrico(String form){
 		amplitud=0;
 		velAng=0;
 	     parsearTrigonometrico(0,(form+"T").toCharArray());  
 	}
+	/**
+	 * Da la funcion trigonometrica
+	 * @return
+	 */
+	public String getFunTrig() {
+		return funTrig;
+	}
+	/**
+	 * Extrae la informacion de la representacion de la funcion del usuario
+	 * @param i
+	 * @param a
+	 */
 	private void parsearTrigonometrico(int i, char[] a) {
 		while(a[i]!='T'){
 			char c=a[i];
@@ -33,31 +72,31 @@ public class Trigonometrico extends Funcion {
 				String[] nom=parseTri(i,a);
 				String nam=nom[0];
 				if(nam.equalsIgnoreCase("sen") ||nam.equalsIgnoreCase("sin")){
-					tipo=1;
+					tipo=SEN;
 					funTrig=nam;
 				}else if(nam.equalsIgnoreCase("cos")){
-					tipo=2;
+					tipo=COS;
 					funTrig=nam;
 				}else if(nam.equalsIgnoreCase("tan")){
-					tipo=3;
+					tipo=TAN;
 					funTrig=nam;
 				}else if(nam.equalsIgnoreCase("csc")){
-					tipo=4;
+					tipo=CSC;
 					funTrig=nam;
 				}else if(nam.equalsIgnoreCase("sec")){
-					tipo=5;
+					tipo=SEC;
 					funTrig=nam;
 				}else if(nam.equalsIgnoreCase("cot")){
-					tipo=6;
+					tipo=COT;
 					funTrig=nam;
 				}else if(nam.equalsIgnoreCase("arcsen")){
-					tipo=7;
+					tipo=ARCSEN;
 					funTrig=nam;
 				}else if(nam.equalsIgnoreCase("arccos")){
-					tipo=8;
+					tipo=ARCCOS;
 					funTrig=nam;
 				}else if(nam.equalsIgnoreCase("arctan")){
-					tipo=9;
+					tipo=ARCTAN;
 					funTrig=nam;
 				}
 				i=Integer.parseInt(nom[1]);
@@ -71,6 +110,11 @@ public class Trigonometrico extends Funcion {
 			amplitud=1;
 		}
 	}
+	/**
+	 * Extrae la informacion de la representacion de la funcion del usuario
+	 * @param i
+	 * @param a
+	 */
 	private String[] parseTri(int i, char[] a) {
 		StringBuilder sb=new StringBuilder();
 		while(Character.isAlphabetic(a[i])){
@@ -82,6 +126,12 @@ public class Trigonometrico extends Funcion {
 		String[] ki={ka,ke};
 		return ki;
 	}
+	/**
+	 * Metodo que parsea numeros en strings
+	 * @param i
+	 * @param a
+	 * @return
+	 */
 	private double[] parseNumber(int i, char[] a) {
 		double nam=0;
 		int c=a[i];
@@ -113,7 +163,9 @@ public class Trigonometrico extends Funcion {
         double[] ans={neg * nam,i-1};
         return ans;
     }
-	
+	/**
+	 * Metodo que dibuja a la funcion trigonometrica
+	 */
 	@Override
 	public void dibujarse(Graphics2D g2d, double alcance, double traslY,
 			double traslX, int ancho) {
@@ -130,6 +182,9 @@ public class Trigonometrico extends Funcion {
 			h1=h;
 		}
 	}
+	/**
+	 * Computa el valor de la funcion trigonometrica evaluada en un x
+	 */
 	@Override
 	public double computarValor(double x) {
 		double y=0;
@@ -174,18 +229,39 @@ public class Trigonometrico extends Funcion {
 		}
 		return y;
 	}
+	/**
+	 * da la amplitud de la funcion trigonometrica
+	 * @return
+	 */
 	public double getAmplitud() {
 		return amplitud;
 	}
+	/**
+	 * Modifica la amplitud de la funcion trigonometrica
+	 * @param amplitud
+	 */
 	public void setAmplitud(double amplitud) {
 		this.amplitud = amplitud;
 	}
+	/**
+	 * da la velocidad angular de la funcion trigonometrica
+	 * @return
+	 */
 	public double getVelAng() {
 		return velAng;
 	}
+	/**
+	 * modifica la velocidad angular de la funcion trigonometrica
+	 * @param velAng
+	 */
 	public void setVelAng(double velAng) {
 		this.velAng = velAng;
 	}
+	/**
+	 * Compara dos funciones trigonometricas
+	 * @param g2
+	 * @return
+	 */
 	public int comparar(Trigonometrico g2) {
 		double dif=tipo-g2.getTipo();
 		if(dif!=0){
@@ -201,12 +277,16 @@ public class Trigonometrico extends Funcion {
 		}
 		return (int)dif;
 	}
+	/**
+	 * da el tipo de la funcion trigonometrica
+	 * @return
+	 */
 	public int getTipo() {
 		return tipo;
 	}
-	public void setTipo(int tipo) {
-		this.tipo = tipo;
-	}
+	/**
+	 * Da la representacion estandar de esta funcion trigonometrica
+	 */
 	@Override
 	public String toString() {
 		return amplitud+funTrig+"("+velAng+"x)";

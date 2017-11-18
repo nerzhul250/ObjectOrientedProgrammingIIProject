@@ -41,16 +41,24 @@ import mundo.Region;
 import mundo.SistemaLineal;
 
 public class InterfazMathy extends JFrame{
+	/**
+	 * Panel principal donde yace todo lo del planoXY
+	 */
 	private PanelPrincipalPlano ppp;
 	private PanelSistemaLineal psl;
 	
+	/**
+	 * Conexion con el mundo
+	 */
 	private MathyGen mundo;
 	
 	private VentanaMatriz venMatrizPro;
 	private VentanaMatrizB ventanaMaB;
+	/**
+	 * Construye la interfaz
+	 */
 	public InterfazMathy(){
 		setTitle("MathyGen");
-		
 		
 		mundo=new MathyGen();
 		ppp=new PanelPrincipalPlano(this,mundo);
@@ -90,6 +98,9 @@ public class InterfazMathy extends JFrame{
 		add(jtp);
 		pack();
 	}
+	/**
+	 * Metodo que guarda el estado del plano principal
+	 */
 	public void guardarArchivo(){
 		try {
 			mundo.guardarEstado();
@@ -271,6 +282,13 @@ public class InterfazMathy extends JFrame{
 		venMatrizPro= new VentanaMatriz(matriz);
 		venMatrizPro.setVisible(true);
 	}
+	/**
+	 * Este metodo agrega una nueva funcion al mundo
+	 * @param form representacion dada por el usuario
+	 * @param color color de la funcion
+	 * @param grosor grosor de la funcion
+	 * @param tipo tipo de funcion
+	 */
 	public void agregarFuncion(String form,Color color, int grosor, int tipo) {
 		try {
 			ppp.agregarFuncion(mundo.agregarFuncion(form,color,grosor,tipo));
@@ -285,26 +303,46 @@ public class InterfazMathy extends JFrame{
 			JOptionPane.showMessageDialog(this,e.getMessage());
 		}
 	}
+	/**
+	 * Agrega un nuevo punto al mundo
+	 * @param x coordenada x del punto
+	 * @param y coordenada y del punto
+	 */
 	public void crearPunto(double x, double y) {
 		ppp.agregarPunto(mundo.agregarPunto(x,y));
 	}
+	/**
+	 * Agrega una nueva region al mundo
+	 * @param frontera los puntos definiendo a la region
+	 * @param color el color de la regin
+	 */
 	public void agregarRegion(ArrayList<Punto> frontera, Color color) {
 		ppp.agregarRegion(mundo.agregarRegion(frontera,color));
 	}
-	public void desplegarMensaje(String mensaje){
-		JOptionPane.showMessageDialog(this, mensaje);
-	}
+	/**
+	 * Metodo que agrega un objeto dibujable al mundo
+	 * @param f el dibujable
+	 */
 	public void agregarObjetoDibujable(Dibujable f) {
 		mundo.agregarObjetoDibujable(f);
 		ppp.refrescarPlano();
 	}
+	/**
+	 * Borra el objeto dibujable del planoxy
+	 * @param f
+	 */
 	public void borrarObjetoDibujable(Dibujable f) {
 		mundo.eliminarObjetoDibujable(f);
 		ppp.refrescarPlano();
 	}
+	/**
+	 * da los objetos dibujables del mundo
+	 * @return
+	 */
 	public ArrayList<Dibujable> darObjetosDibujables() {
 		return mundo.darObjetosDibujables();
 	}
+<<<<<<< HEAD
 	public void organizarRegionesAscendentemente() {
 		mundo.organizarRegiones();
 		ppp.refrescarListaRegiones(mundo.getListaRegiones());
@@ -330,6 +368,19 @@ public class InterfazMathy extends JFrame{
 			JOptionPane.showMessageDialog(this, "Ingresa un área válida");
 		}
 	}
+=======
+	/**
+	 * Metodo que organiza las regiones del mundo
+	 */
+	public void organizarRegiones() {
+		mundo.organizarRegiones();
+		ppp.refrescarListaRegiones(mundo.getListaRegiones());
+	}
+	/**
+	 * Elimina el objeto dibujable del mundo
+	 * @param d
+	 */
+>>>>>>> 80e482743ecb45bc1e96f264949ac0a71dc5cd20
 	public void eliminarObjetoDibujable(Dibujable d) {
 		if(d instanceof Punto){
 			mundo.eliminarObjetoDibujable(d);
@@ -337,20 +388,7 @@ public class InterfazMathy extends JFrame{
 			ppp.refrescarListaPuntos(mundo.getPrimerPunto());
 			
 		}else if(d instanceof Funcion){
-			Funcion dad=((Funcion)d).getPadre();
-			if(dad==null){
-				mundo.setRaizFuncion(null);
-			}else if(dad.getFunDe()==d){
-				dad.setFunDe(null);
-			}else{
-				dad.setFunIz(null);
-			}
-			if(((Funcion)d).getFunDe()!=null){
-				mundo.recorridoDeAgregacion(((Funcion)d).getFunDe(),dad);
-			}
-			if(((Funcion)d).getFunIz()!=null){
-				mundo.recorridoDeAgregacion(((Funcion)d).getFunIz(),dad);
-			}	
+			mundo.eliminarFuncion((Funcion)d);
 			ppp.refrescarListaFunciones(mundo.getRaizFuncion());
 		}else if(d instanceof Region){
 			mundo.eliminarRegion((Region)d);
@@ -360,5 +398,8 @@ public class InterfazMathy extends JFrame{
 			ppp.refrescarListaCurvasParametricas(mundo.darCurvasParametricas());
 		}
 		ppp.refrescarPlano();
+	}
+	public void desplegarMensaje(String mensaje){
+		JOptionPane.showMessageDialog(this, mensaje);
 	}
 }
