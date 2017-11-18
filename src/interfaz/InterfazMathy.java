@@ -46,12 +46,12 @@ public class InterfazMathy extends JFrame{
 	 */
 	private PanelPrincipalPlano ppp;
 	private PanelSistemaLineal psl;
-	
+
 	/**
 	 * Conexion con el mundo
 	 */
 	private MathyGen mundo;
-	
+
 	private VentanaMatriz venMatrizPro;
 	private VentanaMatrizB ventanaMaB;
 	/**
@@ -59,7 +59,7 @@ public class InterfazMathy extends JFrame{
 	 */
 	public InterfazMathy(){
 		setTitle("MathyGen");
-		
+
 		mundo=new MathyGen();
 		ppp=new PanelPrincipalPlano(this,mundo);
 		psl=new PanelSistemaLineal(this);
@@ -79,11 +79,11 @@ public class InterfazMathy extends JFrame{
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(this,"Error Fatal en la carga de archivos");
 		}
-		
+
 		JTabbedPane jtp=new JTabbedPane();
 		jtp.add(ppp,"Plano");
 		jtp.add(psl,"Sistema lineal");
-		
+
 		JMenuBar miMenuBar = new JMenuBar();
 		miMenuBar.add(new MenuArchivo(this));
 		miMenuBar.add(new MenuVer(this));
@@ -113,6 +113,10 @@ public class InterfazMathy extends JFrame{
 		return mundo.darSistemaLineal().darMatrizCoeficientes1()[0].length;
 	}
 
+	/**
+	 * Método que se ejecuta antes de cerrar el programa.
+	 * Guarda el historial de sistemas lineales
+	 */
 	@Override
 	public void dispose() {
 		try {
@@ -123,7 +127,10 @@ public class InterfazMathy extends JFrame{
 		}
 		super.dispose();
 	}
-	
+	/**
+	 * Guarda un sistema lineal actual desplegado en el historial
+	 * @param nombre nombre del sistema
+	 */
 	public void guardarSistema(String nombre){
 		double[][] m1;
 		try {
@@ -141,7 +148,10 @@ public class InterfazMathy extends JFrame{
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
 	}
-	
+	/**
+	 * Método encargado de desplegar el sistema buscado en la interfaz
+	 * @param nombre nombre del sistema
+	 */
 	public void buscarSistema(String nombre){
 		SistemaLineal buscado= mundo.buscarSistemaLineal(nombre);
 		if(buscado!= null){
@@ -153,28 +163,31 @@ public class InterfazMathy extends JFrame{
 			JOptionPane.showMessageDialog(this, "Sistema no encontrado");
 		}
 	}
-	
+	/**
+	 * Es el método que se encarga de ejecutar la multiplicación de matrices
+	 * con 2 hilos
+	 */
 	public void iniciarProductoEntreMatrices(){
 		try {
 			double[][] m1=psl.darMatriz1();
 			double[][] m2=psl.darMatriz2();
 			mundo.iniciarSistemaLineal(m1, m2);
 			int poolSize = 2;
-		      ExecutorService service = Executors.newFixedThreadPool(poolSize);
-		      List<Future<Runnable>> futures = new ArrayList<Future<Runnable>>();
-		
-		      Future f1 = service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(), m1.length/2, 0));
-		      futures.add(f1);
-		      Future f2=service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(), m1.length,m1.length/2));
-		      futures.add(f2);
-		      
-		      // wait for all tasks to complete before continuing
-		      for (Future<Runnable> fe : futures)
-		      {
-		         fe.get();
-		      }
-		      service.shutdownNow();
-		      mostrarMatrizProducto(mundo.darMatrizProducto());
+			ExecutorService service = Executors.newFixedThreadPool(poolSize);
+			List<Future<Runnable>> futures = new ArrayList<Future<Runnable>>();
+
+			Future f1 = service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(), m1.length/2, 0));
+			futures.add(f1);
+			Future f2=service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(), m1.length,m1.length/2));
+			futures.add(f2);
+
+			// wait for all tasks to complete before continuing
+			for (Future<Runnable> fe : futures)
+			{
+				fe.get();
+			}
+			service.shutdownNow();
+			mostrarMatrizProducto(mundo.darMatrizProducto());
 		} catch (NoEsNumeroException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage()+e.darIndice());
 		} catch (InterruptedException e) {
@@ -185,6 +198,9 @@ public class InterfazMathy extends JFrame{
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * Método encargado de desplegar el determinante de la matriz 1
+	 */
 	public void calcularDeterminanteMatriz1(){
 		double[][] m1;
 		try {
@@ -195,6 +211,10 @@ public class InterfazMathy extends JFrame{
 			JOptionPane.showMessageDialog(this, e.getMessage()+e.darIndice());
 		}
 	}
+	/**
+	 * Es el encargado de abrir una nueva ventana en donde se ingresará el vector
+	 * B para darle solución a la matriz 1
+	 */
 	public void ventanaMatrizBVisible(){
 		double[][] m1;
 		try {
@@ -206,6 +226,9 @@ public class InterfazMathy extends JFrame{
 			JOptionPane.showMessageDialog(this, e.getMessage()+e.darIndice());
 		}
 	}
+	/**
+	 * Despliega la solucion de la matriz1
+	 */
 	public void calcularSolucionesMatriz1(){
 		try {
 			mundo.darSistemaLineal().modificarMatrizB(ventanaMaB.darMatrizB());
@@ -220,11 +243,19 @@ public class InterfazMathy extends JFrame{
 			JOptionPane.showMessageDialog(this, e.getMessage()+e.darIndice());
 		}
 	}
+	/**
+	 * Método main encargado de ejecutar el programa
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		InterfazMathy im=new InterfazMathy(); 
 		im.setVisible(true);
 		im.setResizable(false);
 	}
+	/**
+	 * Encargado de darle la instrucción al mundo
+	 * para que se carguen las matrices gigantes
+	 */
 	public void cargarMatricesGigantes(){	
 		try {
 			mundo.cargarMatricesGigantes();
@@ -236,33 +267,40 @@ public class InterfazMathy extends JFrame{
 			JOptionPane.showMessageDialog(this, "Error al cargar los archivos");
 		}
 	}
+	/**
+	 * Es el encargado de ejecutar la multiplicación de las matrices gigantes con 
+	 * hilos
+	 */
 	public void iniciarMultiplicacionMatricesGigantes(){
 		try{
 			long tiempo=System.currentTimeMillis();
 			int m1=mundo.darSistemaLineal().darMatrizCoeficientes1().length;
-			  //limit the number of actual threads
-		      int poolSize = 2;
-		      ExecutorService service = Executors.newFixedThreadPool(poolSize);
-		      List<Future<Runnable>> futures = new ArrayList<Future<Runnable>>();
-		
-		      Future f1 = service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(), m1/2, 0));
-		      futures.add(f1);
-		      Future f2=service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(),m1,m1/2));
-		      futures.add(f2);
-		    
-		      // wait for all tasks to complete before continuing
-		      for (Future<Runnable> fe : futures)
-		      {
-		         fe.get();
-		      }
-		      service.shutdownNow();
-			  tiempo= System.currentTimeMillis()-tiempo;
-			  desplegarMensaje("El tiempo de multiplicación de matrices es de:\n"+(tiempo/1000)+" segundos"+"\n"+"Espera a que se despliegue el resultado");
-			  mostrarMatrizProducto(mundo.darMatrizProducto());
+			//limit the number of actual threads
+			int poolSize = 2;
+			ExecutorService service = Executors.newFixedThreadPool(poolSize);
+			List<Future<Runnable>> futures = new ArrayList<Future<Runnable>>();
+
+			Future f1 = service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(), m1/2, 0));
+			futures.add(f1);
+			Future f2=service.submit(new HiloMultiplicacion(mundo.darSistemaLineal(),m1,m1/2));
+			futures.add(f2);
+
+			// wait for all tasks to complete before continuing
+			for (Future<Runnable> fe : futures)
+			{
+				fe.get();
+			}
+			service.shutdownNow();
+			tiempo= System.currentTimeMillis()-tiempo;
+			desplegarMensaje("El tiempo de multiplicación de matrices es de:\n"+(tiempo/1000)+" segundos"+"\n"+"Espera a que se despliegue el resultado");
+			mostrarMatrizProducto(mundo.darMatrizProducto());
 		}catch(Exception e){
-			
+
 		}
 	}
+	/**
+	 * Despliega la información del programa
+	 */
 	public void mostrarAcercaDelPrograma() {
 		JOptionPane.showMessageDialog(this,"Hecho por STEVENANDSEBAS");
 	}
@@ -271,13 +309,18 @@ public class InterfazMathy extends JFrame{
 		daf.setModalityType(ModalityType.DOCUMENT_MODAL);
 		daf.setVisible(true);
 	}
-	
+	/**
+	 * Abre el diálogo de la curva paramétrica para agregarla
+	 */
 	public void abrirDialogoAgregarCurvaParametrica(){
 		DialogoAgregarCurvaParametrica daf= new DialogoAgregarCurvaParametrica(this);
 		daf.setModalityType(ModalityType.DOCUMENT_MODAL);
 		daf.setVisible(true);
 	}
-	
+	/**
+	 * Método que se encarga de desplegar la matriz resultante del producto de 2 matrices
+	 * @param matriz matriz a mostrar
+	 */
 	public void mostrarMatrizProducto(double[][] matriz){
 		venMatrizPro= new VentanaMatriz(matriz);
 		venMatrizPro.setVisible(true);
@@ -296,6 +339,12 @@ public class InterfazMathy extends JFrame{
 			JOptionPane.showMessageDialog(this,e.getMessage());
 		}
 	}
+	/**
+	 * Es el método que agrega una nueva curva paramétrica
+	 * @param form fórmula de la curva
+	 * @param color color de la curva
+	 * @param tipo tipo de la curva
+	 */
 	public void agregarCurvaParametrica(String form, Color color, int tipo){
 		try {
 			ppp.agregarCurvaParametrica(mundo.agregarCurvaParametrica(form, color, tipo));
@@ -342,15 +391,24 @@ public class InterfazMathy extends JFrame{
 	public ArrayList<Dibujable> darObjetosDibujables() {
 		return mundo.darObjetosDibujables();
 	}
+	/**
+	 * Da la orden para que las regiones se organicen ascendentemente
+	 */
 	public void organizarRegionesAscendentemente() {
 		mundo.organizarRegiones();
 		ppp.refrescarListaRegiones(mundo.getListaRegiones());
 	}
+	/**
+	 * Da la orden para que las regiones se organicen descendientemente
+	 */
 	public void organizarRegionesDescendientemente(){
 		mundo.ordenarRegionesDescendientemente();
 		ppp.refrescarListaRegiones(mundo.getListaRegiones());
 	}
-	
+	/**
+	 * Da la orden al mundo para que busque la región con área ingresada en el input
+	 * Dibuja la región buscada
+	 */
 	public void buscarRegion(){
 		String area = JOptionPane.showInputDialog("Ingresa el área de la región a buscar");
 		try{
@@ -362,7 +420,7 @@ public class InterfazMathy extends JFrame{
 					agregarObjetoDibujable(buscada);
 				}
 			}
-			
+
 		}catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(this, "Ingresa un área válida");
 		}
@@ -379,13 +437,12 @@ public class InterfazMathy extends JFrame{
 	 * Elimina el objeto dibujable del mundo
 	 * @param d
 	 */
-
 	public void eliminarObjetoDibujable(Dibujable d) {
 		if(d instanceof Punto){
 			mundo.eliminarObjetoDibujable(d);
 			mundo.eliminarPunto((Punto)d);
 			ppp.refrescarListaPuntos(mundo.getPrimerPunto());
-			
+
 		}else if(d instanceof Funcion){
 			mundo.eliminarFuncion((Funcion)d);
 			ppp.refrescarListaFunciones(mundo.getRaizFuncion());
@@ -398,6 +455,10 @@ public class InterfazMathy extends JFrame{
 		}
 		ppp.refrescarPlano();
 	}
+	/**
+	 * Despliega un mensaje
+	 * @param mensaje mensaje a desplegar
+	 */
 	public void desplegarMensaje(String mensaje){
 		JOptionPane.showMessageDialog(this, mensaje);
 	}

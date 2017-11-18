@@ -11,8 +11,13 @@ public class MenuArchivo extends JMenu implements ActionListener{
 	 * Constante de guardar
 	 */
 	public final static String GUARDAR="GUARDAR";
-
+	/**
+	 * Constante de buscar region
+	 */
 	public final static String BUSCAR_REGION="BRA";
+	/**
+	 * Item buscar region
+	 */
 	private JMenuItem buscarRegion;
 
 	/***

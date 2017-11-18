@@ -17,34 +17,102 @@ import javax.swing.border.TitledBorder;
 import mundo.NoEsNumeroException;
 
 public class PanelSistemaLineal extends JPanel implements ActionListener{
-	
+	/**
+	 * Es la interfaz principal
+	 */
 	private InterfazMathy principal;
+	/**
+	 * Es el panel que contiene las matrices
+	 */
 	private JPanel panelMatrices;
+	/**
+	 * Matriz 1
+	 */
 	private JTextField[][] matriz1;
+	/**
+	 * Matriz 2
+	 */
 	private JTextField[][]matriz2;
 	//Para el panel Opciones
+	/**
+	 * Botón encargado de inicializar las matrices
+	 */
 	private JButton btnInicializarMatrices;
+	/**
+	 * Botpon encargado de lanzar la orden de calcular el producto entre matrices
+	 */
 	private JButton btnCalcProducto;
+	/**
+	 * Es el botón que ordena el cáluclo de determinante
+	 */
 	private JButton btnCalcDeterminante;
+	/**
+	 * Es el botón que calcula la solución dela matriz 1
+	 */
 	private JButton btnCalcSolucion;
+	/**
+	 * botón que carga la matriz gigante 1
+	 */
 	private JButton btnCargarMatrizGigante1;
+	/**
+	 * Botón que carga la matriz gingante 2
+	 */
 	private JButton btnCargarMatrizGigante2;
+	/**
+	 * Botón que guarda el sistema actual en el historial
+	 */
 	private JButton btnGuardarHistorial;
+	/**
+	 * Botón que busca un sistema lineal en el historial
+	 */
 	private JButton btnBuscarSistema;
+	/**
+	 * Es un arreglo que contiene todos los posibles tamaños de las matrices
+	 */
 	String[] tamanosMatrices={"2x2","3x3","4x4","5x5","6x6","7x7"};
+	/**
+	 * JComboBox que indica el tamaño de las matrices
+	 */
 	private JComboBox listaTamano;
 	
 	//CONSTANTES
+	/**
+	 * Constante de calcular producto
+	 */
 	public final static String CALCULAR_PRODUCTO="calcularProducto";
+	/**
+	 * Constante de calcular determinante
+	 */
 	public final static String CALCULAR_DETERMINANTE="calcDeterminante";
+	/**
+	 * Constante que calcula una solución
+	 */
 	public final static String CALCULAR_SOLUCION="calcSolucion";
+	/**
+	 * constante de inicializar matrices
+	 */
 	public final static String INICIALIZAR_MATRICES="iniMatrices";
+	/**
+	 * constante de cargar amtrices
+	 */
 	public final static String CARGAR_MATRICES_GIGANTES="cgrma1";
+	/**
+	 * Constante de mutliplicar matrices gigantes
+	 */
 	public final static String MULTIPLICAR_MATRICES_GIGANTES="cgrma2";
+	/**
+	 * Constante de guardar el sistema en el historial
+	 */
 	public final static String GUARDAR_EN_HISTORIAL="grdEnHis";
+	/**
+	 * constante de buscar sistema en el historial
+	 */
 	public final static String BUSCAR_SISTEMA="bsrcas";
 	
-	
+	/**
+	 * Crea un nuevo panel de sistema lineal
+	 * @param p interfaz principal
+	 */
 	public PanelSistemaLineal(InterfazMathy p){
 		principal=p;
 		setLayout(new BorderLayout());
@@ -99,6 +167,9 @@ public class PanelSistemaLineal extends JPanel implements ActionListener{
 		add(panelAuxiliarOpciones,BorderLayout.SOUTH);
 		
 	}
+	/**
+	 * Inicializa las matrices de texto
+	 */
 	public void inicializarMatrices(){
 		int tamano=Integer.parseInt(listaTamano.getSelectedItem().toString().charAt(0)+"");
 		remove(panelMatrices);
@@ -141,6 +212,10 @@ public class PanelSistemaLineal extends JPanel implements ActionListener{
 		add(panelMatrices,BorderLayout.CENTER);
 		
 	}
+	/**
+	 * Inicializa las matrices según el tamaño pasado por parámetro
+	 * @param tamano cant de filas o columnas
+	 */
 	public void inicializarMatrices(int tamano){
 		remove(panelMatrices);
 		matriz1= new JTextField[tamano][tamano];
@@ -183,6 +258,11 @@ public class PanelSistemaLineal extends JPanel implements ActionListener{
 		
 	}
 	
+	/**
+	 * Da la matriz 1 en valores
+	 * @return double[][] matriz de valores
+	 * @throws NoEsNumeroException en caso de que alguna casilla de la matriz 1 no sea un numero
+	 */
 	public double[][] darMatriz1() throws NoEsNumeroException{
 		double[][] matriz=new double[matriz1.length][matriz1.length];
 		for(int i =0;i<matriz.length;i++){
@@ -198,6 +278,11 @@ public class PanelSistemaLineal extends JPanel implements ActionListener{
 		return matriz;
 		
 	}
+	/**
+	 * Devuelve la matriz 2 en valores
+	 * @return double[][] matriz de valores
+	 * @throws NoEsNumeroException en caso de que alguna casilla no sea un numero
+	 */
 	public double[][] darMatriz2() throws NoEsNumeroException{
 		double[][] matriz=new double[matriz1.length][matriz1.length];
 		for(int i =0;i<matriz.length;i++){
@@ -213,6 +298,10 @@ public class PanelSistemaLineal extends JPanel implements ActionListener{
 		return matriz;
 		
 	}
+	/**
+	 * Despliega la matriz que se pasa por parámetro
+	 * @param matriz !=null
+	 */
 	public void mostrarMatriz1(double[][] matriz){
 		for(int i =0;i<matriz.length;i++){
 			for(int j=0;j<matriz.length;j++){
@@ -220,6 +309,10 @@ public class PanelSistemaLineal extends JPanel implements ActionListener{
 			}
 		}
 	}
+	/**
+	 * Despliega la matriz pasada por parámetro
+	 * @param matriz !=null
+	 */
 	public void mostrarMatriz2(double[][] matriz){
 		for(int i =0;i<matriz.length;i++){
 			for(int j=0;j<matriz.length;j++){
@@ -227,7 +320,9 @@ public class PanelSistemaLineal extends JPanel implements ActionListener{
 			}
 		}
 	}
-
+	/**
+	 * Método que escucha los botones
+	 */
 	public void actionPerformed(ActionEvent e) {
 		String comando= e.getActionCommand();
 		if(comando.equals(INICIALIZAR_MATRICES)){

@@ -14,8 +14,14 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
 public class VentanaMatriz extends JFrame {
-
+	/**
+	 * Scroll pane que contiene la matriz
+	 */
 	private JScrollPane scroll;
+	/**
+	 * Crea una nueva ventana que contiene una matriz
+	 * @param matriz matriz de numeros
+	 */
 	public VentanaMatriz(double[][] matriz){
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
