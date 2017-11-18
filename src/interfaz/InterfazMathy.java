@@ -342,7 +342,6 @@ public class InterfazMathy extends JFrame{
 	public ArrayList<Dibujable> darObjetosDibujables() {
 		return mundo.darObjetosDibujables();
 	}
-<<<<<<< HEAD
 	public void organizarRegionesAscendentemente() {
 		mundo.organizarRegiones();
 		ppp.refrescarListaRegiones(mundo.getListaRegiones());
@@ -368,7 +367,7 @@ public class InterfazMathy extends JFrame{
 			JOptionPane.showMessageDialog(this, "Ingresa un área válida");
 		}
 	}
-=======
+
 	/**
 	 * Metodo que organiza las regiones del mundo
 	 */
@@ -380,7 +379,7 @@ public class InterfazMathy extends JFrame{
 	 * Elimina el objeto dibujable del mundo
 	 * @param d
 	 */
->>>>>>> 80e482743ecb45bc1e96f264949ac0a71dc5cd20
+
 	public void eliminarObjetoDibujable(Dibujable d) {
 		if(d instanceof Punto){
 			mundo.eliminarObjetoDibujable(d);

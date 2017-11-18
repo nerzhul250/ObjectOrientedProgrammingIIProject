@@ -26,14 +26,10 @@ public class MathyGen {
 	public final static String RUTA_PUNTOS_GUARDADA="./data/EstadoGraficadora/puntos.txt";
 	public final static String RUTA_MATRIZ_GIGANTE_1="./data/matricesGigantes/MATRIZ11.txt";
 	public final static String RUTA_MATRIZ_GIGANTE_2="./data/matricesGigantes/MATRIZ2.txt";
-<<<<<<< HEAD
+
 	public final static String RUTA_HISTORIAL_SISTEMAS_LINEALES="./data/historialSistema/historialSistema.txt";
 
-	public static String getRutaMatrizGigante2() {
-		return RUTA_MATRIZ_GIGANTE_2;
-	}
-=======
->>>>>>> 80e482743ecb45bc1e96f264949ac0a71dc5cd20
+
 	
 	/**
 	 * Ancho del planoXY
@@ -69,29 +65,11 @@ public class MathyGen {
 	private ArrayList<Dibujable>objetosDibujables;
 	private SistemaLineal historialSistema;
 	private ArrayList<CurvaParametrica> curvasParametricas;
-<<<<<<< HEAD
-	
-	public MathyGen(){
-//		try {
-//			crearMatrizGigante1();
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//		try {
-//			crearMatrizGigante2();
-//		} catch (FileNotFoundException e) {
-		
-//			e.printStackTrace();
-//		}
-		objetosDibujables=new ArrayList<Dibujable>();
-		curvasParametricas= new ArrayList<CurvaParametrica>();
-		listaRegiones= new ArrayList<Region>();
-		double[][]m1=new double[1][1];
-		sistemaLineal= new SistemaLineal(m1, null);
-	}
 
-=======
->>>>>>> 80e482743ecb45bc1e96f264949ac0a71dc5cd20
+	
+
+
+
 
 	/**
 	 * agrega un sistema lineal al historial
@@ -288,7 +266,7 @@ public class MathyGen {
 		return actual;
 	}
 	
-<<<<<<< HEAD
+
 	/**
 	 * Ordena las regiones actuales descendientemente
 	 */
@@ -300,14 +278,14 @@ public class MathyGen {
 				listaRegiones.set(j-1, temp);
 			}
 		}
-=======
+}
+
 	
 	public MathyGen(){
 		objetosDibujables=new ArrayList<Dibujable>();
 		curvasParametricas= new ArrayList<CurvaParametrica>();
 		double[][]m1=new double[1][1];
 		sistemaLineal= new SistemaLineal(m1, null);
->>>>>>> 80e482743ecb45bc1e96f264949ac0a71dc5cd20
 	}
 	
 	//TODO buscar binariamente las regiones
@@ -318,17 +296,12 @@ public class MathyGen {
 	public SistemaLineal darSistemaLineal(){
 		return sistemaLineal;
 	}
-<<<<<<< HEAD
+
 	/**
 	 * Inicializa el sistema lineal actual
 	 * @param m1 matriz 1
 	 * @param m2 matriz 2
 	 */
-=======
-	public static String getRutaMatrizGigante2() {
-		return RUTA_MATRIZ_GIGANTE_2;
-	}
->>>>>>> 80e482743ecb45bc1e96f264949ac0a71dc5cd20
 	public void iniciarSistemaLineal(double[][] m1,double[][] m2){
 		sistemaLineal= new SistemaLineal(m1, m2);
 	}
@@ -376,7 +349,7 @@ public class MathyGen {
 		}
 
 	}
-<<<<<<< HEAD
+
 	
 	/**
 	 * Agrega una curva parametrica
@@ -386,9 +359,6 @@ public class MathyGen {
 	 * @return CurvaParametrica que se agrego
 	 * @throws FormulaParaParametrizarIncompleta
 	 */
-=======
-
->>>>>>> 80e482743ecb45bc1e96f264949ac0a71dc5cd20
 	public CurvaParametrica agregarCurvaParametrica(String form, Color color, int tipo) throws FormulaParaParametrizarIncompleta{
 		CurvaParametrica cur=null;
 		switch(tipo){
@@ -403,7 +373,7 @@ public class MathyGen {
 		return cur;
 	}
 	
-<<<<<<< HEAD
+
 
 	public Funcion agregarFuncion1(String form, Color color, int grosor, int tipo) throws FuncionYaExisteException{
 		Funcion fun=null;
@@ -453,8 +423,7 @@ public class MathyGen {
 	 * Carga las matrices gigantes
 	 * @throws IOException
 	 */
-=======
->>>>>>> 80e482743ecb45bc1e96f264949ac0a71dc5cd20
+
 	public void cargarMatricesGigantes() throws IOException{
 		sistemaLineal=new SistemaLineal(cargarMatrizGigante1(), cargarMatrizGigante2());
 	}
@@ -835,7 +804,7 @@ public class MathyGen {
 	public void eliminarRegion(Region d) {
 		getListaRegiones().remove(d);
 	}
-<<<<<<< HEAD
+
 	public SistemaLineal darHistorialSistemaLineal(){
 		return historialSistema;
 	}
@@ -844,7 +813,7 @@ public class MathyGen {
 	}
 	public ArrayList<Region> darRegiones(){
 		return listaRegiones;
-=======
+	}
 	/**
 	 * Este metodo se encarga de eliminar una funcion
 	 * @param d La funcion a eliminar
@@ -894,6 +863,5 @@ public class MathyGen {
 				raizFuncion=raizFuncion.getFunIz();
 			}
 		}
->>>>>>> 80e482743ecb45bc1e96f264949ac0a71dc5cd20
 	}
 }
