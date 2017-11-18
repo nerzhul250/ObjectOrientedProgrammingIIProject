@@ -25,6 +25,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
+import hilos.HiloGeneradorPrimos;
 import hilos.HiloMultiplicacion;
 import mundo.Circunferencia;
 import mundo.CurvaParametrica;
@@ -46,6 +47,7 @@ public class InterfazMathy extends JFrame{
 	 */
 	private PanelPrincipalPlano ppp;
 	private PanelSistemaLineal psl;
+	private PanelNumeros pn;
 	
 	/**
 	 * Conexion con el mundo
@@ -63,6 +65,8 @@ public class InterfazMathy extends JFrame{
 		mundo=new MathyGen();
 		ppp=new PanelPrincipalPlano(this,mundo);
 		psl=new PanelSistemaLineal(this);
+		pn=new PanelNumeros(this);
+		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		try {
 			boolean[] dec=mundo.cargarEstado();
@@ -75,6 +79,7 @@ public class InterfazMathy extends JFrame{
 			if(dec[2]){				
 				ppp.refrescarListaRegiones(mundo.getListaRegiones());
 			}
+			refrescarPanelPrimos();
 		} catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(this,"Error Fatal en la carga de archivos");
@@ -83,6 +88,7 @@ public class InterfazMathy extends JFrame{
 		JTabbedPane jtp=new JTabbedPane();
 		jtp.add(ppp,"Plano");
 		jtp.add(psl,"Sistema lineal");
+		jtp.add(pn,"Numeros");
 		
 		JMenuBar miMenuBar = new JMenuBar();
 		miMenuBar.add(new MenuArchivo(this));
@@ -277,6 +283,11 @@ public class InterfazMathy extends JFrame{
 		daf.setModalityType(ModalityType.DOCUMENT_MODAL);
 		daf.setVisible(true);
 	}
+	public void abrirDialogoAgregarNumero() {	
+		DialogoAgregarNumero dan=new DialogoAgregarNumero(this,"Agregar nuevo numero");
+		dan.setModalityType(ModalityType.DOCUMENT_MODAL);
+		dan.setVisible(true);
+	}
 	
 	public void mostrarMatrizProducto(double[][] matriz){
 		venMatrizPro= new VentanaMatriz(matriz);
@@ -398,7 +409,33 @@ public class InterfazMathy extends JFrame{
 		}
 		ppp.refrescarPlano();
 	}
+	public void iniciarBusquedaPrimos(){
+		if(mundo.estaBuscandoPrimos()){
+			refrescarPanelPrimos();
+			mundo.pararBusquedaPrimos();
+		}else{
+			mundo.iniciarBusquedaPrimos();
+			new Thread(new HiloGeneradorPrimos(mundo)).start();			
+		}
+	}
+	public void refrescarPanelPrimos(){
+		pn.refrescarPrimos(mundo.getPrimos());
+	}
+	public void refrescarPanelNumeros(){
+		pn.refrescarNumeros(mundo.getNumeros());
+	}
 	public void desplegarMensaje(String mensaje){
 		JOptionPane.showMessageDialog(this, mensaje);
+	}
+	public void agregarNumero(String nam) {
+		try{
+			if(!mundo.agregarNumero(nam)){
+				JOptionPane.showMessageDialog(this,"Genere mas primos");
+			}else{
+				pn.agregarNumero(mundo.getNumeros().get(mundo.getNumeros().size()-1));			
+			}
+		}catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(this,"No fue un numero lo que ingresó");
+		}
 	}
 }

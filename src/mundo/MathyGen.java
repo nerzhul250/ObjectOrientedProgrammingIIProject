@@ -15,12 +15,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MathyGen {
 	
+	public final static String RUTA_PRIMOS_GUARDADA = "./data/EstadoGraficadora/listaPrimos.mat";
 	public final static String RUTA_REGION_GUARDADA="./data/EstadoGraficadora/listaRegion.mat";
 	public final static String RUTA_FUNCION_GUARDADA="./data/EstadoGraficadora/funcionRaiz.mat";
 	public final static String RUTA_PUNTOS_GUARDADA="./data/EstadoGraficadora/puntos.txt";
@@ -28,8 +30,6 @@ public class MathyGen {
 	public final static String RUTA_MATRIZ_GIGANTE_2="./data/matricesGigantes/MATRIZ2.txt";
 
 	public final static String RUTA_HISTORIAL_SISTEMAS_LINEALES="./data/historialSistema/historialSistema.txt";
-
-
 	
 	/**
 	 * Ancho del planoXY
@@ -65,12 +65,20 @@ public class MathyGen {
 	private ArrayList<Dibujable>objetosDibujables;
 	private SistemaLineal historialSistema;
 	private ArrayList<CurvaParametrica> curvasParametricas;
-
 	
-
-
-
-
+	private boolean buscarPrimos;
+	private ArrayList<NumeroPrimo>primosEncontrados;
+	private ArrayList<Numero>numeros;
+	
+	
+	public MathyGen(){
+		numeros=new ArrayList<Numero>();
+		objetosDibujables=new ArrayList<Dibujable>();
+		curvasParametricas= new ArrayList<CurvaParametrica>();
+		double[][]m1=new double[1][1];
+		sistemaLineal= new SistemaLineal(m1, null);
+	}
+	
 	/**
 	 * agrega un sistema lineal al historial
 	 * @param s sistema a agregr
@@ -279,14 +287,6 @@ public class MathyGen {
 			}
 		}
 }
-
-	
-	public MathyGen(){
-		objetosDibujables=new ArrayList<Dibujable>();
-		curvasParametricas= new ArrayList<CurvaParametrica>();
-		double[][]m1=new double[1][1];
-		sistemaLineal= new SistemaLineal(m1, null);
-	}
 	
 	//TODO buscar binariamente las regiones
 	/**
@@ -715,7 +715,7 @@ public class MathyGen {
 		}
 		f=new File(MathyGen.RUTA_FUNCION_GUARDADA);
 		if(f.exists()){
-			ObjectInputStream ois=new ObjectInputStream(new FileInputStream(MathyGen.RUTA_FUNCION_GUARDADA));
+			ObjectInputStream ois=new ObjectInputStream(new FileInputStream(f));
 			raizFuncion=(Funcion)ois.readObject();
 			res[1]=true;
 		}else{
@@ -723,11 +723,19 @@ public class MathyGen {
 		}
 		f=new File(MathyGen.RUTA_REGION_GUARDADA);
 		if(f.exists()){
-			ObjectInputStream ois=new ObjectInputStream(new FileInputStream(MathyGen.RUTA_REGION_GUARDADA));
+			ObjectInputStream ois=new ObjectInputStream(new FileInputStream(f));
 			listaRegiones=(ArrayList<Region>)ois.readObject();
 			res[2]=true;
 		}else{
 			listaRegiones=new ArrayList<Region>();
+		}
+		f=new File(MathyGen.RUTA_PRIMOS_GUARDADA);
+		if(f.exists()){
+			ObjectInputStream ois=new ObjectInputStream(new FileInputStream(f));
+			primosEncontrados=(ArrayList<NumeroPrimo>)ois.readObject();
+		}else{
+			primosEncontrados=new ArrayList<NumeroPrimo>();
+			primosEncontrados.add(new NumeroPrimo("2",0));
 		}
 		return res;
 	}
@@ -756,6 +764,9 @@ public class MathyGen {
 			oos.writeObject(listaRegiones);
 			oos.close();
 		}
+		oos=new ObjectOutputStream(new FileOutputStream(MathyGen.RUTA_PRIMOS_GUARDADA));
+		oos.writeObject(primosEncontrados);
+		oos.close();
 	}
 	/**
 	 * Este metodo se encarga de organizar regiones por selection sort
@@ -862,6 +873,35 @@ public class MathyGen {
 			}else{
 				raizFuncion=raizFuncion.getFunIz();
 			}
+		}
+	}
+	public void iniciarBusquedaPrimos(){
+		buscarPrimos=true;
+	}
+	public void pararBusquedaPrimos(){
+		buscarPrimos=false;
+	}
+	public boolean estaBuscandoPrimos(){
+		return buscarPrimos;
+	}
+	public ArrayList<NumeroPrimo> getPrimos(){
+		return primosEncontrados;
+	}
+
+	public ArrayList<Numero> getNumeros() {
+		return numeros;
+	}
+
+	public boolean agregarNumero(String nam) {
+		NumeroCompuesto ka=new NumeroCompuesto(nam);
+		BigInteger ke=BigInteger.valueOf((long) Math.sqrt(ka.getNumero().longValue()));
+		ke.add(BigInteger.ONE);
+		if(primosEncontrados.get(primosEncontrados.size()-1).getNumero().compareTo(ke)<0){
+			return false;
+		}else{
+			ka.calcularFactoresPrimos(primosEncontrados);
+			numeros.add(ka);							
+			return true;
 		}
 	}
 }

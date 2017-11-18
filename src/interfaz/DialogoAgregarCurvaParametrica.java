@@ -58,7 +58,6 @@ public class DialogoAgregarCurvaParametrica extends JDialog implements ActionLis
 		aux.add(btnAgregar);
 		add(aux, BorderLayout.SOUTH);
 		pack();
-		
 	}
 	public void actionPerformed(ActionEvent arg0) {
 		String comando=arg0.getActionCommand();
