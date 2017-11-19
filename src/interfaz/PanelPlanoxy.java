@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.border.StrokeBorder;
 import javax.swing.border.TitledBorder;
 
+import mundo.Animable;
 import mundo.Circunferencia;
 import mundo.Dibujable;
 import mundo.Elipse;
@@ -115,12 +116,13 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 		}
 		g2d.setColor(Color.BLACK);
 		g2d.drawString("x="+df.format(mousePosx)+" "+"y="+df.format(mousePosy),30,30);
-		
+
 		for (int i = 0; i < principal.darObjetosDibujables().size(); i++) {
 			principal.darObjetosDibujables().get(i).dibujarse(g2d,alcance,traslY,traslX,MathyGen.ANCHOPLANO+anchoAd);
 		}
-	
+
 	}
+
 	/**
 	 * da el ancho en pixeles del planoxy
 	 * @return
@@ -142,28 +144,43 @@ public class PanelPlanoxy extends JPanel implements MouseMotionListener,MouseWhe
 	public double darAlcance() {
 		return alcance;
 	}
+	/**
+	 * Método encargado de dibujar un objeto animable
+	 * @param d objeto animable
+	 */
+	public void animar(Animable d){
+		d.animarse((Graphics2D)this.getGraphics(), alcance, traslY, traslX, MathyGen.ANCHOPLANO+anchoAd);
+	}
 	public void mouseWheelMoved(MouseWheelEvent e) {
-		double k=e.getWheelRotation();
-		alcance=alcance*Math.pow(Math.E,k/10);
-		centroW=(int) (MathyGen.ANCHOPLANO*(alcance-traslX)/(2*alcance));
-		centroH=(int) (MathyGen.LARGOPLANO*(alcance+traslY)/(2*alcance));
-		repaint();
+		if(!principal.darEnAnimacion()){
+			double k=e.getWheelRotation();
+			alcance=alcance*Math.pow(Math.E,k/10);
+			centroW=(int) (MathyGen.ANCHOPLANO*(alcance-traslX)/(2*alcance));
+			centroH=(int) (MathyGen.LARGOPLANO*(alcance+traslY)/(2*alcance));
+			repaint();			
+		}
 	}
 	public void mouseDragged(MouseEvent e) {
-		double difw=e.getX()-priorPosw;
-		double difh=e.getY()-priorPosh;
-		traslX-=difw/50;
-		traslY+=difh/50;
-		centroW=(int) (MathyGen.ANCHOPLANO*(alcance-traslX)/(2*alcance));
-		centroH=(int) (MathyGen.LARGOPLANO*(alcance+traslY)/(2*alcance));
-		priorPosw=e.getX();
-		priorPosh=e.getY();
-		repaint();
+		if(!principal.darEnAnimacion()){
+			double difw=e.getX()-priorPosw;
+			double difh=e.getY()-priorPosh;
+			traslX-=difw/50;
+			traslY+=difh/50;
+			centroW=(int) (MathyGen.ANCHOPLANO*(alcance-traslX)/(2*alcance));
+			centroH=(int) (MathyGen.LARGOPLANO*(alcance+traslY)/(2*alcance));
+			priorPosw=e.getX();
+			priorPosh=e.getY();
+			repaint();
+
+		}
 	}
 	public void mouseMoved(MouseEvent e) {
-		mousePosx=(2*alcance/MathyGen.ANCHOPLANO)*e.getX()-alcance+traslX;
-		mousePosy=(-2*alcance/MathyGen.LARGOPLANO)*e.getY()+alcance+traslY;
-		repaint();
+		if(!principal.darEnAnimacion()){
+			mousePosx=(2*alcance/MathyGen.ANCHOPLANO)*e.getX()-alcance+traslX;
+			mousePosy=(-2*alcance/MathyGen.LARGOPLANO)*e.getY()+alcance+traslY;
+			repaint();
+
+		}
 	}
 	public void mouseClicked(MouseEvent e) {
 		if(e.getClickCount()==2 && e.getButton()==MouseEvent.BUTTON1){

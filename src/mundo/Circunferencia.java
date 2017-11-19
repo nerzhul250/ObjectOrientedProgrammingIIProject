@@ -6,11 +6,11 @@ import java.awt.Graphics2D;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
-public class Circunferencia extends CurvaParametrica {
+public class Circunferencia extends CurvaParametrica implements Animable {
 
 	
 	private Double radio;
-	public Circunferencia(String form) throws FormulaParaParametrizarIncompleta {
+	public Circunferencia(String form) throws FormulaParaParametrizarIncompleta{
 		parsearFormula(0, form);
 		
 	}
@@ -129,6 +129,32 @@ public class Circunferencia extends CurvaParametrica {
 			g2d.drawLine(wx1,wy1, wx,wy);
 			wy1=wy;
 			wx1=wx;
+		}
+	}
+	/**
+	 *  Método encargado de dibujar la circunferencia pero de manera animada
+	 * @param g2d graphics del panel donde se dibbujará
+	 * @param alcance es el alcance que tiene el plano
+	 * @param tralY es la traslación en y del centro en el plano
+	 * @param tralX es la traslacion en x del centro en el plano
+	 */
+	public void animarse(Graphics2D g2d, double alcance, double traslY, double traslX, int ancho) {
+		g2d.setColor(darColor());
+		g2d.setStroke(new BasicStroke(1));
+		int wx1=(int) (MathyGen.ANCHOPLANO*(darPosicionX(0)+alcance-traslX)/(2*alcance));
+		int wy1=(int) (MathyGen.LARGOPLANO*(darPosicionY(0)-alcance-traslY)/(-2*alcance));
+		for(int i =1; i<1001;i++){
+			int wx=(int) (MathyGen.ANCHOPLANO*(darPosicionX(i*2*Math.PI/1000.0)+alcance-traslX)/(2*alcance));
+			int wy=(int) (MathyGen.LARGOPLANO*(darPosicionY(i*2*Math.PI/1000.0)-alcance-traslY)/(-2*alcance));
+			g2d.drawLine(wx1,wy1, wx,wy);
+			wy1=wy;
+			wx1=wx;
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

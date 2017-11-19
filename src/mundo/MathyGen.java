@@ -70,7 +70,7 @@ public class MathyGen {
 	private ArrayList<NumeroPrimo>primosEncontrados;
 	private ArrayList<Numero>numeros;
 	
-	
+	private boolean enAnimacion;
 	public MathyGen(){
 		numeros=new ArrayList<Numero>();
 		objetosDibujables=new ArrayList<Dibujable>();
@@ -816,12 +816,24 @@ public class MathyGen {
 		getListaRegiones().remove(d);
 	}
 
+	/**
+	 * Devuelve el sistema lineal actual
+	 * @return
+	 */
 	public SistemaLineal darHistorialSistemaLineal(){
 		return historialSistema;
 	}
+	/**
+	 * Modifica el sistema lineal actual
+	 * @param m
+	 */
 	public void modificarHistorialSistemaLineal(SistemaLineal m){
 		historialSistema=m;
 	}
+	/**
+	 * Devuelve la lista de regiones actuales
+	 * @return
+	 */
 	public ArrayList<Region> darRegiones(){
 		return listaRegiones;
 	}
@@ -903,5 +915,19 @@ public class MathyGen {
 			numeros.add(ka);							
 			return true;
 		}
+	}
+	/**
+	 * Retorna si actualmente hay una animación
+	 * @return true si está en animación
+	 */
+	public boolean darEnAnimacion(){
+		return enAnimacion;
+	}
+	/**
+	 * Modifica si está en animación
+	 * @param b
+	 */
+	public void modificarEnAnimacion(boolean b){
+		enAnimacion= b;
 	}
 }
