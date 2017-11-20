@@ -25,8 +25,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
+import hilos.HiloAnimar;
 import hilos.HiloGeneradorPrimos;
 import hilos.HiloMultiplicacion;
+import mundo.Animable;
 import mundo.Circunferencia;
 import mundo.CurvaParametrica;
 import mundo.FormulaParaParametrizarIncompleta;
@@ -388,6 +390,7 @@ public class InterfazMathy extends JFrame{
 		mundo.agregarObjetoDibujable(f);
 		ppp.refrescarPlano();
 	}
+	
 	/**
 	 * Borra el objeto dibujable del planoxy
 	 * @param f
@@ -454,16 +457,19 @@ public class InterfazMathy extends JFrame{
 			mundo.eliminarObjetoDibujable(d);
 			mundo.eliminarPunto((Punto)d);
 			ppp.refrescarListaPuntos(mundo.getPrimerPunto());
-
+			borrarObjetoDibujable(d);
 		}else if(d instanceof Funcion){
 			mundo.eliminarFuncion((Funcion)d);
 			ppp.refrescarListaFunciones(mundo.getRaizFuncion());
+			borrarObjetoDibujable(d);
 		}else if(d instanceof Region){
 			mundo.eliminarRegion((Region)d);
 			ppp.refrescarListaRegiones(mundo.getListaRegiones());
+			borrarObjetoDibujable(d);
 		}else if(d instanceof CurvaParametrica){
 			mundo.eliminarCurvaParametrica((CurvaParametrica)d);
 			ppp.refrescarListaCurvasParametricas(mundo.darCurvasParametricas());
+			borrarObjetoDibujable(d);
 		}
 		ppp.refrescarPlano();
 	}
@@ -504,5 +510,32 @@ public class InterfazMathy extends JFrame{
 	 */
 	public void desplegarMensaje(String mensaje){
 		JOptionPane.showMessageDialog(this, mensaje);
+	}
+	/**
+	 * Inicia el hilo para animar un dibujo
+	 * @param d objeto animable
+	 */
+	public void iniciarHiloAnimacion(Animable d){
+		if(!mundo.darEnAnimacion()){
+			HiloAnimar h= new HiloAnimar(this, d,mundo);
+			Thread hilo= new Thread(h);
+			mundo.agregarObjetoDibujable((Dibujable)d);
+			hilo.start();			
+		}
+	}
+	/**
+	 * Método auxiliar que permite pintar en el panel el objeto
+	 * @param d
+	 */
+	public void animacion(Animable d){
+		ppp.animar(d);
+	}
+	
+	/**
+	 * Devuelve un boolean que indica si hay una animación en curso
+	 * @return
+	 */
+	public boolean darEnAnimacion(){
+		return mundo.darEnAnimacion();
 	}
 }

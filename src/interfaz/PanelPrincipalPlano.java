@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import mundo.Animable;
 import mundo.CurvaParametrica;
+import mundo.Dibujable;
 import mundo.Funcion;
 import mundo.MathyGen;
 import mundo.Punto;
@@ -94,5 +96,19 @@ public class PanelPrincipalPlano extends JPanel{
 	 */
 	public void refrescarListaPuntos(Punto primerPunto) {
 		pod.refrescarListaPuntos(primerPunto);
+	}
+	/**
+	 * Devuleve el plano xy
+	 * @return
+	 */
+	public PanelPlanoxy darPlanoXY(){
+		return ppxy;
+	}
+	/**
+	 * Método encargado de dibujar un objeto animable
+	 * @param f objeto animable
+	 */
+	public void animar(Animable f){
+		ppxy.animar(f);
 	}
 }

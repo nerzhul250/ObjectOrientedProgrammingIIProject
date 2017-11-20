@@ -6,10 +6,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import mundo.Animable;
 import mundo.CurvaParametrica;
 
 public class PopUpMenuCuvaParametricaGeneral extends JPopupMenu implements ActionListener {
-
+	/**
+	 * Constante de animar
+	 */
+	public final static String ANIMAR="an";
 	/**
 	 * Interfaz principal
 	 */
@@ -31,6 +35,10 @@ public class PopUpMenuCuvaParametricaGeneral extends JPopupMenu implements Actio
 	 */
 	private JMenuItem itBorrar;
 	/**
+	 * Item que ordena animar un objeto
+	 */
+	private JMenuItem itAnimar;
+	/**
 	 * Crea un nuevo popUpMenu para curva parametrica
 	 * @param p interfaz principal
 	 * @param c curva paramétrica seleccionada
@@ -41,7 +49,7 @@ public class PopUpMenuCuvaParametricaGeneral extends JPopupMenu implements Actio
 		itEliminar= new JMenuItem("Eliminar curva");
 		itBorrar= new JMenuItem("Borrar función del plano");
 		itDibujar= new JMenuItem("Dibujar curva");
-		
+		itAnimar= new JMenuItem("Animar curva (Si es una curva animable)");
 		itEliminar.addActionListener(this);
 		itEliminar.setActionCommand(PopUpMenuFuncionPar.ELIMINAR);
 		
@@ -51,9 +59,12 @@ public class PopUpMenuCuvaParametricaGeneral extends JPopupMenu implements Actio
 		itDibujar.addActionListener(this);
 		itDibujar.setActionCommand(PopUpMenuFuncionPar.DIBUJAR);
 		
+		itAnimar.addActionListener(this);
+		itAnimar.setActionCommand(ANIMAR);
 		add(itDibujar);
 		add(itBorrar);
 		add(itEliminar);
+		add(itAnimar);
 	}
 	/**
 	 * Escucha los items
@@ -66,6 +77,10 @@ public class PopUpMenuCuvaParametricaGeneral extends JPopupMenu implements Actio
 			principal.agregarObjetoDibujable(curv);
 		}else if(comando.equals(PopUpMenuFuncionPar.BORRAR)){
 			principal.borrarObjetoDibujable(curv);
+		}else if(comando.equals(ANIMAR)){
+			if(curv instanceof Animable){
+				principal.iniciarHiloAnimacion((Animable)curv);
+			}
 		}
 	}
 

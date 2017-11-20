@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
  * @author steve
  *
  */
-public class Elipse extends CurvaParametrica {
+public class Elipse extends CurvaParametrica implements Animable {
 	/**
 	 * Es el coeficiente que representa el alargamiento de la elipse en
 	 * el eje x
@@ -207,5 +207,34 @@ public class Elipse extends CurvaParametrica {
 	 */
 	public void modificarCoeficienteY(Double coeficienteY) {
 		this.coeficienteY = coeficienteY;
+	}
+
+	/**
+	 * Método que dibuja en el panel la elipse pero de manera animada
+	 * @param g2d es el graphics del plano donde se va a dibujar
+	 * @param alcance es el máximo alcance que se verá en el plano
+	 * @param traslY es dónde está dibujado el centro en el plano en y
+	 * @param traslX es donde esta dibujado el centro en el plano en x
+	 */
+	public void animarse(Graphics2D g2d, double alcance, double traslY, double traslX, int ancho) {
+		g2d.setColor(darColor());
+		double wx1=MathyGen.ANCHOPLANO*(darPosicionX(0)+alcance-traslX)/(2*alcance);
+		double wy1=MathyGen.LARGOPLANO*(darPosicionY(0)-alcance-traslY)/(-2*alcance);
+		for(int i =1; i<1001;i++){
+			
+			double wx=MathyGen.ANCHOPLANO*(darPosicionX(i*Math.PI*2/1000)+alcance-traslX)/(2*alcance);
+			double wy=MathyGen.LARGOPLANO*(darPosicionY(i*Math.PI*2/1000)-alcance-traslY)/(-2*alcance);
+			g2d.setStroke(new BasicStroke(1));
+			g2d.drawLine((int)(wx1), (int)(wy1),(int) (wx), (int)(wy));
+			wx1=wx;
+			wy1=wy;
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 	}
 }
