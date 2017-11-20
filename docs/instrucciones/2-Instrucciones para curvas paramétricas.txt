@@ -1,0 +1,20 @@
+Las mismas explicaciones para las funciones aplican para las curvas paramétricas
+----------------------------------------------------------------------------------------------
+Cómo animo una curva paramétrica?
+Selecciona la curva paramétrica y darle click derecho y en opción animar.
+La curva se dibujará animadamente siempre y cuando sea una curva animable
+-------------------------------------------------------------------------------------------------
+Cómo se debe ingresar la fórmula para una circunferencia?
+La fórmula de la circunferencia debe estar en forma canónica
+(x-h)^2+(y-k)^2=4
+Estrictamente debe estar en forma canónica como se muestra arriba.
+Los números no pueden ser expresados como operaciones
+---------------------------------------------------------------------------------------------------
+Cómo se debe ingresar la fórmula para una elipse?
+La fórmula de la elipse debe estar estrictamente en forma canónica y los denominadores 
+deben quedar expresados como números, es decir: suponga que tiene una formula de la manera
+(x-h)^2/a^2 +(y-k)^2/b^2=1
+para ingresar esta fórmula debe hacerlo de la siguiente manera
+d(x-h)^2+e(y-k)^2=1
+donde d y e son los números de las operaciones
+(1/a^2) y (1/b^2) respectivamente

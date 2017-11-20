@@ -1,0 +1,12 @@
+En la pestaña de números encontrará un botón de generar primos. Allí se generarán primos y se mostrarán
+en la parte izquierda de la ventana una vez pare de generar los primos
+---------------------------------------------------------------------------------------------------
+Cómo puedo ver la factorización en primos, los divisores y la representación binaria de un número?
+En la parte derecha de la ventana encontrará un panel vacío. Allí puede dar doble click para agregar un número.
+Una vez agregado el número debe seleccionarlo y aparecerá en el centro todo.
+---------------------------------------------------------------------------------------------------
+NOTA:
+-Si no se han generado suficientes primos para hacer una factorización de un número, el programa le dirá
+que su input es inválido
+-Puede ir generando números primos mientras usted agrega números para ver su factorización o mientras usted trabaje en el plano
+o en el sistema lineal

@@ -1,0 +1,4 @@
+Las mismas explicaciones para las funciones son válidas para los puntos
+---------------------------------------------------------------------------------------------------
+Cómo agrego un punto?
+el punto se agrega dando doble click en el plano donde se queira graficar el punto

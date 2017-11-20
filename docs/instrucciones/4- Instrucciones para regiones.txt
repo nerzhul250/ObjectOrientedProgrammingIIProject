@@ -1,0 +1,6 @@
+Las mismas instrucciones de las funciones son válidas para las regiones
+---------------------------------------------------------------------------------------------------
+Cómo agrego una nueva región?
+Debes escoger unos puntos con ctrl+ click en los puntos que serán vertices de la región
+Los puntos deben ser seleccionados desde el panel de puntos.
+Una vez marcados los puntos debes dar click derecho y agregar nueva región
