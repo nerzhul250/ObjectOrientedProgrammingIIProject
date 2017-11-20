@@ -12,7 +12,6 @@ public class HiloGeneradorPrimos implements Runnable{
 	public HiloGeneradorPrimos(MathyGen mundo) {
 		this.mundo=mundo;
 	}
-
 	public void run() {
 		ArrayList<NumeroPrimo>primos=mundo.getPrimos();
 		BigInteger num=primos.get(primos.size()-1).getNumero().add(BigInteger.ONE);
