@@ -1,0 +1,11 @@
+En la pestaña de la graficadora podra encontrar en el lado izquierdo el panel llamado funciones
+Cómo añadir una nueva funcion?--------------------------------------------------------------------------------------
+dando click derecho al panel en donde no haya una función
+-----------------------------------------------------------------------------------
+Cómo se debe ingresar la formula para funciones polinómicas?
+La foórmula debe ser ingresada de tal manera que los exponentes estén ^(exponente) de esa manera aún
+cuando el exponente sea uno se debe expresar como x^1 y los coeficientes se deben expresar como números y no operaciones
+Si el coeficiente de un término es 1 hay que escribirlo es decir 1x^1 o 1x^2 
+----------------------------------------------------------------------------------------------------
+Cómo borrar, eliminar o dibujar una función?
+debe seleccionar la función y darle click derecho, le aparecerá un panel

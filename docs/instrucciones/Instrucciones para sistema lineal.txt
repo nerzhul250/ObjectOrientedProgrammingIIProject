@@ -1,0 +1,15 @@
+Cómo inicio un sistema lineal?
+debes escoger el tamaño en la parte inferior izquierda y luego inicializar matrices
+Debes recordar que primero debes inicializar las matrices para hacer cualquier cosa
+---------------------------------------------------------------------------------------------------
+Cómo cargo las matrices gigantes?
+Debes cerrar el programa, luego en la carpeta de matrices gigantes colocar archivos de texto plano con el
+nombre MATRIZ11 y MATRIZ2 para la matriz 1 y matriz 2 respectivamente. Luego debe abrir el programa y darle cargar 
+matrices gigantes. Recuerde que si la matriz es muy grande se va a demorar en inicializar las matrices
+---------------------------------------------------------------------------------------------------
+Multiplicar matrices gigantes?
+Una vez que cargue las matrices gigantes, debe darle en multiplicar amtrices gigantes, tiene que esperar dependiendo 
+del tamaño de las matrices y el programa le avisará cuándo terminó de multiplicar las matrices. Luego debe esperar un
+momento más para que se despliegue una ventana con la matriz resultante
+---------------------------------------------------------------------------------------------------
+NOTA: si quiere guarda el sistema lineal, debe escribir un nombre único
