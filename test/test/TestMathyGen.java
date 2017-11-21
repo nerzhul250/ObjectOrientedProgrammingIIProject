@@ -258,6 +258,9 @@ public class TestMathyGen {
 		assertTrue(mathyGen.buscarRegion("7,09").area().equals("7,09"));
 		assertTrue(mathyGen.buscarRegion("12,59").area().equals("12,59"));
 		assertTrue(mathyGen.buscarRegion("10,97").area().equals("10,97"));
+		assertTrue(mathyGen.buscarRegion("1231")== null);
+		assertTrue(mathyGen.buscarRegion("-123")== null);
+		assertTrue(mathyGen.buscarRegion("8")==null);
 		
 	}
 
