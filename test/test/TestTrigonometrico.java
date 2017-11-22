@@ -10,6 +10,10 @@ public class TestTrigonometrico {
 	private void setUpEscenario1(){
 		trigonometrico=null;
 	}
+	private void setUpEscenario2(){
+		trigonometrico=new Trigonometrico("cos(x)");
+	}
+	
 	@Test
 	public void testInicializacionTrigonometrico() {
 		setUpEscenario1();
@@ -20,5 +24,11 @@ public class TestTrigonometrico {
 		trigonometrico=new Trigonometrico("36tan(-12x)");
 		assertTrue(trigonometrico.getFunTrig().equals("tan"));
 	}
+	@Test
+	public void testComputarValor() {
+		setUpEscenario2();
+		assertTrue(Math.abs(trigonometrico.computarValor(3.14)+1)<1);
+	}
+	
 
 }

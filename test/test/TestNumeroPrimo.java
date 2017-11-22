@@ -16,5 +16,4 @@ public class TestNumeroPrimo {
 		numeroPrimo=new NumeroPrimo("7",4);
 		assertEquals("7",numeroPrimo.getNumero().toString());
 	}
-
 }
