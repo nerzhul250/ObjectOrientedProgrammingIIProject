@@ -41,7 +41,7 @@ public class MathyGen {
 	public final static int LARGOPLANO =625;
 
 	public static final int TRIGONOMETRICO = 1;
-	public final static int TIPOPOLINOMIO=3;
+	public final static int POLINOMIO=3;
 	public final static int CIRCUNFERENCIA=2;
 	public final static int ELIPSE=4;
 
@@ -65,14 +65,24 @@ public class MathyGen {
 	private ArrayList<Dibujable>objetosDibujables;
 	private SistemaLineal historialSistema;
 	private ArrayList<CurvaParametrica> curvasParametricas;
-	
+	/**
+	 * Variable que indica si el programa esta buscando primos actualmente
+	 */
 	private boolean buscarPrimos;
+	/**
+	 * Todos los primos encontrados por el programa
+	 */
 	private ArrayList<NumeroPrimo>primosEncontrados;
+	/**
+	 * Numero que el usuario ha añadido
+	 */
 	private ArrayList<Numero>numeros;
-	
 	private boolean enAnimacion;
+	
 	public MathyGen(){
+		primosEncontrados=new ArrayList<NumeroPrimo>();
 		numeros=new ArrayList<Numero>();
+		listaRegiones=new ArrayList<Region>();
 		objetosDibujables=new ArrayList<Dibujable>();
 		curvasParametricas= new ArrayList<CurvaParametrica>();
 		double[][]m1=new double[1][1];
@@ -372,53 +382,6 @@ public class MathyGen {
 		curvasParametricas.add(cur);
 		return cur;
 	}
-	
-
-
-	public Funcion agregarFuncion1(String form, Color color, int grosor, int tipo) throws FuncionYaExisteException{
-		Funcion fun=null;
-		switch (tipo) {
-		case TIPOPOLINOMIO:
-			fun=new Polinomio(form);
-			break;
-		}
-		fun.setColor(color);
-		fun.setGrosor(grosor);
-		fun.setForma(form);
-		if(estaEnElArbol1(fun,raizFuncion)) throw new FuncionYaExisteException(fun.getForma());
-		agregarFuncionAlArbol1(fun,raizFuncion);
-		return fun;
-	}
-	public boolean estaEnElArbol1(Funcion f,Funcion actual){
-		if(raizFuncion==null){
-			return false;
-		}else if(actual!=null && actual.compareTo(f)==0){
-			return true;
-		}else if(actual!=null){
-			return estaEnElArbol1(f,actual.getFunDe()) || estaEnElArbol1(f,actual.getFunIz());
-		}
-		return false;
-	}
-	public void agregarFuncionAlArbol1(Funcion f,Funcion actual) throws FuncionYaExisteException{
-		if(raizFuncion==null){
-			raizFuncion=f;
-		}else{
-			if(f.compareTo(actual)==-1){
-				if(actual.getFunIz()==null){
-					actual.setFunIz(f);
-				}else{
-					agregarFuncionAlArbol1(f,actual.getFunIz());
-				}
-			}else if(f.compareTo(actual)==1){
-				if(actual.getFunDe()==null){
-					actual.setFunDe(f);
-				}else{
-					agregarFuncionAlArbol1(f,actual.getFunDe());
-				}
-			}
-		}
-	}
-
 	/**
 	 * Carga las matrices gigantes
 	 * @throws IOException
@@ -561,7 +524,7 @@ public class MathyGen {
 	 * Este metodo da la lista de objetos dibujables
 	 * @return
 	 */
-	public ArrayList<Dibujable> darObjetosDibujables() {
+	public ArrayList<Dibujable> getObjetosDibujables() {
 		return objetosDibujables;
 	}
 	/**
@@ -579,7 +542,7 @@ public class MathyGen {
 		case TRIGONOMETRICO:
 			fun=new Trigonometrico(form);
 			break;
-		case TIPOPOLINOMIO:
+		case POLINOMIO:
 			fun=new Polinomio(form);
 			break;
 		}
@@ -663,6 +626,7 @@ public class MathyGen {
 	}
 	/**
 	 * 	Este metodo se encarga de agregar una nueva region a la lista de regiones
+	 * <pre>:Hay como minimo 3 puntos en frontera
 	 * @param frontera los puntos que definen a la region
 	 * @param color el color de la region
 	 * @return la region agregada
@@ -769,7 +733,8 @@ public class MathyGen {
 		oos.close();
 	}
 	/**
-	 * Este metodo se encarga de organizar regiones por selection sort
+	 * Este metodo se encarga de organizar regiones por selection sort, de forma
+	 * ascendente
 	 */
 	public void organizarRegiones() {
 		for (int i = 0; i < listaRegiones.size()-1; i++) {
@@ -843,6 +808,7 @@ public class MathyGen {
 	 */
 	public void eliminarFuncion(Funcion d) {
 		Funcion padre=d.getPadre();
+		System.out.println(padre==null);
 		if(d.getFunDe()==null && d.getFunIz()==null){
 			if(padre!=null){
 				if(padre.getFunDe()==d){
@@ -864,17 +830,27 @@ public class MathyGen {
 			}else{
 				padre2.setFunIz(menor.getFunDe());
 			}
+			if(menor.getFunDe()!=null){
+				menor.getFunDe().setPadre(padre2);				
+			}
 			if(padre!=null){
 				if(padre.getFunDe()==d){
 					padre.setFunDe(menor);
 				}else{
-					padre.setFunIz(menor);
+					padre.setFunIz(menor);					
 				}
 			}else{
 				raizFuncion=menor;
 			}
+			menor.setPadre(padre);
 			menor.setFunDe(d.getFunDe());
 			menor.setFunIz(d.getFunIz());
+			if(d.getFunDe()!=null){
+				d.getFunDe().setPadre(menor);
+			}
+			if(d.getFunIz()!=null){
+				d.getFunIz().setPadre(menor);
+			}
 		}else{
 			if(padre!=null){
 				if(padre.getFunDe()==d){
@@ -882,8 +858,14 @@ public class MathyGen {
 				}else{
 					padre.setFunIz(d.getFunIz());
 				}
+				if(d.getFunIz()!=null){
+					d.getFunIz().setPadre(padre);
+				}
 			}else{
 				raizFuncion=raizFuncion.getFunIz();
+				if(raizFuncion.getFunIz()!=null){
+					raizFuncion.getFunIz().setPadre(null);
+				}
 			}
 		}
 	}
@@ -899,7 +881,6 @@ public class MathyGen {
 	public ArrayList<NumeroPrimo> getPrimos(){
 		return primosEncontrados;
 	}
-
 	public ArrayList<Numero> getNumeros() {
 		return numeros;
 	}

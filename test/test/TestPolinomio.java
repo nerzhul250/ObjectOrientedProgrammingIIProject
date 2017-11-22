@@ -17,6 +17,9 @@ public class TestPolinomio {
 		polinomio=new Polinomio("1x^2");
 	}
 	
+	private void setUpEscenario3(){
+		polinomio=new Polinomio("2x^5-3x^2+4x^4-1x^3+2x^1");
+	}
 	@Test
 	public void testInicializacionPolinomio() {
 		setUpEscenario1();
@@ -28,17 +31,27 @@ public class TestPolinomio {
 				polinomio.getCoeficientes().get(2)==1 && polinomio.getCoeficientes().get(3)==1
 				&& polinomio.getCoeficientes().get(4)==1);
 	}
+	
+	@Test
 	public void testComputarValor(){
 		setUpEscenario2();
-		assertTrue(polinomio.computarValor(2)==2);
+		assertTrue(polinomio.computarValor(2)==4);
 		assertTrue(polinomio.computarValor(3)==9);
 		assertTrue(polinomio.computarValor(4)==16);
 	}
 	
+	@Test
 	public void testCompararPolinomio(){
 		setUpEscenario2();
 		Polinomio p2=new Polinomio("2x^2");
 		assertTrue(p2.comparar(polinomio)==1);
+	}
+	
+	@Test
+	public void testToSringPolinomio(){
+		setUpEscenario3();
+		System.out.println(polinomio.toString());
+		assertEquals(polinomio.toString(),"+2.00x^1-3.00x^2-1.00x^3+4.00x^4+2.00x^5");;
 	}
 
 }

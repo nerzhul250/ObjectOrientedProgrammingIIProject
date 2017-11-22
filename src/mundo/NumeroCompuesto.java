@@ -28,7 +28,6 @@ public class NumeroCompuesto extends Numero{
 			}
 		}
 		sb.append(nam.toString()+"^"+counter);
-		sb.append(" ");
 		return sb.toString();
 	}
 	public int calcularFactoresPrimos(ArrayList<NumeroPrimo> primosEncontrados){

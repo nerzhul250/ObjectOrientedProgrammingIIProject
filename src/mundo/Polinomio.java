@@ -174,8 +174,8 @@ public class Polinomio extends Funcion {
 	@Override
 	public String toString() {
 		DecimalFormat df=new DecimalFormat("0.00");
-		String nim=""+df.format(coeficientes.get(0));
-		for (int i = 1; i <coeficientes.size() ; i++) {
+		String nim="";
+		for (int i = 0; i <coeficientes.size() ; i++) {
 			if(coeficientes.get(i)!=0){
 				if(coeficientes.get(i)<0){
 					nim=nim+df.format(coeficientes.get(i))+"x^"+i;

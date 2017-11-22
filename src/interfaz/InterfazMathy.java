@@ -404,7 +404,7 @@ public class InterfazMathy extends JFrame{
 	 * @return
 	 */
 	public ArrayList<Dibujable> darObjetosDibujables() {
-		return mundo.darObjetosDibujables();
+		return mundo.getObjetosDibujables();
 	}
 	/**
 	 * Da la orden para que las regiones se organicen ascendentemente

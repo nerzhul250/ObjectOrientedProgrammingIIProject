@@ -121,18 +121,14 @@ public abstract class Funcion implements Dibujable, Computable, Comparable, Seri
 		int thisNum=0;
 		int oNum=0;
 		if(this instanceof Polinomio){
-			thisNum=3;
-		}else if(this instanceof Exponencial){
-			thisNum=2;
+			thisNum=MathyGen.POLINOMIO;
 		}else if(this instanceof Trigonometrico){
-			thisNum=1;
+			thisNum=MathyGen.TRIGONOMETRICO;
 		}
 		if(o instanceof Polinomio){
-			oNum=3;
-		}else if(o instanceof Exponencial){
-			oNum=2;
+			oNum=MathyGen.POLINOMIO;
 		}else if(o instanceof Trigonometrico){
-			oNum=1;
+			oNum=MathyGen.TRIGONOMETRICO;
 		}
 		int dif=thisNum-oNum;
 		if(dif!=0){
@@ -141,10 +137,6 @@ public abstract class Funcion implements Dibujable, Computable, Comparable, Seri
 			if(o instanceof Polinomio){
 				Polinomio g1=(Polinomio)this;
 				Polinomio g2=(Polinomio)o;
-				dif=g1.comparar(g2);
-			}else if(o instanceof Exponencial){
-				Exponencial g1=(Exponencial)this;
-				Exponencial g2=(Exponencial)o;
 				dif=g1.comparar(g2);
 			}else if(o instanceof Trigonometrico){
 				Trigonometrico g1=(Trigonometrico)this;

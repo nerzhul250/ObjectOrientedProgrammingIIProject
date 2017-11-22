@@ -42,7 +42,7 @@ public class PopUpMenuPunto2 extends JPopupMenu implements ActionListener{
 			}else{
 				f=df.format(b)+"+"+df.format(m)+"x^1";
 			}
-			principal.agregarFuncion(f,color,1,MathyGen.TIPOPOLINOMIO);
+			principal.agregarFuncion(f,color,1,MathyGen.POLINOMIO);
 		}
 	}
 }

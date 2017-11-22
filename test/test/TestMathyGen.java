@@ -16,6 +16,7 @@ import mundo.MathyGen;
 import mundo.MatrizNoInvertibleException;
 import mundo.NombreFaltanteSistemaLinealException;
 import mundo.Polinomio;
+import mundo.Punto;
 import mundo.Region;
 import mundo.SistemaLineal;
 
@@ -39,7 +40,105 @@ public class TestMathyGen {
 		}
 		assertTrue(mathyGen.estaEnElArbol(new Polinomio("1x^2"),mathyGen.getRaizFuncion())!=null);
 	}
-	
+	@Test
+	public void testEliminarFuncion() {
+		setUpEscenario1();
+		try {
+			mathyGen.agregarFuncion("5x^2",Color.white,2,MathyGen.POLINOMIO);
+			mathyGen.agregarFuncion("8x^2",Color.white,2,MathyGen.POLINOMIO);
+			Polinomio p=(Polinomio) mathyGen.agregarFuncion("7x^2",Color.white,2,MathyGen.POLINOMIO);
+			assertTrue(mathyGen.estaEnElArbol(p,mathyGen.getRaizFuncion())!=null);
+			mathyGen.eliminarFuncion(p);
+			assertTrue(mathyGen.estaEnElArbol(p,mathyGen.getRaizFuncion())==null);
+		} catch (FuncionYaExisteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@Test
+	public void testAgregarPunto() {
+		setUpEscenario1();
+		mathyGen.agregarPunto(1,2);
+		assertTrue(mathyGen.getPrimerPunto().getX()==1);
+		assertTrue(mathyGen.getPrimerPunto().getY()==2);
+	}
+	@Test
+	public void testAgregarRegion() {
+		setUpEscenario1();
+		ArrayList<Punto>puntos=new ArrayList<Punto>();
+		puntos.add(new Punto(0,0));
+		puntos.add(new Punto(0,1));
+		puntos.add(new Punto(1,0));
+		mathyGen.agregarRegion(puntos,Color.black);
+		ArrayList<Region> regiones=mathyGen.getListaRegiones();
+		assertTrue(regiones.size()==1);
+	}
+	@Test
+	public void testAgregarObjetoDibujable() {
+		setUpEscenario1();
+		Punto k=new Punto(1,1);
+		mathyGen.agregarObjetoDibujable(k);
+		assertTrue(mathyGen.getObjetosDibujables().size()==1);
+	}
+	@Test
+	public void testGuardadoCargueEstado() {
+		setUpEscenario1();
+		try {
+			mathyGen.agregarFuncion("1x^2",Color.white,2,3);
+		} catch (FuncionYaExisteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mathyGen.agregarPunto(1,2);
+		ArrayList<Punto>puntos=new ArrayList<Punto>();
+		puntos.add(new Punto(0,0));
+		puntos.add(new Punto(0,1));
+		puntos.add(new Punto(1,0));
+		mathyGen.agregarRegion(puntos,Color.black);
+		try {
+			mathyGen.guardarEstado();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			boolean[] ke=mathyGen.cargarEstado();
+			assertTrue(ke[0]);
+			assertTrue(ke[1]);
+			assertTrue(ke[2]);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	@Test
+	public void testOrganizarRegionesAscendente() {
+		setUpEscenario1();
+		ArrayList<Punto>puntos=new ArrayList<Punto>();
+		puntos.add(new Punto(0,0));
+		puntos.add(new Punto(0,50));
+		puntos.add(new Punto(100,0));
+		puntos.add(new Punto(100,100));
+		mathyGen.agregarRegion(puntos,Color.black);
+		puntos=new ArrayList<Punto>();
+		puntos.add(new Punto(0,0));
+		puntos.add(new Punto(0,25));
+		puntos.add(new Punto(30,0));
+		mathyGen.agregarRegion(puntos,Color.black);
+		puntos=new ArrayList<Punto>();
+		puntos.add(new Punto(0,0));
+		puntos.add(new Punto(0,11));
+		puntos.add(new Punto(25,0));
+		mathyGen.agregarRegion(puntos,Color.black);
+		mathyGen.organizarRegiones();
+		ArrayList<Region> regiones=mathyGen.getListaRegiones();
+		double area1=regiones.get(0).getArea();
+		double area2=regiones.get(1).getArea();
+		double area3=regiones.get(2).getArea();
+		assertTrue(area1<area2 && area1<area3);
+		assertTrue(area2<area3);
+	}
 	@Test
 	public void probarMetodoAgregarSistemaLinealAlHistorial(){
 		setUpEscenario1();
