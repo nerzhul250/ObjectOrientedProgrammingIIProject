@@ -200,6 +200,7 @@ public class TestMathyGen {
 			assertTrue(mathyGen.darCurvasParametricas().size()==1);
 			mathyGen.eliminarCurvaParametrica(c2);
 			assertTrue(mathyGen.darCurvasParametricas().size()==0);
+			mathyGen.eliminarCurvaParametrica(c2);
 		} catch (FormulaParaParametrizarIncompleta e) {
 			fail();
 		}
