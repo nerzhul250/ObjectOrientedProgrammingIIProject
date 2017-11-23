@@ -74,7 +74,7 @@ public class DialogoAgregarFuncion extends JDialog implements ActionListener{
 		aux.setLayout(new GridLayout(6,1));
 		Integer[] fon={1,2,3,4};
 		//TODO AGREGAR CIRCUNFERENCIA y elipse
-		String[] fan={"Polinomio","Trigonometrico","Exponencial","General"};
+		String[] fan={"Polinomio","Trigonometrico"};
 		
 		grosor=new JComboBox<Integer>(fon);
 		funciones=new JComboBox<String>(fan);
